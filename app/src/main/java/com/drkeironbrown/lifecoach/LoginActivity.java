@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Functions.hideStatusBar(this);
         setContentView(R.layout.activity_login);
         llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
@@ -64,23 +65,24 @@ public class LoginActivity extends AppCompatActivity {
         imgLake = (ImageView) findViewById(R.id.imgLake);
 
         Glide.with(this).load(R.drawable.login_bg).into(imgLake);
-        Functions.loadCircularImage(this,R.mipmap.ic_launcher,imgLogo,null);
+        Functions.loadCircularImage(this, R.mipmap.ic_launcher_round, imgLogo, null);
         loginViewSlideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
-        loginViewSlideRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        loginViewSlideRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
 
-        registerViewSlideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        registerViewSlideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
         registerViewSlideRight = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
 
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isLoginView) {
+                    isLoginView = true;
                     llLoginView.startAnimation(loginViewSlideRight);
                     llRegisterView.startAnimation(registerViewSlideRight);
                     dashSignIn.setVisibility(View.VISIBLE);
                     dashSignUp.setVisibility(View.INVISIBLE);
-                    txtSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this,R.color.colorPrimary));
-                    txtSignUp.setTextColor(ContextCompat.getColor(LoginActivity.this,R.color.black));
+                    txtSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.colorPrimary));
+                    txtSignUp.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.black));
                 }
             }
         });
@@ -88,12 +90,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isLoginView) {
-                    llLoginView.startAnimation(loginViewSlideLeft);
+                    isLoginView = false;
                     llRegisterView.startAnimation(registerViewSlideLeft);
+                    llLoginView.startAnimation(loginViewSlideLeft);
                     dashSignIn.setVisibility(View.INVISIBLE);
                     dashSignUp.setVisibility(View.VISIBLE);
-                    txtSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this,R.color.black));
-                    txtSignUp.setTextColor(ContextCompat.getColor(LoginActivity.this,R.color.colorPrimary));
+                    txtSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.black));
+                    txtSignUp.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.colorPrimary));
                 }
             }
         });
@@ -106,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                llLoginView.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -156,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                llRegisterView.setVisibility(View.VISIBLE);
             }
 
             @Override
