@@ -1,70 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none"
     tools:context=".LoginActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:src="@drawable/login_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="64dp"
-        android:layout_marginRight="64dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgLake"
+            android:layout_width="match_parent"
+            android:layout_height="220dp" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:src="@mipmap/ic_launcher_round" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="64dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:textSize="18sp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="Sign In"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
-                android:textAllCaps="true" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="32dp"
-                android:layout_height="1dp"
+                <TextView
+                    android:id="@+id/txtSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Sign In"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/dashSignIn"
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/txtSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Sign Up"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:visibility="invisible"
+                    android:background="@color/colorPrimary"
+                    android:id="@+id/dashSignUp"
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLoginView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.drkeironbrown.lifecoach.custom.TfEditText
+                android:id="@+id/edtUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/black_box"
+                android:hint="Username"
+                android:inputType="textNoSuggestions"
+                android:lines="1"
+                android:maxLines="1"
+                android:padding="12dp"
+                android:textSize="@dimen/text_size_14" />
+
+            <CheckBox
+                android:id="@+id/cbTermCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/colorPrimary" />
-        </LinearLayout>
+                android:text="Term and condition"
+                android:textSize="@dimen/text_size_12" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="18sp"
+            <CheckBox
+                android:id="@+id/cbGetMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Sign Up"
-                android:textAllCaps="true" />
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="8dp"
+                android:text="Get mail"
+                android:textSize="@dimen/text_size_12" />
 
-            <View
-                android:layout_width="32dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp" />
+            <com.drkeironbrown.lifecoach.custom.TfButton
+                android:id="@+id/btnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/black_btn_selector"
+                android:text="SIGN IN"
+                android:textColor="@color/white" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRegisterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.drkeironbrown.lifecoach.custom.TfEditText
+                android:id="@+id/edtUserName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/black_box"
+                android:hint="Username"
+                android:inputType="textNoSuggestions"
+                android:lines="1"
+                android:maxLines="1"
+                android:padding="12dp"
+                android:textSize="@dimen/text_size_14" />
+
+            <com.drkeironbrown.lifecoach.custom.TfEditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/black_box"
+                android:hint="Email Id"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:maxLines="1"
+                android:padding="12dp"
+                android:textSize="@dimen/text_size_14" />
+
+            <CheckBox
+                android:id="@+id/cbTermCondition2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="8dp"
+                android:text="Term and condition"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/cbGetMail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginTop="8dp"
+                android:text="Get mail"
+                android:textSize="12sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfButton
+                android:id="@+id/btnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/black_btn_selector"
+                android:text="SIGN Up"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+</ScrollView>
