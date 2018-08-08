@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NewTamplet</string>
     <string name="inspiration_personal_inspirational"><![CDATA[Inspiration & Personal Inspirational]]></string>
+    <string name="enter_mind_movie_name">Enter mind movie name</string>
 </resources>

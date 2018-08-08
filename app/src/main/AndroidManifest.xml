@@ -12,17 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.FunctionSlideActivity" />
         <activity android:name=".ui.DashboardActivity" />
         <activity android:name=".ui.SlideshowListActivity" />
-        <activity android:name=".ui.GalleryListActivity"></activity>
+        <activity android:name=".ui.GalleryListActivity" />
+        <activity android:name=".ui.AddSlideshowActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

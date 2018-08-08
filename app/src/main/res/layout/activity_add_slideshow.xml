@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddSlideshowActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_action_back" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Life coach"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:isBold="true" />
+    </RelativeLayout>
+
+    <com.drkeironbrown.lifecoach.custom.TfEditText
+        android:id="@+id/edtSlideshowName"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_42"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/black_box"
+        android:ellipsize="end"
+        android:hint="@string/enter_mind_movie_name"
+        android:inputType="textNoSuggestions"
+        android:lines="1"
+        android:maxLines="1"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:id="@+id/llSelectTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtSlideshowName"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_alarm_clock" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtSelectTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_42"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/black_box"
+            android:gravity="center_vertical"
+            android:hint="Select time"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llSelectTime"
+        android:layout_marginTop="16dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+</RelativeLayout>
