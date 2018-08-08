@@ -1,9 +1,11 @@
-package com.drkeironbrown.lifecoach;
+package com.drkeironbrown.lifecoach.ui;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.helper.Functions;
@@ -44,8 +47,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Functions.hideStatusBar(this);
         setContentView(R.layout.activity_login);
+
+        Window w = getWindow(); // in Activity's onCreate() for instance
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
         cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
@@ -165,6 +171,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animation animation) {
 
+            }
+        });
+
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                finish();
+            }
+        });
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                finish();
             }
         });
     }

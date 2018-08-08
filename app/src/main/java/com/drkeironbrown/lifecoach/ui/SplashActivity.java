@@ -1,8 +1,9 @@
-package com.drkeironbrown.lifecoach;
+package com.drkeironbrown.lifecoach.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.Functions;
 
 public class SplashActivity extends AppCompatActivity {
