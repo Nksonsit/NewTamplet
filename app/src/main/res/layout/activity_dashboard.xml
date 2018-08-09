@@ -317,7 +317,7 @@
                         android:text="Shop"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <ImageView
                         android:layout_width="52dp"
