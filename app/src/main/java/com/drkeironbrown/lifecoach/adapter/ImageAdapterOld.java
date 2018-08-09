@@ -9,34 +9,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.AppConstant;
-import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Image;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ImageAdapterOld extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int width;
-    private OnClickItem onClickItem;
+    private boolean is4x4;
     private boolean isGallery;
     private List<Image> list;
     private Context context;
 
-    public ImageAdapter(Context context, List<Image> list, boolean isGallery, OnClickItem onClickItem) {
+    public ImageAdapterOld(Context context, List<Image> list, boolean isGallery, boolean is4x4) {
         this.context = context;
         this.list = list;
-        this.onClickItem = onClickItem;
         this.isGallery = isGallery;
+        this.is4x4 = is4x4;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
+    }
+    public void setIs4x4(boolean is4x4){
+        this.is4x4 =is4x4;
     }
 
     @NonNull
@@ -55,17 +55,18 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (getItemViewType(position) == 0) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) viewHolder;
-            imageViewHolder.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 3) - 20, (width / 3) - 20));
-            Functions.loadImage(context, list.get(position).getImagePath(), imageViewHolder.img, null);
-        } else {
+            if (is4x4) {
+                imageViewHolder.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 4) - 20, (width / 4) - 20));
+            }else {
+                imageViewHolder.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 5) - 20, (width / 5) - 20));
+            }
+        }else {
             AddImageViewHolder addImageViewHolder = (AddImageViewHolder) viewHolder;
-            addImageViewHolder.rlAddImage.setLayoutParams(new RelativeLayout.LayoutParams((width / 3) - 20, (width / 3) - 20));
-            addImageViewHolder.rlAddImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickItem.onAddImage();
-                }
-            });
+            if (is4x4) {
+                addImageViewHolder.rlAddImage.setLayoutParams(new RelativeLayout.LayoutParams((width / 4) - 20, (width / 4) - 20));
+            }else {
+                addImageViewHolder.rlAddImage.setLayoutParams(new RelativeLayout.LayoutParams((width / 5) - 20, (width / 5) - 20));
+            }
         }
     }
 
@@ -112,35 +113,20 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void setDataList(List<Image> list) {
-        this.list = new ArrayList<>();
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgRemove;
-        private ImageView img;
         private RelativeLayout rlItem;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
             rlItem = (RelativeLayout) itemView.findViewById(R.id.rlItem);
-            img = (ImageView) itemView.findViewById(R.id.img);
-            imgRemove = (ImageView) itemView.findViewById(R.id.imgRemove);
         }
     }
 
     public class AddImageViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout rlAddImage;
-
         public AddImageViewHolder(View itemView) {
             super(itemView);
             rlAddImage = (RelativeLayout) itemView.findViewById(R.id.rlAddImage);
         }
-    }
-
-    public interface OnClickItem {
-        void onAddImage();
     }
 }

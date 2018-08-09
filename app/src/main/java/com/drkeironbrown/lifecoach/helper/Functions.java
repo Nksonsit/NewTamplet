@@ -39,14 +39,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
-
-import org.json.JSONObject;
+import com.drkeironbrown.lifecoach.model.Image;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -296,6 +299,27 @@ public class Functions {
                 .into(imageView);
     }
 
+    public static void loadImage(final Context context, File file, final ImageView imageView, final ProgressBar progressBar) {
+        Glide.with(context)
+                .load(file)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (progressBar != null)
+                            progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        if (progressBar != null)
+                            progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .into(imageView);
+    }
+
     public static void loadCircularImage(final Context context, Drawable url, final ImageView imageView, final ProgressBar progressBar) {
         Glide.with(context)
                 .load(url)
@@ -319,6 +343,7 @@ public class Functions {
                 .apply(new RequestOptions().circleCropTransform())
                 .into(imageView);
     }
+
     public static void loadCircularImage(final Context context, int id, final ImageView imageView, final ProgressBar progressBar) {
         Glide.with(context)
                 .load(id)
@@ -487,11 +512,53 @@ public class Functions {
         return Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
     }
+
     public static float getLeftPadding(Context context, float textWidth) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
         return (width / 2) - (textWidth / 2);
+    }
+
+    public static List<Image> copyPasteAllImages(List<Image> list) {
+        List<Image> imageList = new ArrayList<>();
+        long time = System.currentTimeMillis();
+        for (int i = 0; i < list.size(); i++) {
+            try {
+                File mainDir = new File(Environment.getExternalStorageDirectory(), "/LifeCoach");
+                if (!mainDir.exists()) {
+                    mainDir.mkdir();
+                }
+                File file = new File(mainDir.getAbsoluteFile(), "username_" + (time + i) + ".jpg");
+
+                Log.e("file", file.getAbsolutePath());
+
+                InputStream in = null;
+                in = new FileInputStream(new File(list.get(i).getImagePath()));
+
+                OutputStream out = null;
+                out = new FileOutputStream(file);
+
+                // Copy the bits from instream to outstream
+                byte[] buf = new byte[1024];
+                int len;
+
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+
+                in.close();
+                out.close();
+
+
+                Image image = new Image();
+                image.setImagePath(file.getAbsolutePath());
+                imageList.add(image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return imageList;
     }
 
 

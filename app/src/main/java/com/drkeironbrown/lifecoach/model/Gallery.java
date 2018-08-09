@@ -1,18 +1,28 @@
 package com.drkeironbrown.lifecoach.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Gallery {
-    private List<String> Images;
+public class Gallery implements Serializable{
+    private List<Image> Images;
     private int TotalImage;
     private String GalleryName;
+    private String GalleryDateTime;
     private int GalleryId;
 
-    public List<String> getImages() {
+    public String getGalleryDateTime() {
+        return GalleryDateTime;
+    }
+
+    public void setGalleryDateTime(String galleryDateTime) {
+        GalleryDateTime = galleryDateTime;
+    }
+
+    public List<Image> getImages() {
         return Images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(List<Image> images) {
         Images = images;
     }
 

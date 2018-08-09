@@ -32,11 +32,24 @@
             app:isBold="true" />
     </RelativeLayout>
 
+    <com.drkeironbrown.lifecoach.custom.TfButton
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/black_btn_selector"
+        android:text="Add mind movie"
+        android:textColor="@color/white" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSlideshow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/btnAdd"
         android:overScrollMode="never"
         android:scrollbars="none" />
 </RelativeLayout>

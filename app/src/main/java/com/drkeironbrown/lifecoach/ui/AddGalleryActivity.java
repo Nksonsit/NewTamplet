@@ -20,8 +20,8 @@ import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
-import com.drkeironbrown.lifecoach.model.Slideshow;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -29,27 +29,26 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddSlideshowActivity extends AppCompatActivity {
+public class AddGalleryActivity extends AppCompatActivity {
 
     private RecyclerView rvImage;
-    private TfEditText edtSlideshowName;
-    private ImageAdapter adapter;
-    private List<Image> list;
+    private TfEditText edtGalleryName;
     private GridLayoutManager gManger;
+    private List<Image> list;
+    private ImageAdapter adapter;
     private android.widget.ImageView imgBack;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtTitle;
     private android.widget.RelativeLayout toolbar;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtLabel;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSelectTime;
     private android.widget.LinearLayout llSelectTime;
-    private com.drkeironbrown.lifecoach.custom.TfButton btnAdd;
-    private Slideshow slideShow;
+    private TfButton btnAdd;
+    private Gallery gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_slideshow);
-        btnAdd = (TfButton) findViewById(R.id.btnAdd);
+        setContentView(R.layout.activity_add_gallery);
         llSelectTime = (LinearLayout) findViewById(R.id.llSelectTime);
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
         txtLabel = (TfTextView) findViewById(R.id.txtLabel);
@@ -57,21 +56,23 @@ public class AddSlideshowActivity extends AppCompatActivity {
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         rvImage = (RecyclerView) findViewById(R.id.rvImage);
-        edtSlideshowName = (TfEditText) findViewById(R.id.edtSlideshowName);
+        btnAdd = (TfButton) findViewById(R.id.btnAdd);
+        edtGalleryName = (TfEditText) findViewById(R.id.edtGalleryName);
         gManger = new GridLayoutManager(this, 3);
         rvImage.setLayoutManager(gManger);
-
-        slideShow = (Slideshow) getIntent().getSerializableExtra("slideshow");
         list = new ArrayList<>();
-        if (slideShow != null) {
-            edtSlideshowName.setText(slideShow.getSlideshowName());
-            list = slideShow.getImages();
+
+        gallery = (Gallery) getIntent().getSerializableExtra("gallery");
+        list = new ArrayList<>();
+        if (gallery != null) {
+            edtGalleryName.setText(gallery.getGalleryName());
+            list = gallery.getImages();
         }
 
-        adapter = new ImageAdapter(this, list, false, new ImageAdapter.OnClickItem() {
+        adapter = new ImageAdapter(this, list, true, new ImageAdapter.OnClickItem() {
             @Override
             public void onAddImage() {
-                TedPermission.with(AddSlideshowActivity.this).setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                TedPermission.with(AddGalleryActivity.this).setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .setPermissionListener(new PermissionListener() {
                             @Override
                             public void onPermissionGranted() {
@@ -80,7 +81,7 @@ public class AddSlideshowActivity extends AppCompatActivity {
 
                             @Override
                             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                                Functions.showToast(AddSlideshowActivity.this, "You can't add image without permission.", MDToast.TYPE_INFO);
+                                Functions.showToast(AddGalleryActivity.this, "You can't add image without permission.", MDToast.TYPE_INFO);
                             }
                         }).check();
             }
@@ -95,28 +96,22 @@ public class AddSlideshowActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.hideKeyPad(AddSlideshowActivity.this, v);
-                if (edtSlideshowName.getText().toString().trim().length() == 0) {
-                    Functions.showToast(AddSlideshowActivity.this, "Please enter mind movie name", MDToast.TYPE_INFO);
+                Functions.hideKeyPad(AddGalleryActivity.this, v);
+                if (edtGalleryName.getText().toString().trim().length() == 0) {
+                    Functions.showToast(AddGalleryActivity.this, "Please enter vision board name", MDToast.TYPE_INFO);
                     return;
                 }
                 if (list.size() < 3) {
-                    Functions.showToast(AddSlideshowActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
+                    Functions.showToast(AddGalleryActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
                     return;
                 }
-                Slideshow slideshow = new Slideshow();
-                slideshow.setSlideshowName(edtSlideshowName.getText().toString().trim());
-                slideshow.setImages(Functions.copyPasteAllImages(list));
-                DBOpenHelper.addImages(AddSlideshowActivity.this, slideshow);
+                Gallery gallery = new Gallery();
+                gallery.setGalleryName(edtGalleryName.getText().toString().trim());
+                gallery.setImages(list);
+                DBOpenHelper.addImagesToGallery(AddGalleryActivity.this, gallery);
                 onBackPressed();
             }
         });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        Functions.fireIntent(this, false);
     }
 
     private void addImage() {
@@ -156,5 +151,10 @@ public class AddSlideshowActivity extends AppCompatActivity {
 //            Image image = ImagePicker.getFirstImageOrNull(data);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Functions.fireIntent(this, false);
     }
 }

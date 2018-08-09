@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddSlideshowActivity">
+    tools:context=".ui.AddGalleryActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
     </RelativeLayout>
 
     <com.drkeironbrown.lifecoach.custom.TfEditText
-        android:id="@+id/edtSlideshowName"
+        android:id="@+id/edtGalleryName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_42"
         android:layout_below="@+id/toolbar"
@@ -41,7 +41,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/black_box"
         android:ellipsize="end"
-        android:hint="@string/enter_mind_movie_name"
+        android:hint="Enter vision board name"
         android:inputType="textNoSuggestions"
         android:lines="1"
         android:maxLines="1"
@@ -51,7 +51,7 @@
         android:id="@+id/txtLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edtSlideshowName"
+        android:layout_below="@+id/edtGalleryName"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"

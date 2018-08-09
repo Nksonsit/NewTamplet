@@ -3,27 +3,52 @@
     package="com.drkeironbrown.lifecoach">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".LifeCoachApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SplashActivity">
-        </activity>
-        <activity android:name=".ui.LoginActivity" />
-        <activity android:name=".ui.FunctionSlideActivity" />
-        <activity android:name=".ui.DashboardActivity" />
-        <activity android:name=".ui.SlideshowListActivity" />
-        <activity android:name=".ui.GalleryListActivity" />
-        <activity android:name=".ui.AddSlideshowActivity">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.FunctionSlideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.SlideshowListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.GalleryListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.AddSlideshowActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"></activity>
+        <activity android:name=".ui.AddGalleryActivity"></activity>
     </application>
 
 </manifest>

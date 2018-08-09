@@ -33,6 +33,7 @@
                     android:id="@+id/img3"
                     android:layout_width="82dp"
                     android:layout_height="52dp"
+                    android:background="@drawable/img_border"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40dp"
                     android:scaleType="centerCrop"
@@ -41,6 +42,7 @@
                 <ImageView
                     android:id="@+id/img2"
                     android:layout_width="92dp"
+                    android:background="@drawable/img_border"
                     android:layout_height="62dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
@@ -48,6 +50,7 @@
                     android:src="@mipmap/ic_launcher" />
 
                 <ImageView
+                    android:background="@drawable/img_border"
                     android:id="@+id/img1"
                     android:layout_width="102dp"
                     android:layout_height="72dp"

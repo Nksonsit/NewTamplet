@@ -1,18 +1,28 @@
 package com.drkeironbrown.lifecoach.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Slideshow {
-    private List<String> Images;
+public class Slideshow implements Serializable{
+    private List<Image> Images;
     private int TotalImage;
     private String SlideshowName;
+    private String SlideshowDateTime;
     private int SlideshowId;
 
-    public List<String> getImages() {
+    public String getSlideshowDateTime() {
+        return SlideshowDateTime;
+    }
+
+    public void setSlideshowDateTime(String slideshowDateTime) {
+        SlideshowDateTime = slideshowDateTime;
+    }
+
+    public List<Image> getImages() {
         return Images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(List<Image> images) {
         Images = images;
     }
 

@@ -1,6 +1,8 @@
 package com.drkeironbrown.lifecoach.model;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable {
     private String ImagePath;
     private int ImageId;
 
