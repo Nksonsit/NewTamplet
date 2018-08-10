@@ -40,5 +40,19 @@ public class DashboardActivity extends AppCompatActivity {
                 Functions.fireIntent(DashboardActivity.this, SlideshowListActivity.class, true);
             }
         });
+
+        rlGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, GalleryListActivity.class, true);
+            }
+        });
+
+        rlJournal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, AddJournalActivity.class, true);
+            }
+        });
     }
 }

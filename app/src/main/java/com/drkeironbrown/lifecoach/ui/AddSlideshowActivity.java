@@ -107,7 +107,11 @@ public class AddSlideshowActivity extends AppCompatActivity {
                 Slideshow slideshow = new Slideshow();
                 slideshow.setSlideshowName(edtSlideshowName.getText().toString().trim());
                 slideshow.setImages(Functions.copyPasteAllImages(list));
-                DBOpenHelper.addImages(AddSlideshowActivity.this, slideshow);
+                if (slideShow != null) {
+                    DBOpenHelper.updateSlideshow(slideshow);
+                } else {
+                    DBOpenHelper.addImages(slideshow);
+                }
                 onBackPressed();
             }
         });

@@ -17,7 +17,13 @@
         <activity
             android:name=".ui.SplashActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
@@ -33,13 +39,7 @@
         <activity
             android:name=".ui.SlideshowListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
         <activity
             android:name=".ui.GalleryListActivity"
             android:screenOrientation="portrait"
@@ -47,8 +47,12 @@
         <activity
             android:name=".ui.AddSlideshowActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"></activity>
-        <activity android:name=".ui.AddGalleryActivity"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.AddGalleryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity android:name=".ui.AddJournalActivity"></activity>
     </application>
 
 </manifest>

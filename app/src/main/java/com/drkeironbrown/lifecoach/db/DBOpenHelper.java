@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
 import com.drkeironbrown.lifecoach.model.Slideshow;
-import com.drkeironbrown.lifecoach.ui.AddGalleryActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -95,7 +95,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         return dbFile.exists();
     }
 
-    public static void addImages(Context context, Slideshow slideshow) {
+    public static void addImages(Slideshow slideshow) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
         String addSlideData = "INSERT INTO Slideshow ('SlideshowName','SlideshowDateTime') VALUES('" + slideshow.getSlideshowName() + "','" + slideshow.getSlideshowDateTime() + "')";
         sb.execSQL(addSlideData);
@@ -167,7 +167,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         DatabaseManager.getInstance().closeDatabase();
     }
 
-    public static void addImagesToGallery(Context context, Gallery gallery) {
+    public static void addImagesToGallery(Gallery gallery) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
         String addSlideData = "INSERT INTO Gallery ('GalleryName','GalleryDateTime') VALUES('" + gallery.getGalleryName() + "','" + gallery.getGalleryDateTime() + "')";
         sb.execSQL(addSlideData);
@@ -186,7 +186,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         DatabaseManager.getInstance().closeDatabase();
     }
-
 
 
     public static List<Gallery> getGalleryList() {
@@ -238,6 +237,34 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         sb.execSQL("DELETE FROM Gallery WHERE GalleryId = " + galleryId);
         sb.execSQL("DELETE FROM Images WHERE GalleryId = " + galleryId);
 
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void updateSlideshow(Slideshow slideshow) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("UPDATE Slideshow SET SlideshowName = '" + slideshow.getSlideshowName() + "', SlideshowDateTime = '" + slideshow.getSlideshowDateTime() + "'");
+        sb.execSQL("DELETE * FROM Images WHERE SlideshowId = " + slideshow.getSlideshowId());
+        Functions.copyPasteAllImages(slideshow.getImages());
+        for (int i = 0; i < slideshow.getImages().size(); i++) {
+            File file = new File(slideshow.getImages().get(i).getImagePath());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void updateGallery(Gallery gallery) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("UPDATE Gallery SET GalleryName = '" + gallery.getGalleryName() + "', GalleryDateTime = '" + gallery.getGalleryDateTime() + "'");
+        sb.execSQL("DELETE * FROM Images WHERE GalleryId = " + gallery.getGalleryId());
+        Functions.copyPasteAllImages(gallery.getImages());
+        for (int i = 0; i < gallery.getImages().size(); i++) {
+            File file = new File(gallery.getImages().get(i).getImagePath());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
         DatabaseManager.getInstance().closeDatabase();
     }
 }

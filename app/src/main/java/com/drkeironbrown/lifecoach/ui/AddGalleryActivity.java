@@ -108,7 +108,12 @@ public class AddGalleryActivity extends AppCompatActivity {
                 Gallery gallery = new Gallery();
                 gallery.setGalleryName(edtGalleryName.getText().toString().trim());
                 gallery.setImages(list);
-                DBOpenHelper.addImagesToGallery(AddGalleryActivity.this, gallery);
+                if (gallery != null) {
+                    DBOpenHelper.updateGallery(gallery);
+                } else {
+                    DBOpenHelper.addImagesToGallery(gallery);
+                }
+
                 onBackPressed();
             }
         });
