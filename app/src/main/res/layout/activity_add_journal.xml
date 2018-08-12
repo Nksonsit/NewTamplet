@@ -9,19 +9,61 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/paper" />
 
     <com.drkeironbrown.lifecoach.custom.LinedEditText
         android:id="@+id/edtJournal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="32dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="32dp"
         android:background="@null"
         android:gravity="top"
         android:imeOptions="actionNone"
         android:inputType="textMultiLine|textNoSuggestions"
         android:minLines="10"
         android:singleLine="false" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:paddingRight="@dimen/padding_12">
+
+        <ImageView
+            android:id="@+id/imgShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_share"
+            android:tint="@color/darkColor" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imgSave"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/red" />
+
+        <ImageView
+            android:id="@+id/imgSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imgShare"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_save"
+            android:tint="@color/darkGreen" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

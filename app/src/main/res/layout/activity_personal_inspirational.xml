@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GalleryListActivity">
+    tools:context=".ui.PersonalInspirationalActivity">
+
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -41,17 +42,15 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/black_btn_selector"
-        android:text="Add vision board"
+        android:text="Add your inspirational message"
         android:textColor="@color/white" />
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvGallery"
+        android:id="@+id/rvPInspirational"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btnAdd"
         android:overScrollMode="never"
         android:scrollbars="none" />
-
     <LinearLayout
         android:id="@+id/llEmptyView"
         android:layout_width="match_parent"
@@ -69,10 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="No vision board available"
+            android:text="No message available"
             android:textColor="@color/darkColor"
             android:textSize="22sp"
             android:textStyle="bold"
             app:isBold="true" />
     </LinearLayout>
+
 </RelativeLayout>

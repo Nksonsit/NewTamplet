@@ -55,6 +55,7 @@ public class AddGalleryActivity extends AppCompatActivity {
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        txtTitle.setText("Add vision board");
         rvImage = (RecyclerView) findViewById(R.id.rvImage);
         btnAdd = (TfButton) findViewById(R.id.btnAdd);
         edtGalleryName = (TfEditText) findViewById(R.id.edtGalleryName);
@@ -105,13 +106,14 @@ public class AddGalleryActivity extends AppCompatActivity {
                     Functions.showToast(AddGalleryActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
                     return;
                 }
-                Gallery gallery = new Gallery();
-                gallery.setGalleryName(edtGalleryName.getText().toString().trim());
-                gallery.setImages(list);
+                Gallery galleryReq = new Gallery();
+                galleryReq.setGalleryName(edtGalleryName.getText().toString().trim());
+                galleryReq.setImages(list);
                 if (gallery != null) {
-                    DBOpenHelper.updateGallery(gallery);
+                    galleryReq.setGalleryId(gallery.getGalleryId());
+                    DBOpenHelper.updateGallery(galleryReq);
                 } else {
-                    DBOpenHelper.addImagesToGallery(gallery);
+                    DBOpenHelper.addImagesToGallery(galleryReq);
                 }
 
                 onBackPressed();
@@ -129,7 +131,7 @@ public class AddGalleryActivity extends AppCompatActivity {
                 .includeVideo(false) // Show video on image picker
 //                .single() // single mode
                 .multi() // multi mode (default mode)
-                .limit(12) // max images can be selected (99 by default)
+                .limit(20) // max images can be selected (99 by default)
                 .showCamera(true) // show camera or not (true by default)
 //                .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
 //                .origin(images) // original selected images, used in multi mode

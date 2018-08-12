@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SecondThoughtActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/paper" />
+
+    <com.drkeironbrown.lifecoach.custom.LinedEditText
+        android:id="@+id/edtSecondThought"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnLetItGo"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="32dp"
+        android:longClickable="false"
+        android:background="@null"
+        android:gravity="top"
+        android:imeOptions="actionNone"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:minLines="10"
+        android:singleLine="false" />
+
+    <com.drkeironbrown.lifecoach.custom.TfButton
+        android:id="@+id/btnLetItGo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="72dp"
+        android:background="@drawable/black_box"
+        android:text="Let it go.."
+        android:textColor="@color/darkColor" />
+</RelativeLayout>

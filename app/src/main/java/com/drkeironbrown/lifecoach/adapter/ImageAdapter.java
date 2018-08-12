@@ -52,11 +52,18 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == 0) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) viewHolder;
             imageViewHolder.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 3) - 20, (width / 3) - 20));
             Functions.loadImage(context, list.get(position).getImagePath(), imageViewHolder.img, null);
+            imageViewHolder.imgRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
         } else {
             AddImageViewHolder addImageViewHolder = (AddImageViewHolder) viewHolder;
             addImageViewHolder.rlAddImage.setLayoutParams(new RelativeLayout.LayoutParams((width / 3) - 20, (width / 3) - 20));

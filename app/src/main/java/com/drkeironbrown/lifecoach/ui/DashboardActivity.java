@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        PrefUtils.setIsFirstTime(this, false);
         rlShop = (RelativeLayout) findViewById(R.id.rlShop);
         rlOnSecondThought = (RelativeLayout) findViewById(R.id.rlOnSecondThought);
         rlJournal = (RelativeLayout) findViewById(R.id.rlJournal);
@@ -51,7 +53,28 @@ public class DashboardActivity extends AppCompatActivity {
         rlJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(DashboardActivity.this, AddJournalActivity.class, true);
+                Functions.fireIntent(DashboardActivity.this, JournalListActivity.class, true);
+            }
+        });
+
+        rlPInspirational.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, PersonalInspirationalActivity.class, true);
+            }
+        });
+
+        rlInspirational.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, InspirationalActivity.class, true);
+            }
+        });
+
+        rlOnSecondThought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, SecondThoughtActivity.class, true);
             }
         });
     }

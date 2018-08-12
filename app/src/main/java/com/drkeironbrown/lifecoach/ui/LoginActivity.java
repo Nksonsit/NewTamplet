@@ -18,6 +18,7 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -177,14 +178,24 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                PrefUtils.setIsLogin(LoginActivity.this,true);
+                if (PrefUtils.isFirstTime(LoginActivity.this)) {
+                    Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                } else {
+                    Functions.fireIntent(LoginActivity.this, DashboardActivity.class, true);
+                }
                 finish();
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                PrefUtils.setIsLogin(LoginActivity.this,true);
+                if (PrefUtils.isFirstTime(LoginActivity.this)) {
+                    Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                } else {
+                    Functions.fireIntent(LoginActivity.this, DashboardActivity.class, true);
+                }
                 finish();
             }
         });

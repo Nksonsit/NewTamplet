@@ -52,7 +52,13 @@
             android:name=".ui.AddGalleryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
-        <activity android:name=".ui.AddJournalActivity"></activity>
+        <activity android:name=".ui.AddJournalActivity" />
+        <activity android:name=".ui.JournalListActivity" />
+        <activity android:name=".ui.SecondThoughtActivity" />
+        <activity android:name=".ui.PersonalInspirationalActivity" />
+        <activity android:name=".ui.InspirationalActivity" />
+        <activity android:name=".ui.GalleryActivity" />
+        <activity android:name=".ui.SlideshowActivity"></activity>
     </application>
 
 </manifest>

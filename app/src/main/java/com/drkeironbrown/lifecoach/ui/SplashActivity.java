@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -12,7 +13,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        Functions.fireIntent(this,LoginActivity.class,true);
+        if (PrefUtils.isLogin(this)) {
+            if (PrefUtils.isFirstTime(this)) {
+                Functions.fireIntent(this, FunctionSlideActivity.class, true);
+            } else {
+                Functions.fireIntent(this, DashboardActivity.class, true);
+            }
+        } else {
+            Functions.fireIntent(this, LoginActivity.class, true);
+        }
+        finish();
     }
 }

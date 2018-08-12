@@ -55,6 +55,7 @@ public class AddSlideshowActivity extends AppCompatActivity {
         txtLabel = (TfTextView) findViewById(R.id.txtLabel);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
+        txtTitle.setText("Add mind movie");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         rvImage = (RecyclerView) findViewById(R.id.rvImage);
         edtSlideshowName = (TfEditText) findViewById(R.id.edtSlideshowName);
@@ -104,13 +105,14 @@ public class AddSlideshowActivity extends AppCompatActivity {
                     Functions.showToast(AddSlideshowActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
                     return;
                 }
-                Slideshow slideshow = new Slideshow();
-                slideshow.setSlideshowName(edtSlideshowName.getText().toString().trim());
-                slideshow.setImages(Functions.copyPasteAllImages(list));
+                Slideshow slideshowReq = new Slideshow();
+                slideshowReq.setSlideshowName(edtSlideshowName.getText().toString().trim());
+                slideshowReq.setImages(Functions.copyPasteAllImages(list));
                 if (slideShow != null) {
-                    DBOpenHelper.updateSlideshow(slideshow);
+                    slideshowReq.setSlideshowId(slideShow.getSlideshowId());
+                    DBOpenHelper.updateSlideshow(slideshowReq);
                 } else {
-                    DBOpenHelper.addImages(slideshow);
+                    DBOpenHelper.addImages(slideshowReq);
                 }
                 onBackPressed();
             }

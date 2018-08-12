@@ -55,10 +55,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
                 onClickItem.onEditClick(position);
             }
         });
-        holder.imgPlay.setOnClickListener(new View.OnClickListener() {
+        holder.imgSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickItem.onPlayClick(position);
+                onClickItem.onSeeClick(position);
             }
         });
     }
@@ -71,7 +71,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
 
     public class GalleryViewHolder extends RecyclerView.ViewHolder {
@@ -81,16 +81,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         private ImageView img1;
         private ImageView imgEdit;
         private ImageView imgDelete;
-        private ImageView imgPlay;
+        private ImageView imgSee;
 
         public GalleryViewHolder(View itemView) {
             super(itemView);
-            imgPlay = (ImageView) itemView.findViewById(R.id.imgPlay);
             imgDelete = (ImageView) itemView.findViewById(R.id.imgDelete);
             imgEdit = (ImageView) itemView.findViewById(R.id.imgEdit);
             img1 = (ImageView) itemView.findViewById(R.id.img1);
             img2 = (ImageView) itemView.findViewById(R.id.img2);
             img3 = (ImageView) itemView.findViewById(R.id.img3);
+            imgSee = (ImageView) itemView.findViewById(R.id.imgSee);
             txtGalleryName = (TfTextView) itemView.findViewById(R.id.txtGalleryName);
         }
     }
@@ -100,6 +100,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
 
         void onEditClick(int position);
 
-        void onPlayClick(int position);
+        void onSeeClick(int position);
     }
 }

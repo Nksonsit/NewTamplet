@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
@@ -29,25 +30,50 @@ public class SlideshowListActivity extends AppCompatActivity {
     private TfTextView txtTitle;
     private RelativeLayout toolbar;
     private TfButton btnAdd;
+    private LinearLayout llEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slideshow_list);
+        llEmptyView = (LinearLayout) findViewById(R.id.llEmptyView);
         btnAdd = (TfButton) findViewById(R.id.btnAdd);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
+        txtTitle.setText("Mind movie");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         rvSlideshow = (RecyclerView) findViewById(R.id.rvSlideshow);
         rvSlideshow.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
         list = DBOpenHelper.getSlideshowList();
+        if (list.size() == 0) {
+            llEmptyView.setVisibility(View.VISIBLE);
+            rvSlideshow.setVisibility(View.GONE);
+        } else {
+            llEmptyView.setVisibility(View.GONE);
+            rvSlideshow.setVisibility(View.VISIBLE);
+        }
+
         adapter = new SlideshowAdapter(this, list, new SlideshowAdapter.OnClickItem() {
             @Override
-            public void onDeleteClick(int position) {
-                DBOpenHelper.deleteSlideshow(list.get(position).getSlideshowId());
-                list.remove(position);
-                adapter.notifyItemRemoved(position);
+            public void onDeleteClick(final int position) {
+                Functions.showAlertDialogWithTwoOption(SlideshowListActivity.this, "YES", "NO", "Areyou sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes) {
+                            DBOpenHelper.deleteSlideshow(list.get(position).getSlideshowId());
+                            list.remove(position);
+                            adapter.notifyItemRemoved(position);
+                            if (list.size() == 0) {
+                                llEmptyView.setVisibility(View.VISIBLE);
+                                rvSlideshow.setVisibility(View.GONE);
+                            } else {
+                                llEmptyView.setVisibility(View.GONE);
+                                rvSlideshow.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                });
             }
 
             @Override
@@ -59,7 +85,10 @@ public class SlideshowListActivity extends AppCompatActivity {
 
             @Override
             public void onPlayClick(int position) {
-
+                Intent intent = new Intent(SlideshowListActivity.this, SlideshowActivity.class);
+                intent.putExtra("title", list.get(position).getSlideshowName());
+                intent.putExtra("slideshowId", list.get(position).getSlideshowId());
+                Functions.fireIntent(SlideshowListActivity.this, intent, true);
             }
         });
         rvSlideshow.setAdapter(adapter);
@@ -89,5 +118,13 @@ public class SlideshowListActivity extends AppCompatActivity {
         super.onRestart();
         list = DBOpenHelper.getSlideshowList();
         adapter.setDataList(list);
+        if (list.size() == 0) {
+            llEmptyView.setVisibility(View.VISIBLE);
+            rvSlideshow.setVisibility(View.GONE);
+        } else {
+            llEmptyView.setVisibility(View.GONE);
+            rvSlideshow.setVisibility(View.VISIBLE);
+        }
+
     }
 }

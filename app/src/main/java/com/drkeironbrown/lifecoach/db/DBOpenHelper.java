@@ -9,6 +9,9 @@ import android.util.Log;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
+import com.drkeironbrown.lifecoach.model.Journal;
+import com.drkeironbrown.lifecoach.model.Inspiration;
+import com.drkeironbrown.lifecoach.model.PersonalInspiration;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 
 import java.io.File;
@@ -243,13 +246,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static void updateSlideshow(Slideshow slideshow) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
         sb.execSQL("UPDATE Slideshow SET SlideshowName = '" + slideshow.getSlideshowName() + "', SlideshowDateTime = '" + slideshow.getSlideshowDateTime() + "'");
-        sb.execSQL("DELETE * FROM Images WHERE SlideshowId = " + slideshow.getSlideshowId());
-        Functions.copyPasteAllImages(slideshow.getImages());
+        sb.execSQL("DELETE FROM Images WHERE SlideshowId = " + slideshow.getSlideshowId());
+        List<Image> list = Functions.copyPasteAllImages(slideshow.getImages());
         for (int i = 0; i < slideshow.getImages().size(); i++) {
             File file = new File(slideshow.getImages().get(i).getImagePath());
             if (file.exists()) {
                 file.delete();
             }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            String addImages = "INSERT INTO Images ('SlideshowId','ImagePath') VALUES('" + slideshow.getSlideshowId() + "','" + list.get(i).getImagePath() + "')";
+            sb.execSQL(addImages);
         }
         DatabaseManager.getInstance().closeDatabase();
     }
@@ -257,14 +264,147 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static void updateGallery(Gallery gallery) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
         sb.execSQL("UPDATE Gallery SET GalleryName = '" + gallery.getGalleryName() + "', GalleryDateTime = '" + gallery.getGalleryDateTime() + "'");
-        sb.execSQL("DELETE * FROM Images WHERE GalleryId = " + gallery.getGalleryId());
-        Functions.copyPasteAllImages(gallery.getImages());
+        sb.execSQL("DELETE FROM Images WHERE GalleryId = " + gallery.getGalleryId());
+        List<Image> list = Functions.copyPasteAllImages(gallery.getImages());
         for (int i = 0; i < gallery.getImages().size(); i++) {
             File file = new File(gallery.getImages().get(i).getImagePath());
             if (file.exists()) {
                 file.delete();
             }
         }
+        for (int i = 0; i < list.size(); i++) {
+            String addImages = "INSERT INTO Images ('GalleryId','ImagePath') VALUES('" + gallery.getGalleryId() + "','" + list.get(i).getImagePath() + "')";
+            sb.execSQL(addImages);
+        }
         DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void addJournal(Journal journal) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("INSERT INTO Journal(JournalText) VALUES('" + journal.getJournal() + "')");
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void updateJournal(Journal journal) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("UPDATE Journal SET JournalText = '" + journal.getJournal() + "' WHERE JournalId = " + journal.getJournalId());
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void deleteJournal(int journalId) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("DELETE FROM Journal WHERE JournalId = " + journalId);
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static List<Journal> getJournal() {
+        List<Journal> list = new ArrayList<>();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Journal", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                Journal journal = new Journal();
+                journal.setJournalId(cursor.getInt(0));
+                journal.setJournal(cursor.getString(1));
+                list.add(journal);
+            } while (cursor.moveToNext());
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return list;
+    }
+
+    public static void deletePInspirational(int pInspirationalId) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("DELETE FROM PersonalInspirational WHERE PersonalInspirationalId = " + pInspirationalId);
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void updatePersonalInspirational(PersonalInspiration personalInspiration) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("UPDATE PersonalInspirational SET PersonalInspirational = '" + personalInspiration.getPInspirational() + "' WHERE PersonalInspirationalId = " + personalInspiration.getPInspirationalId());
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static void addPersonalInspirational(PersonalInspiration personalInspiration) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("INSERT INTO PersonalInspirational(PersonalInspirational,IsByUser) VALUES('" + personalInspiration.getPInspirational() + "',1)");
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static List<PersonalInspiration> getPersonalInspirational() {
+        List<PersonalInspiration> list = new ArrayList<>();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM PersonalInspirational", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                PersonalInspiration personalInspiration = new PersonalInspiration();
+                personalInspiration.setPInspirationalId(cursor.getInt(0));
+                personalInspiration.setPInspirational(cursor.getString(1));
+                personalInspiration.setIsByUser(cursor.getInt(2));
+                list.add(personalInspiration);
+            } while (cursor.moveToNext());
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return list;
+    }
+
+
+    public static List<Inspiration> getInspirational() {
+        List<Inspiration> list = new ArrayList<>();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Inspirational", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                Inspiration inspiration = new Inspiration();
+                inspiration.setInspirationalId(cursor.getInt(0));
+                inspiration.setInspirational(cursor.getString(1));
+                list.add(inspiration);
+            } while (cursor.moveToNext());
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return list;
+    }
+
+    public static List<Image> getImagesFromGallery(int galleryId) {
+        List<Image> list = new ArrayList<>();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Images WHERE GalleryId = " + galleryId, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                Image image = new Image();
+                image.setImageId(cursor.getInt(0));
+                image.setImagePath(cursor.getString(3));
+                list.add(image);
+            } while (cursor.moveToNext());
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return list;
+    }
+
+    public static void removeImage(int imageId) {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        sb.execSQL("DELETE FROM Images WHERE ImageId = " + imageId);
+        DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static List<Image> getImagesFromSlideshow(int slideshowId) {
+        List<Image> list = new ArrayList<>();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Images WHERE SlideshowId = " + slideshowId, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                Image image = new Image();
+                image.setImageId(cursor.getInt(0));
+                image.setImagePath(cursor.getString(3));
+                list.add(image);
+            } while (cursor.moveToNext());
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return list;
     }
 }
