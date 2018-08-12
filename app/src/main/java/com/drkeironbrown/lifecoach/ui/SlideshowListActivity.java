@@ -29,19 +29,21 @@ public class SlideshowListActivity extends AppCompatActivity {
     private ImageView imgBack;
     private TfTextView txtTitle;
     private RelativeLayout toolbar;
-    private TfButton btnAdd;
+    private LinearLayout btnAdd;
     private LinearLayout llEmptyView;
+    private ImageView imgAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slideshow_list);
         llEmptyView = (LinearLayout) findViewById(R.id.llEmptyView);
-        btnAdd = (TfButton) findViewById(R.id.btnAdd);
+        btnAdd = (LinearLayout) findViewById(R.id.btnAdd);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         txtTitle.setText("Mind movie");
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgAdd = (ImageView) findViewById(R.id.imgAdd);
         rvSlideshow = (RecyclerView) findViewById(R.id.rvSlideshow);
         rvSlideshow.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
@@ -101,6 +103,13 @@ public class SlideshowListActivity extends AppCompatActivity {
         });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(SlideshowListActivity.this, AddSlideshowActivity.class, true);
+            }
+        });
+
+        imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Functions.fireIntent(SlideshowListActivity.this, AddSlideshowActivity.class, true);

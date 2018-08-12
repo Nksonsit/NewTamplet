@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +152,10 @@ public class AddGalleryActivity extends AppCompatActivity {
             List<com.esafirm.imagepicker.model.Image> imageList = ImagePicker.getImages(data);
             for (int i = 0; i < imageList.size(); i++) {
                 Image image = new Image();
+                Log.e("file",imageList.get(i).getPath());
+                if(!new File(imageList.get(i).getPath()).exists()){
+                    Log.e("not","exist");
+                }
                 image.setImagePath(imageList.get(i).getPath());
                 list.add(image);
             }

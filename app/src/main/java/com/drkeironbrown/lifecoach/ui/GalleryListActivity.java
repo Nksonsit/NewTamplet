@@ -29,8 +29,9 @@ public class GalleryListActivity extends AppCompatActivity {
     private android.widget.ImageView imgBack;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtTitle;
     private android.widget.RelativeLayout toolbar;
-    private TfButton btnAdd;
+    private LinearLayout btnAdd;
     private LinearLayout llEmptyView;
+    private ImageView imgAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,9 @@ public class GalleryListActivity extends AppCompatActivity {
         llEmptyView = (LinearLayout) findViewById(R.id.llEmptyView);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         txtTitle.setText("Vision board");
+        imgAdd = (ImageView) findViewById(R.id.imgAdd);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        btnAdd = (TfButton) findViewById(R.id.btnAdd);
+        btnAdd = (LinearLayout) findViewById(R.id.btnAdd);
         rvGallery = (RecyclerView) findViewById(R.id.rvGallery);
         rvGallery.setLayoutManager(new LinearLayoutManager(this));
 
@@ -101,6 +103,13 @@ public class GalleryListActivity extends AppCompatActivity {
         });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(GalleryListActivity.this, AddGalleryActivity.class, true);
+            }
+        });
+
+        imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Functions.fireIntent(GalleryListActivity.this, AddGalleryActivity.class, true);

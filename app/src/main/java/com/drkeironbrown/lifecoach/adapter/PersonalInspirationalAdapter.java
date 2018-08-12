@@ -79,6 +79,7 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
                         Functions.showToast(context, "Please add message", MDToast.TYPE_INFO);
                         return;
                     }
+                    addPersonalInspirationVH.edtPInspirational.setText("");
                     mOnClick.onSaveClick(addPersonalInspirationVH.edtPInspirational.getText().toString().trim());
                 }
             });

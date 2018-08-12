@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -15,6 +16,7 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
+import com.drkeironbrown.lifecoach.ui.ZoomablImageActivity;
 
 import java.io.File;
 import java.util.List;
@@ -40,8 +42,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ImageVH> {
         int height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
     }
-    public void setIs4x4(boolean is4x4){
-        this.is4x4 =is4x4;
+
+    public void setIs4x4(boolean is4x4) {
+        this.is4x4 = is4x4;
     }
 
     @NonNull
@@ -67,10 +70,17 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ImageVH> {
         });
         if (is4x4) {
             imageVH.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 4) - 20, (width / 4) - 20));
-        }else {
+        } else {
             imageVH.rlItem.setLayoutParams(new RelativeLayout.LayoutParams((width / 5) - 20, (width / 5) - 20));
         }
-
+        imageVH.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ZoomablImageActivity.class);
+                intent.putExtra("image", list.get(i).getImagePath());
+                Functions.fireIntent((Activity) context, intent, true);
+            }
+        });
     }
 
     @Override

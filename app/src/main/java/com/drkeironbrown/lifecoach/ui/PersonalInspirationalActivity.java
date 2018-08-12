@@ -25,12 +25,13 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
     private ImageView imgBack;
     private TfTextView txtTitle;
     private RelativeLayout toolbar;
-    private TfButton btnAdd;
+    private LinearLayout btnAdd;
     private RecyclerView rvPInspirational;
     private List<PersonalInspiration> list;
     private PersonalInspirationalAdapter adapter;
     private boolean isAddingMode = false;
     private LinearLayout llEmptyView;
+    private ImageView imgAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,12 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_inspirational);
         rvPInspirational = (RecyclerView) findViewById(R.id.rvPInspirational);
         llEmptyView = (LinearLayout) findViewById(R.id.llEmptyView);
-        btnAdd = (TfButton) findViewById(R.id.btnAdd);
+        btnAdd = (LinearLayout) findViewById(R.id.btnAdd);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         txtTitle.setText("Personal inspirational");
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgAdd = (ImageView) findViewById(R.id.imgAdd);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +93,19 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                llEmptyView.setVisibility(View.GONE);
+                rvPInspirational.setVisibility(View.VISIBLE);
+                if (!isAddingMode) {
+                    adapter.setAddInMode(true);
+                    isAddingMode = false;
+                }
+            }
+        });
+        imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llEmptyView.setVisibility(View.GONE);
+                rvPInspirational.setVisibility(View.VISIBLE);
                 if (!isAddingMode) {
                     adapter.setAddInMode(true);
                     isAddingMode = false;

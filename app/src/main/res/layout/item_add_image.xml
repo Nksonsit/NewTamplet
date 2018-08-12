@@ -16,7 +16,8 @@
             android:layout_height="102dp"
             android:layout_margin="@dimen/margin_8"
             android:background="@drawable/dotted_box"
-            android:padding="8dp"
-            android:src="@drawable/add_image" />
+            android:padding="24dp"
+            android:tint="@color/black"
+            android:src="@drawable/add" />
     </RelativeLayout>
 </RelativeLayout>

@@ -65,7 +65,7 @@ public class FunctionSlideActivity extends AppCompatActivity {
                     txtNext.setText("Done");
                     pushFragment(new SevenFragment());
                 } else {
-                    Functions.fireIntent(FunctionSlideActivity.this, DashboardActivity.class, true);
+                    Functions.fireIntent(FunctionSlideActivity.this, Dashboard2Activity.class, true);
                     finish();
                 }
             }
@@ -73,7 +73,7 @@ public class FunctionSlideActivity extends AppCompatActivity {
         txtSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(FunctionSlideActivity.this, DashboardActivity.class, true);
+                Functions.fireIntent(FunctionSlideActivity.this, Dashboard2Activity.class, true);
                 finish();
             }
         });

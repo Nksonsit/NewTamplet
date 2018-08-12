@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
             if (PrefUtils.isFirstTime(this)) {
                 Functions.fireIntent(this, FunctionSlideActivity.class, true);
             } else {
-                Functions.fireIntent(this, DashboardActivity.class, true);
+                Functions.fireIntent(this, Dashboard2Activity.class, true);
             }
         } else {
             Functions.fireIntent(this, LoginActivity.class, true);

@@ -58,7 +58,9 @@
         <activity android:name=".ui.PersonalInspirationalActivity" />
         <activity android:name=".ui.InspirationalActivity" />
         <activity android:name=".ui.GalleryActivity" />
-        <activity android:name=".ui.SlideshowActivity"></activity>
+        <activity android:name=".ui.SlideshowActivity" />
+        <activity android:name=".ui.Dashboard2Activity" />
+        <activity android:name=".ui.ZoomablImageActivity"></activity>
     </application>
 
 </manifest>
