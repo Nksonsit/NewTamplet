@@ -59,7 +59,7 @@ public class SlideshowListActivity extends AppCompatActivity {
         adapter = new SlideshowAdapter(this, list, new SlideshowAdapter.OnClickItem() {
             @Override
             public void onDeleteClick(final int position) {
-                Functions.showAlertDialogWithTwoOption(SlideshowListActivity.this, "YES", "NO", "Areyou sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(SlideshowListActivity.this, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
                     @Override
                     public void onSelect(boolean isYes) {
                         if (isYes) {

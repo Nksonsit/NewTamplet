@@ -17,25 +17,27 @@ import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
-    private ImageView imgLife;
-    private TfEditText edtUserName;
-    private CheckBox cbTermCondition2;
-    private CheckBox cbGetMail2;
-    private TfButton btnSignIn;
-    private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
-    private LinearLayout llRegisterView;
+    private android.widget.ImageView imgLife;
+    private com.drkeironbrown.lifecoach.custom.TfEditText edtUserName;
+    private com.drkeironbrown.lifecoach.custom.TfEditText edtEmail;
+    private android.widget.CheckBox cbTermCondition2;
+    private android.widget.CheckBox cbGetMail2;
+    private com.drkeironbrown.lifecoach.custom.TfButton btnSignUp;
+    private com.drkeironbrown.lifecoach.custom.TfTextView txtSignIn;
+    private android.widget.LinearLayout llRegisterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
-        this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
-        this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
+        this.txtSignIn = (TfTextView) findViewById(R.id.txtSignIn);
+        this.btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
         this.cbTermCondition2 = (CheckBox) findViewById(R.id.cbTermCondition2);
+        this.edtEmail = (TfEditText) findViewById(R.id.edtEmail);
         this.edtUserName = (TfEditText) findViewById(R.id.edtUserName);
         this.imgLife = (ImageView) findViewById(R.id.imgLife);
 
@@ -44,35 +46,33 @@ public class LoginActivity extends AppCompatActivity {
 
         Glide.with(this).load(R.drawable.life).into(imgLife);
 
-        txtSignUp.setOnClickListener(new View.OnClickListener() {
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(LoginActivity.this, RegisterActivity.class, true);
+                onBackPressed();
             }
         });
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.hideKeyPad(LoginActivity.this, v);
-                if (!Functions.isConnected(LoginActivity.this)) {
-                    Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                Functions.hideKeyPad(RegisterActivity.this, v);
+                if (!Functions.isConnected(RegisterActivity.this)) {
+                    Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);
                 }
-                PrefUtils.setIsLogin(LoginActivity.this, true);
-                if (PrefUtils.isFirstTime(LoginActivity.this)) {
-                    Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                PrefUtils.setIsLogin(RegisterActivity.this, true);
+                if (PrefUtils.isFirstTime(RegisterActivity.this)) {
+                    Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);
                 } else {
-                    Functions.fireIntent(LoginActivity.this, DashboardActivity.class, true);
+                    Functions.fireIntent(RegisterActivity.this, DashboardActivity.class, true);
                 }
                 finish();
             }
         });
-        txtSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Functions.hideKeyPad(LoginActivity.this, v);
-                Functions.fireIntent(LoginActivity.this, RegisterActivity.class, true);
-            }
-        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Functions.fireIntent(this, false);
     }
 }

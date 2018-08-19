@@ -9,6 +9,15 @@ public class Gallery implements Serializable{
     private String GalleryName;
     private String GalleryDateTime;
     private int GalleryId;
+    private int NotiId;
+
+    public int getNotiId() {
+        return NotiId;
+    }
+
+    public void setNotiId(int notiId) {
+        NotiId = notiId;
+    }
 
     public String getGalleryDateTime() {
         return GalleryDateTime;

@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:overScrollMode="never"
     android:scrollbars="none"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,6 +60,21 @@
                     android:padding="12dp"
                     android:textSize="@dimen/text_size_14" />
 
+                <com.drkeironbrown.lifecoach.custom.TfEditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginRight="42dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/black_box"
+                    android:hint="Email Id"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text_size_14" />
+
                 <CheckBox
                     android:id="@+id/cbTermCondition2"
                     android:layout_width="match_parent"
@@ -81,14 +96,14 @@
                     android:textSize="12sp" />
 
                 <com.drkeironbrown.lifecoach.custom.TfButton
-                    android:id="@+id/btnSignIn"
+                    android:id="@+id/btnSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/black_btn_selector"
-                    android:text="SIGN In"
+                    android:text="SIGN Up"
                     android:textColor="@color/white" />
 
                 <LinearLayout
@@ -101,15 +116,15 @@
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Don't have an account ?"
+                        android:text="Already have an account ?"
                         android:textColor="@color/black" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:id="@+id/txtSignUp"
+                        android:id="@+id/txtSignIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Sign In"
                         android:padding="@dimen/padding_8"
-                        android:text="Sign Up"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>

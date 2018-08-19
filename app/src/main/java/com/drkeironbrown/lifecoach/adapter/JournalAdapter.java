@@ -67,7 +67,7 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Functions.hideKeyPad(context,v);
-                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Areyou sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
                         @Override
                         public void onSelect(boolean isYes) {
                             DBOpenHelper.deleteJournal(list.get(i - 1).getJournalId());

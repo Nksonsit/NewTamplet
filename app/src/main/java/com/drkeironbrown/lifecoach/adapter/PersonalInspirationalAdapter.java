@@ -97,7 +97,7 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
                 @Override
                 public void onClick(View v) {
                     Functions.hideKeyPad(context, v);
-                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Areyou sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
                         @Override
                         public void onSelect(boolean isYes) {
                             if (isYes) {

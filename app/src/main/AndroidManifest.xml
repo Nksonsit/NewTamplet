@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:name=".LifeCoachApplication"
@@ -60,7 +62,18 @@
         <activity android:name=".ui.GalleryActivity" />
         <activity android:name=".ui.SlideshowActivity" />
         <activity android:name=".ui.Dashboard2Activity" />
-        <activity android:name=".ui.ZoomablImageActivity"></activity>
+        <activity android:name=".ui.ZoomablImageActivity" />
+
+        <receiver
+            android:name=".helper.AlarmHelper"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".ui.RegisterActivity"></activity>
     </application>
 
 </manifest>

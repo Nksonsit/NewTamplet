@@ -9,6 +9,15 @@ public class Slideshow implements Serializable{
     private String SlideshowName;
     private String SlideshowDateTime;
     private int SlideshowId;
+    private int NotiId;
+
+    public int getNotiId() {
+        return NotiId;
+    }
+
+    public void setNotiId(int notiId) {
+        NotiId = notiId;
+    }
 
     public String getSlideshowDateTime() {
         return SlideshowDateTime;

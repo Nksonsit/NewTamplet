@@ -1,6 +1,7 @@
 package com.drkeironbrown.lifecoach.ui;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,18 +21,24 @@ import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
+import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.NotificationScheduler;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
-public class AddGalleryActivity extends AppCompatActivity {
+public class AddGalleryActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private RecyclerView rvImage;
     private TfEditText edtGalleryName;
@@ -46,11 +53,22 @@ public class AddGalleryActivity extends AppCompatActivity {
     private android.widget.LinearLayout llSelectTime;
     private TfButton btnAdd;
     private Gallery gallery;
+    private DatePickerDialog dpd;
+    private String selectedDate;
+    private TimePickerDialog tpd;
+    private String selectedTime;
+    private int day;
+    private int month;
+    private int year;
+    private int hour;
+    private int min;
+    private int randomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_gallery);
+        randomId = new Random().nextInt();
         llSelectTime = (LinearLayout) findViewById(R.id.llSelectTime);
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
         txtLabel = (TfTextView) findViewById(R.id.txtLabel);
@@ -100,6 +118,16 @@ public class AddGalleryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Functions.hideKeyPad(AddGalleryActivity.this, v);
+
+                if (selectedDate == null || selectedDate.trim().length() == 0) {
+                    Functions.showToast(AddGalleryActivity.this, "Please select date", MDToast.TYPE_INFO);
+                    return;
+                }
+                if (selectedTime == null || selectedTime.trim().length() == 0) {
+                    Functions.showToast(AddGalleryActivity.this, "Please select time", MDToast.TYPE_INFO);
+                    return;
+                }
+
                 if (edtGalleryName.getText().toString().trim().length() == 0) {
                     Functions.showToast(AddGalleryActivity.this, "Please enter vision board name", MDToast.TYPE_INFO);
                     return;
@@ -111,16 +139,77 @@ public class AddGalleryActivity extends AppCompatActivity {
                 Gallery galleryReq = new Gallery();
                 galleryReq.setGalleryName(edtGalleryName.getText().toString().trim());
                 galleryReq.setImages(list);
+
+                AlarmHelper alarmHelper = new AlarmHelper();
                 if (gallery != null) {
+                    alarmHelper.setReminder(AddGalleryActivity.this, gallery.getNotiId(), GalleryListActivity.class, day, month-1, year, hour, min,true,gallery);
                     galleryReq.setGalleryId(gallery.getGalleryId());
                     DBOpenHelper.updateGallery(galleryReq);
                 } else {
+                    alarmHelper.setReminder(AddGalleryActivity.this, randomId, GalleryListActivity.class, day, month-1, year, hour, min,true,DBOpenHelper.getLastGallery());
                     DBOpenHelper.addImagesToGallery(galleryReq);
                 }
 
                 onBackPressed();
             }
         });
+
+        txtSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedDate == null || selectedDate.trim().length() == 0) {
+                    openDateDialog();
+                } else {
+                    openTimeDialog();
+                }
+            }
+        });
+    }
+
+    private void openTimeDialog() {
+        Calendar now = Calendar.getInstance();
+        Log.e("month",now.get(Calendar.MONTH)+"");
+        tpd = TimePickerDialog.newInstance(
+                AddGalleryActivity.this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        );
+
+        tpd.setThemeDark(false);
+        tpd.setTitle("TimePicker Title");
+
+        tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                Log.d("TimePicker", "Dialog was cancelled");
+            }
+        });
+        tpd.show(getFragmentManager(), "Timepickerdialog");
+    }
+
+    private void openDateDialog() {
+        Calendar now = Calendar.getInstance();
+
+        if (dpd == null) {
+            dpd = DatePickerDialog.newInstance(
+                    AddGalleryActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+        } else {
+            dpd.initialize(
+                    AddGalleryActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+        }
+        dpd.setThemeDark(false);
+        dpd.setTitle("Select date");
+
+        dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
     private void addImage() {
@@ -152,9 +241,9 @@ public class AddGalleryActivity extends AppCompatActivity {
             List<com.esafirm.imagepicker.model.Image> imageList = ImagePicker.getImages(data);
             for (int i = 0; i < imageList.size(); i++) {
                 Image image = new Image();
-                Log.e("file",imageList.get(i).getPath());
-                if(!new File(imageList.get(i).getPath()).exists()){
-                    Log.e("not","exist");
+                Log.e("file", imageList.get(i).getPath());
+                if (!new File(imageList.get(i).getPath()).exists()) {
+                    Log.e("not", "exist");
                 }
                 image.setImagePath(imageList.get(i).getPath());
                 list.add(image);
@@ -169,5 +258,22 @@ public class AddGalleryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Functions.fireIntent(this, false);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        day = dayOfMonth;
+        month = monthOfYear+1;
+        this.year = year;
+        selectedDate = String.format("%02d", dayOfMonth) + "/" + String.format("%02d", monthOfYear+1) + "/" + year;
+        openTimeDialog();
+    }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        hour = hourOfDay;
+        min = minute;
+        selectedTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
+        txtSelectTime.setText(selectedDate + " " + selectedTime);
     }
 }

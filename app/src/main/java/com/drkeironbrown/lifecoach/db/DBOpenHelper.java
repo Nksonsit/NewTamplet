@@ -100,7 +100,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public static void addImages(Slideshow slideshow) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
-        String addSlideData = "INSERT INTO Slideshow ('SlideshowName','SlideshowDateTime') VALUES('" + slideshow.getSlideshowName() + "','" + slideshow.getSlideshowDateTime() + "')";
+        String addSlideData = "INSERT INTO Slideshow ('SlideshowName','SlideshowDateTime','NotiId') VALUES('" + slideshow.getSlideshowName() + "','" + slideshow.getSlideshowDateTime() + "'," + slideshow.getNotiId() + ")";
         sb.execSQL(addSlideData);
 
         Cursor cursor = sb.rawQuery("SELECT * FROM Slideshow", null);
@@ -130,6 +130,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 slideshow.setSlideshowId(cursor.getInt(0));
                 slideshow.setSlideshowName(cursor.getString(1));
                 slideshow.setSlideshowDateTime(cursor.getString(2));
+                slideshow.setNotiId(cursor.getInt(3));
                 Cursor imageCursor = sb.rawQuery("SELECT * FROM Images WHERE SlideshowId = " + cursor.getInt(0), null);
                 if (imageCursor != null && imageCursor.getCount() > 0) {
                     imageCursor.moveToFirst();
@@ -172,7 +173,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public static void addImagesToGallery(Gallery gallery) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
-        String addSlideData = "INSERT INTO Gallery ('GalleryName','GalleryDateTime') VALUES('" + gallery.getGalleryName() + "','" + gallery.getGalleryDateTime() + "')";
+        String addSlideData = "INSERT INTO Gallery ('GalleryName','GalleryDateTime','NotiId') VALUES('" + gallery.getGalleryName() + "','" + gallery.getGalleryDateTime() + "'," + gallery.getNotiId() + ")";
         sb.execSQL(addSlideData);
 
         Cursor cursor = sb.rawQuery("SELECT * FROM Gallery", null);
@@ -203,6 +204,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 gallery.setGalleryId(cursor.getInt(0));
                 gallery.setGalleryName(cursor.getString(1));
                 gallery.setGalleryDateTime(cursor.getString(2));
+                gallery.setNotiId(cursor.getInt(3));
                 Cursor imageCursor = sb.rawQuery("SELECT * FROM Images WHERE GalleryId = " + cursor.getInt(0), null);
                 if (imageCursor != null && imageCursor.getCount() > 0) {
                     imageCursor.moveToFirst();
@@ -407,4 +409,74 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         DatabaseManager.getInstance().closeDatabase();
         return list;
     }
+
+    public static Slideshow getLastSlideShow() {
+        Slideshow slideshow = new Slideshow();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Slideshow", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToLast();
+            slideshow.setSlideshowId(cursor.getInt(0));
+            slideshow.setSlideshowName(cursor.getString(1));
+            slideshow.setSlideshowDateTime(cursor.getString(2));
+            slideshow.setNotiId(cursor.getInt(3));
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return slideshow;
+    }
+
+    public static Gallery getLastGallery() {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Gallery gallery = new Gallery();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Gallery", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToLast();
+            gallery.setGalleryId(cursor.getInt(0));
+            gallery.setGalleryName(cursor.getString(1));
+            gallery.setGalleryDateTime(cursor.getString(2));
+            gallery.setNotiId(cursor.getInt(3));
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return gallery;
+    }
+
+    public static Inspiration getRandomInspirational() {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Inspiration inspiration = new Inspiration();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Inspirational WHERE InspirationalId IN (SELECT InspirationalId FROM Inspirational ORDER BY RANDOM() LIMIT 1)", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            inspiration.setInspirationalId(cursor.getInt(0));
+            inspiration.setInspirational(cursor.getString(1));
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return inspiration;
+    }
+
+    public static PersonalInspiration getRandomPInspirational() {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        PersonalInspiration inspiration = new PersonalInspiration();
+        Cursor cursor = sb.rawQuery("SELECT * FROM PersonalInspirational WHERE PersonalInspirationalId IN (SELECT PersonalInspirationalId FROM PersonalInspirational ORDER BY RANDOM() LIMIT 1)", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            inspiration.setPInspirationalId(cursor.getInt(0));
+            inspiration.setPInspirational(cursor.getString(1));
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return inspiration;
+    }
+
+    public static int getPInspirationalCount() {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        PersonalInspiration inspiration = new PersonalInspiration();
+        Cursor cursor = sb.rawQuery("SELECT * FROM PersonalInspirational", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            DatabaseManager.getInstance().closeDatabase();
+            return cursor.getCount();
+        } else {
+            DatabaseManager.getInstance().closeDatabase();
+            return 0;
+        }
+    }
+
 }

@@ -59,7 +59,7 @@ public class GalleryListActivity extends AppCompatActivity {
         adapter = new GalleryAdapter(this, list, new GalleryAdapter.OnClickItem() {
             @Override
             public void onDeleteClick(final int position) {
-                Functions.showAlertDialogWithTwoOption(GalleryListActivity.this, "YES", "NO", "Areyou sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(GalleryListActivity.this, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
                     @Override
                     public void onSelect(boolean isYes) {
                         DBOpenHelper.deleteGallery(list.get(position).getGalleryId());

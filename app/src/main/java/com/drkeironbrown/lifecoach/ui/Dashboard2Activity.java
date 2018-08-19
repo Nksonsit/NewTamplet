@@ -6,8 +6,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.db.DBOpenHelper;
+import com.drkeironbrown.lifecoach.helper.AlarmHelper;
+import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.NotificationScheduler;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
+
+import java.util.Random;
 
 public class Dashboard2Activity extends AppCompatActivity {
 
@@ -20,12 +27,16 @@ public class Dashboard2Activity extends AppCompatActivity {
     private android.widget.LinearLayout llPInspirational;
     private android.widget.LinearLayout llJournal;
     private android.widget.LinearLayout llSecondThought;
+    private TfTextView txtTitle;
+    private LinearLayout llSettings;
+    private LinearLayout llLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
         PrefUtils.setIsFirstTime(this, false);
+        txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         this.llSecondThought = (LinearLayout) findViewById(R.id.llSecondThought);
         this.llJournal = (LinearLayout) findViewById(R.id.llJournal);
         this.llPInspirational = (LinearLayout) findViewById(R.id.llPInspirational);
@@ -34,6 +45,8 @@ public class Dashboard2Activity extends AppCompatActivity {
         this.llGallery = (LinearLayout) findViewById(R.id.llGallery);
         this.llShop = (LinearLayout) findViewById(R.id.llShop);
         this.llCategory = (LinearLayout) findViewById(R.id.llCategory);
+        this.llSettings = (LinearLayout) findViewById(R.id.llSettings);
+        this.llLogout = (LinearLayout) findViewById(R.id.llLogout);
         this.toolbar = (LinearLayout) findViewById(R.id.toolbar);
         llSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +89,39 @@ public class Dashboard2Activity extends AppCompatActivity {
                 Functions.fireIntent(Dashboard2Activity.this, SecondThoughtActivity.class, true);
             }
         });
+        llSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(Dashboard2Activity.this, SettingsActivity.class, true);
+            }
+        });
+        llLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
+                PrefUtils.setIsLogin(Dashboard2Activity.this, false);
+                Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, true);
+                finish();
+            }
+        });
 
+
+        AlarmHelper alarmHelper = new AlarmHelper();
+        PrefUtils.setIsInspirationalSet(this, false);
+        PrefUtils.setIsPInspirationalSet(this, false);
+        if (!PrefUtils.isInspirational(this)) {
+            final int min = 9;
+            final int max = 21;
+            final int random = new Random().nextInt((max - min) + 1) + min;
+            PrefUtils.setIsInspirationalSet(this, true);
+            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);
+        }
+        if (!PrefUtils.isPInspirational(this) && DBOpenHelper.getPInspirationalCount() > 0) {
+            final int min = 9;
+            final int max = 21;
+            final int random = new Random().nextInt((max - min) + 1) + min;
+            PrefUtils.setIsPInspirationalSet(this, true);
+            alarmHelper.setReminder(this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+        }
     }
 }

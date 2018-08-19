@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SettingsActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_action_back" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Life coach"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:isBold="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notification time"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/darkColor" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inspirational message"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <LinearLayout
+            android:id="@+id/llInspirationalTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_alarm_clock" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtInspirationalTime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_42"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/black_box"
+                android:gravity="center_vertical"
+                android:hint="Select time"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personal inspirational message"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <LinearLayout
+            android:id="@+id/llPInspirationalTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_alarm_clock" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtPInspirationalTime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_42"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/black_box"
+                android:gravity="center_vertical"
+                android:hint="Select time"
+                android:padding="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

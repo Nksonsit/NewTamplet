@@ -1,12 +1,14 @@
 package com.drkeironbrown.lifecoach.ui;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,17 +21,22 @@ import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
+import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Image;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
-public class AddSlideshowActivity extends AppCompatActivity {
+public class AddSlideshowActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
 
     private RecyclerView rvImage;
     private TfEditText edtSlideshowName;
@@ -44,11 +51,22 @@ public class AddSlideshowActivity extends AppCompatActivity {
     private android.widget.LinearLayout llSelectTime;
     private com.drkeironbrown.lifecoach.custom.TfButton btnAdd;
     private Slideshow slideShow;
+    private DatePickerDialog dpd;
+    private String selectedDate;
+    private TimePickerDialog tpd;
+    private String selectedTime;
+    private int day;
+    private int month;
+    private int year;
+    private int hour;
+    private int min;
+    private int randomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_slideshow);
+        randomId = new Random().nextInt();
         btnAdd = (TfButton) findViewById(R.id.btnAdd);
         llSelectTime = (LinearLayout) findViewById(R.id.llSelectTime);
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
@@ -108,16 +126,66 @@ public class AddSlideshowActivity extends AppCompatActivity {
                 Slideshow slideshowReq = new Slideshow();
                 slideshowReq.setSlideshowName(edtSlideshowName.getText().toString().trim());
                 slideshowReq.setImages(Functions.copyPasteAllImages(list));
+                AlarmHelper alarmHelper = new AlarmHelper();
                 if (slideShow != null) {
+                    alarmHelper.setReminder(AddSlideshowActivity.this, slideShow.getNotiId(), GalleryListActivity.class, day, month-1, year, hour, min,false,slideShow);
                     slideshowReq.setSlideshowId(slideShow.getSlideshowId());
                     DBOpenHelper.updateSlideshow(slideshowReq);
                 } else {
+                    alarmHelper.setReminder(AddSlideshowActivity.this, randomId, GalleryListActivity.class, day, month-1, year, hour, min,false,DBOpenHelper.getLastSlideShow());
                     DBOpenHelper.addImages(slideshowReq);
                 }
                 onBackPressed();
             }
         });
 
+    }
+
+
+    private void openTimeDialog() {
+        Calendar now = Calendar.getInstance();
+        Log.e("month",now.get(Calendar.MONTH)+"");
+        tpd = TimePickerDialog.newInstance(
+                AddSlideshowActivity.this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        );
+
+        tpd.setThemeDark(false);
+        tpd.setTitle("TimePicker Title");
+
+        tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                Log.d("TimePicker", "Dialog was cancelled");
+            }
+        });
+        tpd.show(getFragmentManager(), "Timepickerdialog");
+    }
+
+    private void openDateDialog() {
+        Calendar now = Calendar.getInstance();
+
+        if (dpd == null) {
+            dpd = DatePickerDialog.newInstance(
+                    AddSlideshowActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+        } else {
+            dpd.initialize(
+                    AddSlideshowActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+        }
+        dpd.setThemeDark(false);
+        dpd.setTitle("Select date");
+
+        dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
     @Override
@@ -162,5 +230,22 @@ public class AddSlideshowActivity extends AppCompatActivity {
 //            Image image = ImagePicker.getFirstImageOrNull(data);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        day = dayOfMonth;
+        month = monthOfYear+1;
+        this.year = year;
+        selectedDate = String.format("%02d", dayOfMonth) + "/" + String.format("%02d", monthOfYear+1) + "/" + year;
+        openTimeDialog();
+    }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        hour = hourOfDay;
+        min = minute;
+        selectedTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
+        txtSelectTime.setText(selectedDate + " " + selectedTime);
     }
 }
