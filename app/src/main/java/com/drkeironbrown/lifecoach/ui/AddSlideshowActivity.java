@@ -139,6 +139,16 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
             }
         });
 
+        txtSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedDate == null || selectedDate.trim().length() == 0) {
+                    openDateDialog();
+                } else {
+                    openTimeDialog();
+                }
+            }
+        });
     }
 
 
