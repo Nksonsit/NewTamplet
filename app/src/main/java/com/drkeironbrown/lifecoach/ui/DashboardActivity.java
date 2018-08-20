@@ -77,5 +77,12 @@ public class DashboardActivity extends AppCompatActivity {
                 Functions.fireIntent(DashboardActivity.this, SecondThoughtActivity.class, true);
             }
         });
+
+        rlShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(DashboardActivity.this, ShopActivity.class, true);
+            }
+        });
     }
 }

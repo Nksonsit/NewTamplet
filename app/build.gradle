@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
     implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.13.1'
     implementation 'com.facebook.stetho:stetho:1.3.1'
-    implementation 'com.bogdwellers:pinchtozoom:0.1'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
+    implementation 'com.bogdwellers:pinchtozoom:0.1'
+    implementation 'tyrantgit:explosionfield:1.0.1'
 }

@@ -73,7 +73,8 @@
         </receiver>
 
         <activity android:name=".ui.SettingsActivity" />
-        <activity android:name=".ui.RegisterActivity"></activity>
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.ShopActivity"></activity>
     </application>
 
 </manifest>
