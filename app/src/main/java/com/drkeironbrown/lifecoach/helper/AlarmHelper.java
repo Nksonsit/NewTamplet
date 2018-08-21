@@ -7,17 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 import com.drkeironbrown.lifecoach.ui.Dashboard2Activity;
 import com.drkeironbrown.lifecoach.ui.GalleryActivity;
-import com.drkeironbrown.lifecoach.ui.GalleryListActivity;
 import com.drkeironbrown.lifecoach.ui.SlideshowActivity;
-import com.drkeironbrown.lifecoach.ui.SlideshowListActivity;
 
-import java.io.CharArrayReader;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -33,17 +29,14 @@ public class AlarmHelper extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.e("HEy", "onReceive: ");
         if (intent.getBooleanExtra("isImage", false)) {
-            /*if (intent.getBooleanExtra("isGallery", true)) {
-                Intent fireIntent = new Intent(context, GalleryActivity.class);
-                fireIntent.putExtra("title", intent.getStringExtra("title"));
-                fireIntent.putExtra("galleryId", intent.getIntExtra("galleryId", 0));
-                context.startActivity(fireIntent);
+            if (intent.getBooleanExtra("isGallery", true)) {
+                NotificationScheduler.showNotification(context, GalleryActivity.class, "Vision board",
+                        intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
+
             } else {
-                Intent fireIntent = new Intent(context, SlideshowActivity.class);
-                fireIntent.putExtra("title", intent.getStringExtra("title"));
-                fireIntent.putExtra("slideshowId", intent.getIntExtra("slideshowId", 0));
-                context.startActivity(fireIntent);
-            }*/
+                NotificationScheduler.showNotification(context, SlideshowActivity.class, "Mind movie",
+                        intent.getStringExtra("title") + " ready to be viewed", intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
+            }
         }
 
         if (intent.getBooleanExtra("IsInspirational", false)) {
@@ -66,7 +59,7 @@ public class AlarmHelper extends BroadcastReceiver {
             context.startActivity(fireIntent);*/
 
             NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New Inspirational message",
-                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""));
+                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
 
         }
         if (intent.getBooleanExtra("IsPInspirational", false)) {
@@ -83,12 +76,8 @@ public class AlarmHelper extends BroadcastReceiver {
                 alarmHelper.setReminder(context, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, false);
             }
 
-/*            Intent fireIntent = new Intent(context, Dashboard2Activity.class);
-            fireIntent.putExtra("msg", intent.getStringExtra("msg"));
-            context.startActivity(fireIntent);*/
-
             NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New personal inspirational message",
-                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""));
+                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
 
         }
     }

@@ -75,11 +75,14 @@ public class NotificationScheduler {
         pendingIntent.cancel();
     }
 
-    public static void showNotification(Context context, Class<?> cls, String title, String content) {
+    public static void showNotification(Context context, Class<?> cls, String title, String content, boolean isMsg) {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent notificationIntent = new Intent(context, cls);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (isMsg) {
+            notificationIntent.putExtra("msg", content);
+        }
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(cls);
@@ -91,6 +94,38 @@ public class NotificationScheduler {
 
         Notification notification = builder.setContentTitle(title)
                 .setContentText(content)
+                .setAutoCancel(true)
+                .setSound(alarmSound)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentIntent(pendingIntent).build();
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(new Random().nextInt(), notification);
+
+    }
+
+    public static void showNotification(Context context, Class<?> cls, String title, String content, int id, boolean isGallery) {
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Intent notificationIntent = new Intent(context, cls);
+        if (isGallery) {
+            notificationIntent.putExtra("galleryId", id);
+        } else {
+            notificationIntent.putExtra("slideshowId", id);
+        }
+        notificationIntent.putExtra("title", title);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(cls);
+        stackBuilder.addNextIntent(notificationIntent);
+
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(DAILY_REMINDER_REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        Notification notification = builder.setContentTitle(title)
+                .setContentText(content + " ready to be viewed")
                 .setAutoCancel(true)
                 .setSound(alarmSound)
                 .setSmallIcon(R.mipmap.ic_launcher_round)

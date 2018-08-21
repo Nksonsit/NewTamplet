@@ -40,4 +40,10 @@
     <color name="default_blue_light">#ff33b5e5</color>
     <color name="off_white">#e5e5e5</color>
     <color name="off_white2">#b2b2b2</color>
+    <color name="intro_blue">#0D469E</color>
+    <color name="intro_cyan">#009285</color>
+    <color name="intro_green">#2D7A31</color>
+    <color name="intro_grey">#404040</color>
+    <color name="intro_orange">#E14F00</color>
+    <color name="intro_red">#B31B1B</color>
 </resources>
