@@ -8,8 +8,17 @@ public class Slideshow implements Serializable{
     private int TotalImage;
     private String SlideshowName;
     private String SlideshowDateTime;
+    private String AudioPath;
     private int SlideshowId;
     private int NotiId;
+
+    public String getAudioPath() {
+        return AudioPath;
+    }
+
+    public void setAudioPath(String audioPath) {
+        AudioPath = audioPath;
+    }
 
     public int getNotiId() {
         return NotiId;

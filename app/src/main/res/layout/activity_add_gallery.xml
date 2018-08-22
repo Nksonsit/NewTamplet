@@ -47,22 +47,12 @@
         android:maxLines="1"
         android:padding="8dp" />
 
-    <com.drkeironbrown.lifecoach.custom.TfTextView
-        android:id="@+id/txtLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtGalleryName"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:text="(Note : Select time for getting notification or you will get notification randomly.)"
-        android:textColor="@color/darkColor" />
 
     <LinearLayout
         android:id="@+id/llSelectTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtLabel"
+        android:layout_below="@+id/edtGalleryName"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
@@ -86,6 +76,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_above="@+id/btnAdd"
         android:id="@+id/rvImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,8 +9,8 @@ import android.util.Log;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Gallery;
 import com.drkeironbrown.lifecoach.model.Image;
-import com.drkeironbrown.lifecoach.model.Journal;
 import com.drkeironbrown.lifecoach.model.Inspiration;
+import com.drkeironbrown.lifecoach.model.Journal;
 import com.drkeironbrown.lifecoach.model.PersonalInspiration;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 
@@ -100,7 +100,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public static void addImages(Slideshow slideshow) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
-        String addSlideData = "INSERT INTO Slideshow ('SlideshowName','SlideshowDateTime','NotiId') VALUES('" + slideshow.getSlideshowName() + "','" + slideshow.getSlideshowDateTime() + "'," + slideshow.getNotiId() + ")";
+        String addSlideData = "INSERT INTO Slideshow ('SlideshowName','SlideshowDateTime','NotiId','AudioPath') VALUES('" + slideshow.getSlideshowName() + "','" + slideshow.getSlideshowDateTime() + "'," + slideshow.getNotiId() + ",'" + slideshow.getAudioPath() + "')";
         sb.execSQL(addSlideData);
 
         Cursor cursor = sb.rawQuery("SELECT * FROM Slideshow", null);
@@ -131,6 +131,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 slideshow.setSlideshowName(cursor.getString(1));
                 slideshow.setSlideshowDateTime(cursor.getString(2));
                 slideshow.setNotiId(cursor.getInt(3));
+                slideshow.setAudioPath(cursor.getString(4));
                 Cursor imageCursor = sb.rawQuery("SELECT * FROM Images WHERE SlideshowId = " + cursor.getInt(0), null);
                 if (imageCursor != null && imageCursor.getCount() > 0) {
                     imageCursor.moveToFirst();
@@ -247,7 +248,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public static void updateSlideshow(Slideshow slideshow) {
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
-        sb.execSQL("UPDATE Slideshow SET SlideshowName = '" + slideshow.getSlideshowName() + "', SlideshowDateTime = '" + slideshow.getSlideshowDateTime() + "'");
+        sb.execSQL("UPDATE Slideshow SET SlideshowName = '" + slideshow.getSlideshowName() + "', SlideshowDateTime = '" + slideshow.getSlideshowDateTime() + "', AudioPath = '" + slideshow.getAudioPath() + "'");
         sb.execSQL("DELETE FROM Images WHERE SlideshowId = " + slideshow.getSlideshowId());
         List<Image> list = Functions.copyPasteAllImages(slideshow.getImages());
         for (int i = 0; i < slideshow.getImages().size(); i++) {
@@ -479,4 +480,19 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    public static Slideshow getSlideshow(int id) {
+        Slideshow slideshow = new Slideshow();
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Slideshow WHERE SlideshowId = " + id, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            slideshow.setSlideshowId(cursor.getInt(0));
+            slideshow.setSlideshowName(cursor.getString(1));
+            slideshow.setSlideshowDateTime(cursor.getString(2));
+            slideshow.setNotiId(cursor.getInt(3));
+            slideshow.setAudioPath(cursor.getString(4));
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return slideshow;
+    }
 }

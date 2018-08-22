@@ -562,6 +562,45 @@ public class Functions {
     }
 
 
+    public static String copyAudioFile(File file) {
+        File newfile = null;
+        try {
+            File mainDir = new File(Environment.getExternalStorageDirectory(), "/LifeCoach");
+            if (!mainDir.exists()) {
+                mainDir.mkdir();
+            }
+            newfile = new File(mainDir.getAbsoluteFile(), "username_" + System.currentTimeMillis() + ".mp3");
+
+            Log.e("input file", file.getAbsolutePath());
+            Log.e("output file", newfile.getAbsolutePath());
+
+            InputStream in = null;
+            in = new FileInputStream(file);
+
+            OutputStream out = null;
+            out = new FileOutputStream(newfile);
+
+            // Copy the bits from instream to outstream
+            byte[] buf = new byte[1024];
+            int len;
+
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+            in.close();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (newfile != null && newfile.exists()) {
+            return newfile.getAbsolutePath();
+        } else {
+            return "";
+        }
+    }
+
     public interface DialogOptionsSelectedListener {
         void onSelect(boolean isYes);
     }

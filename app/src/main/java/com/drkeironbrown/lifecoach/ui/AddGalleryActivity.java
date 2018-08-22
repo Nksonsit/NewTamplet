@@ -48,7 +48,6 @@ public class AddGalleryActivity extends AppCompatActivity implements DatePickerD
     private android.widget.ImageView imgBack;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtTitle;
     private android.widget.RelativeLayout toolbar;
-    private com.drkeironbrown.lifecoach.custom.TfTextView txtLabel;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSelectTime;
     private android.widget.LinearLayout llSelectTime;
     private TfButton btnAdd;
@@ -71,7 +70,6 @@ public class AddGalleryActivity extends AppCompatActivity implements DatePickerD
         randomId = new Random().nextInt();
         llSelectTime = (LinearLayout) findViewById(R.id.llSelectTime);
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
-        txtLabel = (TfTextView) findViewById(R.id.txtLabel);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         imgBack = (ImageView) findViewById(R.id.imgBack);

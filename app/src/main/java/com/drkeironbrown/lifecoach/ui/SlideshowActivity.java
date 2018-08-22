@@ -1,9 +1,11 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,7 +16,9 @@ import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Image;
+import com.drkeironbrown.lifecoach.model.Slideshow;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SlideshowActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class SlideshowActivity extends AppCompatActivity {
     private boolean isHold = false;
     private Handler handler;
     private Runnable runnable;
+    private Slideshow slideShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class SlideshowActivity extends AppCompatActivity {
             }
         });
         list = DBOpenHelper.getImagesFromSlideshow(getIntent().getIntExtra("slideshowId", 0));
+        slideShow = DBOpenHelper.getSlideshow(getIntent().getIntExtra("slideshowId", 0));
         adapter = new CustomPagerAdapter(this, list, new CustomPagerAdapter.OnTouch() {
             @Override
             public void onHold() {
@@ -90,6 +96,29 @@ public class SlideshowActivity extends AppCompatActivity {
 
             }
         });
+
+        if (slideShow.getAudioPath() != null && slideShow.getAudioPath().trim().length() > 0) {
+            MediaPlayer mp = new MediaPlayer();
+            try {
+                mp.setDataSource(slideShow.getAudioPath());
+                mp.prepare();
+            } catch (IOException e) {
+                Log.e("media player", "prepare() failed");
+            }
+            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.start();
+                }
+            });
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.stop();
+                    mp.start();
+                }
+            });
+        }
     }
 
     @Override

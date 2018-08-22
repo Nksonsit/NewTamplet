@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,12 +32,13 @@ import com.gun0912.tedpermission.TedPermission;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class AddSlideshowActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
+public class AddSlideshowActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private RecyclerView rvImage;
     private TfEditText edtSlideshowName;
@@ -46,7 +48,6 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
     private android.widget.ImageView imgBack;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtTitle;
     private android.widget.RelativeLayout toolbar;
-    private com.drkeironbrown.lifecoach.custom.TfTextView txtLabel;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSelectTime;
     private android.widget.LinearLayout llSelectTime;
     private com.drkeironbrown.lifecoach.custom.TfButton btnAdd;
@@ -61,16 +62,20 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
     private int hour;
     private int min;
     private int randomId;
+    private String audioFilePath;
+    private TfTextView txtAudio;
+    private LinearLayout llSelectAudio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_slideshow);
+        llSelectAudio = (LinearLayout) findViewById(R.id.llSelectAudio);
+        txtAudio = (TfTextView) findViewById(R.id.txtAudio);
         randomId = new Random().nextInt();
         btnAdd = (TfButton) findViewById(R.id.btnAdd);
         llSelectTime = (LinearLayout) findViewById(R.id.llSelectTime);
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
-        txtLabel = (TfTextView) findViewById(R.id.txtLabel);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         txtTitle.setText("Add mind movie");
@@ -126,13 +131,20 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
                 Slideshow slideshowReq = new Slideshow();
                 slideshowReq.setSlideshowName(edtSlideshowName.getText().toString().trim());
                 slideshowReq.setImages(Functions.copyPasteAllImages(list));
+                slideshowReq.setAudioPath("");
+                if (slideShow != null) {
+                    slideshowReq.setAudioPath(slideShow.getAudioPath());
+                }
+                if (audioFilePath != null && audioFilePath.trim().length() > 0) {
+                    slideshowReq.setAudioPath(Functions.copyAudioFile(new File(audioFilePath)));
+                }
                 AlarmHelper alarmHelper = new AlarmHelper();
                 if (slideShow != null) {
-                    alarmHelper.setReminder(AddSlideshowActivity.this, slideShow.getNotiId(), GalleryListActivity.class, day, month-1, year, hour, min,false,slideShow);
+                    alarmHelper.setReminder(AddSlideshowActivity.this, slideShow.getNotiId(), GalleryListActivity.class, day, month - 1, year, hour, min, false, slideShow);
                     slideshowReq.setSlideshowId(slideShow.getSlideshowId());
                     DBOpenHelper.updateSlideshow(slideshowReq);
                 } else {
-                    alarmHelper.setReminder(AddSlideshowActivity.this, randomId, GalleryListActivity.class, day, month-1, year, hour, min,false,DBOpenHelper.getLastSlideShow());
+                    alarmHelper.setReminder(AddSlideshowActivity.this, randomId, GalleryListActivity.class, day, month - 1, year, hour, min, false, DBOpenHelper.getLastSlideShow());
                     DBOpenHelper.addImages(slideshowReq);
                 }
                 onBackPressed();
@@ -149,12 +161,19 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
                 }
             }
         });
+
+        llSelectAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectAudioFile();
+            }
+        });
     }
 
 
     private void openTimeDialog() {
         Calendar now = Calendar.getInstance();
-        Log.e("month",now.get(Calendar.MONTH)+"");
+        Log.e("month", now.get(Calendar.MONTH) + "");
         tpd = TimePickerDialog.newInstance(
                 AddSlideshowActivity.this,
                 now.get(Calendar.HOUR_OF_DAY),
@@ -239,15 +258,26 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
             // or get a single image only
 //            Image image = ImagePicker.getFirstImageOrNull(data);
         }
+        if (requestCode == 8989) {
+
+            if (resultCode == RESULT_OK) {
+
+                //the selected audio.
+                Uri uri = data.getData();
+                File file = new File(uri.getPath());
+                audioFilePath = file.getAbsolutePath();
+                txtAudio.setText(file.getName());
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         day = dayOfMonth;
-        month = monthOfYear+1;
+        month = monthOfYear + 1;
         this.year = year;
-        selectedDate = String.format("%02d", dayOfMonth) + "/" + String.format("%02d", monthOfYear+1) + "/" + year;
+        selectedDate = String.format("%02d", dayOfMonth) + "/" + String.format("%02d", monthOfYear + 1) + "/" + year;
         openTimeDialog();
     }
 
@@ -258,4 +288,12 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
         selectedTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
         txtSelectTime.setText(selectedDate + " " + selectedTime);
     }
+
+    public void selectAudioFile() {
+        Intent intent_upload = new Intent();
+        intent_upload.setType("audio/*");
+        intent_upload.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent_upload, 8989);
+    }
+
 }
