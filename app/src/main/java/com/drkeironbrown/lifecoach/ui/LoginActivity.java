@@ -14,6 +14,8 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.custom.WebViewDialog;
+import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private TfButton btnSignIn;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
     private LinearLayout llRegisterView;
+    private TfTextView txtReadTC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
+        this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
         this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
         this.cbTermCondition2 = (CheckBox) findViewById(R.id.cbTermCondition2);
@@ -72,6 +76,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Functions.hideKeyPad(LoginActivity.this, v);
                 Functions.fireIntent(LoginActivity.this, RegisterActivity.class, true);
+            }
+        });
+
+        AdvancedSpannableString spannableString = new AdvancedSpannableString("term and condition");
+        spannableString.setUnderLine("term and condition");
+        txtReadTC.setText(spannableString);
+        txtReadTC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new WebViewDialog(LoginActivity.this);
             }
         });
     }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#90000000"
+    android:gravity="center_horizontal|center_vertical"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:id="@+id/pop_window_feed_tagged_friends_ll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/dialog_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+        <ImageView
+            android:id="@+id/pop_window_cancel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:padding="8dp"
+            android:tint="@color/white"
+            android:src="@drawable/ic_remove" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnOpenSetting"
+        android:layout_below="@+id/pop_window_feed_tagged_friends_ll"
+        android:background="@color/white">
+
+        <WebView
+            android:id="@+id/fragment_setting_terms_and_conditions_wv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+
+    </FrameLayout>
+
+    <com.drkeironbrown.lifecoach.custom.TfButton
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:id="@+id/btnOpenSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
