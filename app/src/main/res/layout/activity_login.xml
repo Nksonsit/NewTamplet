@@ -61,32 +61,6 @@
                     android:padding="12dp"
                     android:textSize="@dimen/text_size_14" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="42dp"
-                    android:layout_marginRight="42dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:id="@+id/cbTermCondition2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="I accept"
-                        android:textSize="12sp" />
-
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:id="@+id/txtReadTC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="term and condition"
-                        android:layout_marginLeft="4dp"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
                 <CheckBox
                     android:id="@+id/cbGetMail2"
                     android:layout_width="match_parent"

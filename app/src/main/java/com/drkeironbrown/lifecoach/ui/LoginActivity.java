@@ -23,12 +23,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private ImageView imgLife;
     private TfEditText edtUserName;
-    private CheckBox cbTermCondition2;
     private CheckBox cbGetMail2;
     private TfButton btnSignIn;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
     private LinearLayout llRegisterView;
-    private TfTextView txtReadTC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
-        this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
         this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
-        this.cbTermCondition2 = (CheckBox) findViewById(R.id.cbTermCondition2);
         this.edtUserName = (TfEditText) findViewById(R.id.edtUserName);
         this.imgLife = (ImageView) findViewById(R.id.imgLife);
 
@@ -79,14 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        AdvancedSpannableString spannableString = new AdvancedSpannableString("term and condition");
-        spannableString.setUnderLine("term and condition");
-        txtReadTC.setText(spannableString);
-        txtReadTC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new WebViewDialog(LoginActivity.this);
-            }
-        });
+
     }
 }

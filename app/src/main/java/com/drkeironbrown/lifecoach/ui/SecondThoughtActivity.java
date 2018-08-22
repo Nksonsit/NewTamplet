@@ -1,9 +1,10 @@
 package com.drkeironbrown.lifecoach.ui;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
@@ -12,23 +13,25 @@ import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.helper.Functions;
 
-import tyrantgit.explosionfield.ExplosionField;
-
 public class SecondThoughtActivity extends AppCompatActivity {
 
     private LinedEditText edtSecondThought;
     private TfButton btnLetItGo;
-    private ExplosionField mExplosionField;
+    //    private ExplosionField mExplosionField;
     private RelativeLayout rrMainView;
+    private LinedEditText edtSecondThough2t;
+    private Animation fadeOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_thought);
-        mExplosionField = ExplosionField.attach2Window(this);
+//        mExplosionField = ExplosionField.attach2Window(this);
         rrMainView = (RelativeLayout) findViewById(R.id.rrMainView);
         edtSecondThought = (LinedEditText) findViewById(R.id.edtSecondThought);
+        edtSecondThough2t = (LinedEditText) findViewById(R.id.edtSecondThought2);
         btnLetItGo = (TfButton) findViewById(R.id.btnLetItGo);
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
         btnLetItGo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,9 +41,14 @@ public class SecondThoughtActivity extends AppCompatActivity {
                     Functions.showToast(SecondThoughtActivity.this, "Please enter your second thought", MDToast.TYPE_INFO);
                     return;
                 }
-                mExplosionField.explode(rrMainView);
 
-                new CountDownTimer(2000, 1000) {
+                edtSecondThought.setAnimation(fadeOut);
+
+//                mExplosionField.explode(rrMainView);
+
+
+
+                /*new CountDownTimer(2000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -50,11 +58,30 @@ public class SecondThoughtActivity extends AppCompatActivity {
                     public void onFinish() {
                         onBackPressed();
                     }
-                }.start();
+                }.start();*/
             }
         });
 
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                edtSecondThough2t.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                edtSecondThought.setText("");
+                edtSecondThough2t.setVisibility(View.GONE);
+                onBackPressed();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {

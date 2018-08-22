@@ -14,6 +14,8 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.custom.WebViewDialog;
+import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
@@ -27,11 +29,13 @@ public class RegisterActivity extends AppCompatActivity {
     private com.drkeironbrown.lifecoach.custom.TfButton btnSignUp;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignIn;
     private android.widget.LinearLayout llRegisterView;
+    private TfTextView txtReadTC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
         this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         this.txtSignIn = (TfTextView) findViewById(R.id.txtSignIn);
         this.btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
@@ -67,6 +71,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Functions.fireIntent(RegisterActivity.this, DashboardActivity.class, true);
                 }
                 finish();
+            }
+        });
+        AdvancedSpannableString spannableString = new AdvancedSpannableString("term and condition");
+        spannableString.setUnderLine("term and condition");
+        txtReadTC.setText(spannableString);
+        txtReadTC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new WebViewDialog(RegisterActivity.this);
             }
         });
     }

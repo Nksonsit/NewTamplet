@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rrMainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rrMainView"
     tools:context=".ui.SecondThoughtActivity">
 
     <ImageView
@@ -12,6 +11,24 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/paper" />
+
+    <com.drkeironbrown.lifecoach.custom.LinedEditText
+        android:id="@+id/edtSecondThought2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnLetItGo"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@null"
+        android:gravity="top"
+        android:imeOptions="actionNone"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:longClickable="false"
+        android:minLines="10"
+        android:singleLine="false"
+        android:visibility="gone" />
 
     <com.drkeironbrown.lifecoach.custom.LinedEditText
         android:id="@+id/edtSecondThought"
@@ -22,11 +39,11 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="32dp"
-        android:longClickable="false"
         android:background="@null"
         android:gravity="top"
         android:imeOptions="actionNone"
         android:inputType="textMultiLine|textNoSuggestions"
+        android:longClickable="false"
         android:minLines="10"
         android:singleLine="false" />
 
