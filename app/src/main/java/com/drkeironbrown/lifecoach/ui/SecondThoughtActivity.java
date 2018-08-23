@@ -42,7 +42,8 @@ public class SecondThoughtActivity extends AppCompatActivity {
                     return;
                 }
 
-                edtSecondThought.setAnimation(fadeOut);
+                edtSecondThought.startAnimation(fadeOut);
+                edtSecondThough2t.setVisibility(View.VISIBLE);
 
 //                mExplosionField.explode(rrMainView);
 
@@ -71,8 +72,9 @@ public class SecondThoughtActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 edtSecondThought.setText("");
+                edtSecondThought.setVisibility(View.VISIBLE);
                 edtSecondThough2t.setVisibility(View.GONE);
-                onBackPressed();
+                //onBackPressed();
             }
 
             @Override

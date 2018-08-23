@@ -11,11 +11,10 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
-import com.drkeironbrown.lifecoach.custom.WebViewDialog;
-import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
@@ -56,7 +55,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Functions.hideKeyPad(LoginActivity.this, v);
                 if (!Functions.isConnected(LoginActivity.this)) {
-                    Functions.fireIntent(LoginActivity.this, FunctionSlideActivity.class, true);
+                    Functions.showToast(LoginActivity.this, getString(R.string.check_internet), MDToast.TYPE_ERROR);
+                    return;
+                }
+                if (edtUserName.getText().toString().trim().length() == 0) {
+                    Functions.showToast(LoginActivity.this, getString(R.string.please_enter_username), MDToast.TYPE_ERROR);
+                    return;
                 }
                 PrefUtils.setIsLogin(LoginActivity.this, true);
                 if (PrefUtils.isFirstTime(LoginActivity.this)) {

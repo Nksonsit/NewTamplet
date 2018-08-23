@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
@@ -62,8 +63,27 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Functions.hideKeyPad(RegisterActivity.this, v);
                 if (!Functions.isConnected(RegisterActivity.this)) {
-                    Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);
+                    Functions.showToast(RegisterActivity.this, getString(R.string.check_internet), MDToast.TYPE_ERROR);
+                    return;
                 }
+                if (edtUserName.getText().toString().trim().length() == 0) {
+                    Functions.showToast(RegisterActivity.this, getString(R.string.please_enter_username), MDToast.TYPE_ERROR);
+                    return;
+                }
+
+                if (edtEmail.getText().toString().trim().length() == 0) {
+                    Functions.showToast(RegisterActivity.this, getString(R.string.please_enter_email_id), MDToast.TYPE_ERROR);
+                    return;
+                }
+                if (!Functions.emailValidation(edtEmail.getText().toString().trim())) {
+                    Functions.showToast(RegisterActivity.this, getString(R.string.enter_valid_email_id), MDToast.TYPE_ERROR);
+                    return;
+                }
+                if(!cbTermCondition2.isChecked()){
+                    Functions.showToast(RegisterActivity.this, getString(R.string.accept_tc), MDToast.TYPE_ERROR);
+                    return;
+                }
+
                 PrefUtils.setIsLogin(RegisterActivity.this, true);
                 if (PrefUtils.isFirstTime(RegisterActivity.this)) {
                     Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);

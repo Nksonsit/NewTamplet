@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.MDToast;
+import com.drkeironbrown.lifecoach.custom.MessageDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
-import com.drkeironbrown.lifecoach.helper.NotificationScheduler;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 import java.util.Random;
@@ -98,30 +99,43 @@ public class Dashboard2Activity extends AppCompatActivity {
         llLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
-                PrefUtils.setIsLogin(Dashboard2Activity.this, false);
-                Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, true);
-                finish();
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "YES", "NO", "Are you sure want to logout ?", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if(isYes){
+                            PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
+                            PrefUtils.setIsLogin(Dashboard2Activity.this, false);
+
+                            PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
+                            PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
+
+                            Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
+                            finish();
+                        }
+                    }
+                });
             }
         });
 
 
         AlarmHelper alarmHelper = new AlarmHelper();
-        PrefUtils.setIsInspirationalSet(this, false);
-        PrefUtils.setIsPInspirationalSet(this, false);
         if (!PrefUtils.isInspirational(this)) {
-            final int min = 9;
-            final int max = 21;
+            final int min = AppConstant.StartingHour;
+            final int max = AppConstant.EndingHour;
             final int random = new Random().nextInt((max - min) + 1) + min;
             PrefUtils.setIsInspirationalSet(this, true);
             alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);
         }
         if (!PrefUtils.isPInspirational(this) && DBOpenHelper.getPInspirationalCount() > 0) {
-            final int min = 9;
-            final int max = 21;
+            final int min = AppConstant.StartingHour;
+            final int max = AppConstant.EndingHour;
             final int random = new Random().nextInt((max - min) + 1) + min;
             PrefUtils.setIsPInspirationalSet(this, true);
             alarmHelper.setReminder(this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+        }
+
+        if (getIntent().getStringExtra("msg") != null) {
+            new MessageDialog(this,getIntent().getStringExtra("msg"));
         }
     }
 }

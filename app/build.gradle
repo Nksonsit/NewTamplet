@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
     implementation 'com.bogdwellers:pinchtozoom:0.1'
     implementation 'tyrantgit:explosionfield:1.0.1'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

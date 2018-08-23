@@ -41,7 +41,7 @@ public class SlideshowListActivity extends AppCompatActivity {
         btnAdd = (LinearLayout) findViewById(R.id.btnAdd);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
-        txtTitle.setText("Mind movie");
+        txtTitle.setText("Vision movie");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgAdd = (ImageView) findViewById(R.id.imgAdd);
         rvSlideshow = (RecyclerView) findViewById(R.id.rvSlideshow);

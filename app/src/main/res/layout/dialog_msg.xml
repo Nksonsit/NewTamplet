@@ -7,10 +7,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         app:cardBackgroundColor="@color/intro_cyan"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
-        android:layout_margin="8dp"
         app:contentPadding="8dp">
 
         <RelativeLayout
@@ -27,12 +27,15 @@
 
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtMsg"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgClose" />
+                android:layout_below="@+id/imgClose"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/lorun_ipsum"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

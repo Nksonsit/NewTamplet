@@ -24,6 +24,7 @@ import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PathUtils;
 import com.drkeironbrown.lifecoach.model.Image;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -78,7 +79,7 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
-        txtTitle.setText("Add mind movie");
+        txtTitle.setText("Add vision movie");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         rvImage = (RecyclerView) findViewById(R.id.rvImage);
         edtSlideshowName = (TfEditText) findViewById(R.id.edtSlideshowName);
@@ -121,7 +122,7 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
             public void onClick(View v) {
                 Functions.hideKeyPad(AddSlideshowActivity.this, v);
                 if (edtSlideshowName.getText().toString().trim().length() == 0) {
-                    Functions.showToast(AddSlideshowActivity.this, "Please enter mind movie name", MDToast.TYPE_INFO);
+                    Functions.showToast(AddSlideshowActivity.this, "Please enter vision movie name", MDToast.TYPE_INFO);
                     return;
                 }
                 if (list.size() < 3) {
@@ -264,9 +265,12 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
 
                 //the selected audio.
                 Uri uri = data.getData();
-                File file = new File(uri.getPath());
-                audioFilePath = file.getAbsolutePath();
-                txtAudio.setText(file.getName());
+                String path = PathUtils.getPath(AddSlideshowActivity.this,uri);
+                if (path != null) {
+                    File file = new File(path);
+                    audioFilePath = file.getAbsolutePath();
+                    txtAudio.setText(file.getName());
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

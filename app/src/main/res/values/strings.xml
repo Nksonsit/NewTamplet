@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">NewTamplet</string>
     <string name="inspiration_personal_inspirational"><![CDATA[Inspiration & Personal Inspirational]]></string>
-    <string name="enter_mind_movie_name">Enter mind movie name</string>
+    <string name="enter_mind_movie_name">Enter vision movie name</string>
+    <string name="check_internet">PLease check your internet connection</string>
+    <string name="please_enter_username">Please enter username</string>
+    <string name="please_enter_email_id">Please enter email id</string>
+    <string name="enter_valid_email_id">Please enter valid email id</string>
+    <string name="accept_tc">Please accept term and condition</string>
+    <string name="lorun_ipsum">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</string>
 </resources>

@@ -94,12 +94,6 @@ public class MessageDialog extends Dialog {
         return super.onTouchEvent(event);
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        if (view != null && scalIn != null) {
-            view.startAnimation(scalIn);
-        }
-    }
 
     @Override
     public void onBackPressed() {

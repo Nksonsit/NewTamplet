@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
@@ -28,79 +29,75 @@ public class AlarmHelper extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e("HEy", "onReceive: ");
-        if (intent.getBooleanExtra("isImage", false)) {
-            if (intent.getBooleanExtra("isGallery", true)) {
-                NotificationScheduler.showNotification(context, GalleryActivity.class, "Vision board",
-                        intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
-
-            } else {
-                NotificationScheduler.showNotification(context, SlideshowActivity.class, "Mind movie",
-                        intent.getStringExtra("title") + " ready to be viewed", intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
-            }
-        }
-
-        if (intent.getBooleanExtra("IsInspirational", false)) {
-
-            int random = 0;
-            AlarmHelper alarmHelper = new AlarmHelper();
-            if (PrefUtils.getInspirationalNotiTime(context) != null) {
-                String tempTime = PrefUtils.getInspirationalNotiTime(context);
-                String[] timeSplit = tempTime.split(":");
-                alarmHelper.setReminder(context, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, true);
-            } else {
-                final int min = 9;
-                final int max = 21;
-                random = new Random().nextInt((max - min) + 1) + min;
-                alarmHelper.setReminder(context, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, true);
+        if (PrefUtils.isLogin(context)) {
+            if (intent.getBooleanExtra("isImage", false)) {
+                if (intent.getBooleanExtra("isGallery", true)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationScheduler.showNotificationOreo(context, GalleryActivity.class, "Vision board " + intent.getIntExtra("galleryId", 0),
+                                intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
+                    } else {
+                        NotificationScheduler.showNotification(context, GalleryActivity.class, "Vision board " + intent.getIntExtra("galleryId", 0),
+                                intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
+                    }
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationScheduler.showNotificationOreo(context, SlideshowActivity.class, "Vision movie " + intent.getIntExtra("slideshowId", 0),
+                                intent.getStringExtra("title"), intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
+                    } else {
+                        NotificationScheduler.showNotification(context, SlideshowActivity.class, "Vision movie " + intent.getIntExtra("slideshowId", 0),
+                                intent.getStringExtra("title"), intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
+                    }
+                }
             }
 
-/*            Intent fireIntent = new Intent(context, Dashboard2Activity.class);
-            fireIntent.putExtra("msg", intent.getStringExtra("msg"));
-            context.startActivity(fireIntent);*/
+            if (intent.getBooleanExtra("IsInspirational", false)) {
 
-            NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New Inspirational message",
-                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                int random = 0;
+                AlarmHelper alarmHelper = new AlarmHelper();
+                if (PrefUtils.getInspirationalNotiTime(context) != null) {
+                    String tempTime = PrefUtils.getInspirationalNotiTime(context);
+                    String[] timeSplit = tempTime.split(":");
+                    alarmHelper.setReminder(context, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, true);
+                } else {
+                    final int min = AppConstant.StartingHour;
+                    final int max = AppConstant.EndingHour;
+                    random = new Random().nextInt((max - min) + 1) + min;
+                    alarmHelper.setReminder(context, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, true);
+                }
 
-        }
-        if (intent.getBooleanExtra("IsPInspirational", false)) {
-            int random = 0;
-            AlarmHelper alarmHelper = new AlarmHelper();
-            if (PrefUtils.getPInspirationalNotiTime(context) != null) {
-                String tempTime = PrefUtils.getPInspirationalNotiTime(context);
-                String[] timeSplit = tempTime.split(":");
-                alarmHelper.setReminder(context, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, false);
-            } else {
-                final int min = 9;
-                final int max = 21;
-                random = new Random().nextInt((max - min) + 1) + min;
-                alarmHelper.setReminder(context, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, false);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationScheduler.showNotificationOreo(context, Dashboard2Activity.class, "New Inspirational message",
+                            intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                } else {
+                    NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New Inspirational message",
+                            intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                }
+
             }
+            if (intent.getBooleanExtra("IsPInspirational", false)) {
+                int random = 0;
+                AlarmHelper alarmHelper = new AlarmHelper();
+                if (PrefUtils.getPInspirationalNotiTime(context) != null) {
+                    String tempTime = PrefUtils.getPInspirationalNotiTime(context);
+                    String[] timeSplit = tempTime.split(":");
+                    alarmHelper.setReminder(context, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, false);
+                } else {
+                    final int min = AppConstant.StartingHour;
+                    final int max = AppConstant.EndingHour;
+                    random = new Random().nextInt((max - min) + 1) + min;
+                    alarmHelper.setReminder(context, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, false);
+                }
 
-            NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New personal inspirational message",
-                    intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationScheduler.showNotificationOreo(context, Dashboard2Activity.class, "New personal inspirational message",
+                            intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                } else {
+                    NotificationScheduler.showNotification(context, Dashboard2Activity.class, "New personal inspirational message",
+                            intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
+                }
 
+            }
         }
-    }
-
-    public void setReminder(Context context, Date date, int calId, String title, String subTitle) {
-        cancelAlarm(context, calId);
-        if (date == null) {
-            return;
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        Log.e("calendar time", "" + calendar);
-        PendingIntent pendingIntent;
-
-        Intent intent = new Intent(context, AlarmHelper.class);
-//        intent.putExtra(UtilConstants.INTENT_TITLE, title);
-//        intent.putExtra(UtilConstants.INTENT_SUBTITLE, subTitle);
-
-        pendingIntent = PendingIntent.getBroadcast(context, calId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = getAlarmManager(context);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
     }
 
     public void setReminder(Context context, int calId, Class<?> cls, int day, int month, int year, int hour, int min, boolean isGallery, Object obj) {
@@ -149,13 +146,13 @@ public class AlarmHelper extends BroadcastReceiver {
 
         Calendar cal = Calendar.getInstance();
         if (isNext) {
-            cal.add(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
         }
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, min);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-
+        Log.e("calender", cal.getTimeInMillis() + "");
         Date date = cal.getTime();
 
         if (date == null) {

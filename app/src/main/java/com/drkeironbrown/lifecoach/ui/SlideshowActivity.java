@@ -33,6 +33,7 @@ public class SlideshowActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private Slideshow slideShow;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class SlideshowActivity extends AppCompatActivity {
         });
 
         if (slideShow.getAudioPath() != null && slideShow.getAudioPath().trim().length() > 0) {
-            MediaPlayer mp = new MediaPlayer();
+            mp = new MediaPlayer();
             try {
                 mp.setDataSource(slideShow.getAudioPath());
                 mp.prepare();
@@ -123,6 +124,7 @@ public class SlideshowActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        mp.stop();
         Functions.fireIntent(this, false);
     }
 }
