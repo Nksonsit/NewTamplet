@@ -117,6 +117,11 @@ public class AddGalleryActivity extends AppCompatActivity implements DatePickerD
             public void onClick(View v) {
                 Functions.hideKeyPad(AddGalleryActivity.this, v);
 
+                if (edtGalleryName.getText().toString().trim().length() == 0) {
+                    Functions.showToast(AddGalleryActivity.this, "Please enter vision board name", MDToast.TYPE_INFO);
+                    return;
+                }
+
                 if (selectedDate == null || selectedDate.trim().length() == 0) {
                     Functions.showToast(AddGalleryActivity.this, "Please select date", MDToast.TYPE_INFO);
                     return;
@@ -125,11 +130,7 @@ public class AddGalleryActivity extends AppCompatActivity implements DatePickerD
                     Functions.showToast(AddGalleryActivity.this, "Please select time", MDToast.TYPE_INFO);
                     return;
                 }
-
-                if (edtGalleryName.getText().toString().trim().length() == 0) {
-                    Functions.showToast(AddGalleryActivity.this, "Please enter vision board name", MDToast.TYPE_INFO);
-                    return;
-                }
+                
                 if (list.size() < 3) {
                     Functions.showToast(AddGalleryActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
                     return;

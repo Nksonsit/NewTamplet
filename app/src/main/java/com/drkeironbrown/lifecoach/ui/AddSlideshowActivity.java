@@ -125,6 +125,16 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
                     Functions.showToast(AddSlideshowActivity.this, "Please enter vision movie name", MDToast.TYPE_INFO);
                     return;
                 }
+
+                if (selectedDate == null || selectedDate.trim().length() == 0) {
+                    Functions.showToast(AddSlideshowActivity.this, "Please select date", MDToast.TYPE_INFO);
+                    return;
+                }
+                if (selectedTime == null || selectedTime.trim().length() == 0) {
+                    Functions.showToast(AddSlideshowActivity.this, "Please select time", MDToast.TYPE_INFO);
+                    return;
+                }
+
                 if (list.size() < 3) {
                     Functions.showToast(AddSlideshowActivity.this, "Please add at least 3 images", MDToast.TYPE_INFO);
                     return;
@@ -133,6 +143,7 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
                 slideshowReq.setSlideshowName(edtSlideshowName.getText().toString().trim());
                 slideshowReq.setImages(Functions.copyPasteAllImages(list));
                 slideshowReq.setAudioPath("");
+                slideshowReq.setSlideshowDateTime(txtSelectTime.getText().toString().trim());
                 if (slideShow != null) {
                     slideshowReq.setAudioPath(slideShow.getAudioPath());
                 }
@@ -145,8 +156,8 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
                     slideshowReq.setSlideshowId(slideShow.getSlideshowId());
                     DBOpenHelper.updateSlideshow(slideshowReq);
                 } else {
-                    alarmHelper.setReminder(AddSlideshowActivity.this, randomId, GalleryListActivity.class, day, month - 1, year, hour, min, false, DBOpenHelper.getLastSlideShow());
                     DBOpenHelper.addImages(slideshowReq);
+                    alarmHelper.setReminder(AddSlideshowActivity.this, randomId, GalleryListActivity.class, day, month - 1, year, hour, min, false, DBOpenHelper.getLastSlideShow());
                 }
                 onBackPressed();
             }

@@ -65,6 +65,7 @@ public class AlarmHelper extends BroadcastReceiver {
                     alarmHelper.setReminder(context, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, true, true);
                 }
 
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     NotificationScheduler.showNotificationOreo(context, Dashboard2Activity.class, "New Inspirational message",
                             intent.getStringExtra("msg").replace("&#44;", ",").replace("&#39;", "'").replace("&#34;", "\""), true);
