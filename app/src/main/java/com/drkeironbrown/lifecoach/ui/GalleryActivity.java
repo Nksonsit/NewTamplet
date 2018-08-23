@@ -51,7 +51,7 @@ public class GalleryActivity extends AppCompatActivity {
         rvGallery.setLayoutManager(gm);
         list = new ArrayList<>();
         list = DBOpenHelper.getImagesFromGallery(getIntent().getIntExtra("galleryId", 0));
-        adapter = new GridAdapter(this, list, false,true, new GridAdapter.OnClick() {
+        adapter = new GridAdapter(this, list, false, true, new GridAdapter.OnClick() {
             @Override
             public void onRemoveClick(int position) {
                 DBOpenHelper.removeImage(list.get(position).getImageId());
@@ -82,6 +82,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Functions.fireIntent(this, false);
+        Functions.fireIntent(this, GalleryListActivity.class, false);
+        finish();
     }
 }

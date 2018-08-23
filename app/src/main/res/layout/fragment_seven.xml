@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        android:text="How many times do we simply want to vent our strongest feelings, but we don’t want others to know about it?  Ever.  This feature allows you to type your message and after you’ve vented, click “Let It Go” and that message goes away.  Forever."
         android:textColor="@color/off_white"
         android:textSize="16sp" />
 </RelativeLayout>

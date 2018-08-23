@@ -41,7 +41,13 @@ public class JournalListActivity extends AppCompatActivity {
         rvJournal.setLayoutManager(slm);
         list = new ArrayList<>();
         list = DBOpenHelper.getJournal();
-        adapter = new JournalAdapter(this, list);
+        adapter = new JournalAdapter(this, list, new JournalAdapter.OnDeleteClick() {
+            @Override
+            public void onDeleteClick() {
+//                list = DBOpenHelper.getJournal();
+//                adapter.setDataList(list);
+            }
+        });
         rvJournal.setAdapter(adapter);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

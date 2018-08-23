@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +42,7 @@ public class SlideshowListActivity extends AppCompatActivity {
         btnAdd = (LinearLayout) findViewById(R.id.btnAdd);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
-        txtTitle.setText("Vision movie");
+        txtTitle.setText("Vision Videos");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgAdd = (ImageView) findViewById(R.id.imgAdd);
         rvSlideshow = (RecyclerView) findViewById(R.id.rvSlideshow);
@@ -73,6 +74,17 @@ public class SlideshowListActivity extends AppCompatActivity {
                                 llEmptyView.setVisibility(View.GONE);
                                 rvSlideshow.setVisibility(View.VISIBLE);
                             }
+                            new CountDownTimer(1000, 500) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    adapter.setDataList(list);
+                                }
+                            }.start();
                         }
                     }
                 });
@@ -119,12 +131,17 @@ public class SlideshowListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Functions.fireIntent(this, false);
+        Functions.fireIntent(this, Dashboard2Activity.class, false);
+        finish();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        updateData();
+    }
+
+    private void updateData() {
         list = DBOpenHelper.getSlideshowList();
         adapter.setDataList(list);
         if (list.size() == 0) {

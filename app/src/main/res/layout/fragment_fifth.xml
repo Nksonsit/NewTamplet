@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        android:text="Browse our store for books and materials that will help you gain insight into issues and some strategies to help you resolve those issues."
         android:textColor="@color/off_white"
         android:textSize="16sp" />
 </RelativeLayout>

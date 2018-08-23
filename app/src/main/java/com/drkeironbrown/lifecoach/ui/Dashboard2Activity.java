@@ -63,6 +63,13 @@ public class Dashboard2Activity extends AppCompatActivity {
             }
         });
 
+        llShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(Dashboard2Activity.this, ShopActivity.class, true);
+            }
+        });
+
         llJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

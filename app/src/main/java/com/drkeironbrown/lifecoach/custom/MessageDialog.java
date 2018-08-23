@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,10 +19,15 @@ import android.widget.ImageView;
 
 import com.drkeironbrown.lifecoach.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class MessageDialog extends Dialog {
 
+    private CardView msgView;
+    private TfButton btnOk;
     private TfTextView txtMsg;
-    private ImageView imgClose;
     private Animation scalIn;
     private Animation scalOut;
     private View view;
@@ -71,10 +78,23 @@ public class MessageDialog extends Dialog {
             }
         });
 
-        imgClose = (ImageView)view.findViewById(R.id.imgClose);
-        txtMsg = (TfTextView)view.findViewById(R.id.txtMsg);
+        msgView = (CardView) view.findViewById(R.id.msgView);
+        List<Integer> colorList = new ArrayList<>();
+        colorList.add(R.color.intro_blue);
+        colorList.add(R.color.intro_cyan);
+        colorList.add(R.color.intro_green);
+        colorList.add(R.color.intro_grey);
+        colorList.add(R.color.intro_orange);
+        colorList.add(R.color.intro_red);
 
-        imgClose.setOnClickListener(new View.OnClickListener() {
+        Random random = new Random();
+        int index = random.nextInt(6);
+
+        msgView.setCardBackgroundColor(ContextCompat.getColor(context, colorList.get(index)));
+        btnOk = (TfButton) view.findViewById(R.id.btnOk);
+        txtMsg = (TfTextView) view.findViewById(R.id.txtMsg);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

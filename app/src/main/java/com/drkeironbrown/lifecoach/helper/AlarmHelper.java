@@ -33,18 +33,18 @@ public class AlarmHelper extends BroadcastReceiver {
             if (intent.getBooleanExtra("isImage", false)) {
                 if (intent.getBooleanExtra("isGallery", true)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationScheduler.showNotificationOreo(context, GalleryActivity.class, "Vision board " + intent.getIntExtra("galleryId", 0),
+                        NotificationScheduler.showNotificationOreo(context, GalleryActivity.class, "Vision board",
                                 intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
                     } else {
-                        NotificationScheduler.showNotification(context, GalleryActivity.class, "Vision board " + intent.getIntExtra("galleryId", 0),
+                        NotificationScheduler.showNotification(context, GalleryActivity.class, "Vision board",
                                 intent.getStringExtra("title"), intent.getIntExtra("galleryId", 0), intent.getBooleanExtra("isGallery", true));
                     }
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationScheduler.showNotificationOreo(context, SlideshowActivity.class, "Vision movie " + intent.getIntExtra("slideshowId", 0),
+                        NotificationScheduler.showNotificationOreo(context, SlideshowActivity.class, "Vision video",
                                 intent.getStringExtra("title"), intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
                     } else {
-                        NotificationScheduler.showNotification(context, SlideshowActivity.class, "Vision movie " + intent.getIntExtra("slideshowId", 0),
+                        NotificationScheduler.showNotification(context, SlideshowActivity.class, "Vision video",
                                 intent.getStringExtra("title"), intent.getIntExtra("slideshowId", 0), intent.getBooleanExtra("isGallery", true));
                     }
                 }

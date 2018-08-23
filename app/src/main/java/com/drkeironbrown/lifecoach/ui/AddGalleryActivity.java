@@ -145,8 +145,8 @@ public class AddGalleryActivity extends AppCompatActivity implements DatePickerD
                     galleryReq.setGalleryId(gallery.getGalleryId());
                     DBOpenHelper.updateGallery(galleryReq);
                 } else {
-                    alarmHelper.setReminder(AddGalleryActivity.this, randomId, GalleryListActivity.class, day, month-1, year, hour, min,true,DBOpenHelper.getLastGallery());
                     DBOpenHelper.addImagesToGallery(galleryReq);
+                    alarmHelper.setReminder(AddGalleryActivity.this, randomId, GalleryListActivity.class, day, month-1, year, hour, min,true,DBOpenHelper.getLastGallery());
                 }
 
                 onBackPressed();

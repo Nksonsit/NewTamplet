@@ -79,7 +79,7 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
         txtSelectTime = (TfTextView) findViewById(R.id.txtSelectTime);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
-        txtTitle.setText("Add vision movie");
+        txtTitle.setText("Add vision video");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         rvImage = (RecyclerView) findViewById(R.id.rvImage);
         edtSlideshowName = (TfEditText) findViewById(R.id.edtSlideshowName);
@@ -122,7 +122,7 @@ public class AddSlideshowActivity extends AppCompatActivity implements DatePicke
             public void onClick(View v) {
                 Functions.hideKeyPad(AddSlideshowActivity.this, v);
                 if (edtSlideshowName.getText().toString().trim().length() == 0) {
-                    Functions.showToast(AddSlideshowActivity.this, "Please enter vision movie name", MDToast.TYPE_INFO);
+                    Functions.showToast(AddSlideshowActivity.this, "Please enter vision video name", MDToast.TYPE_INFO);
                     return;
                 }
 

@@ -3,8 +3,10 @@ package com.drkeironbrown.lifecoach.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private OnDeleteClick onDeleteClick;
     private List<Journal> list;
     private Context context;
 
-    public JournalAdapter(Context context, List<Journal> list) {
+    public JournalAdapter(Context context, List<Journal> list, OnDeleteClick onDeleteClick) {
         this.context = context;
         this.list = list;
+        this.onDeleteClick = onDeleteClick;
     }
 
     @Override
@@ -66,13 +70,27 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             journalViewHolder.imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Functions.hideKeyPad(context,v);
+                    Functions.hideKeyPad(context, v);
                     Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
                         @Override
                         public void onSelect(boolean isYes) {
+                            Log.e("list", list.size() + "    " + i);
                             DBOpenHelper.deleteJournal(list.get(i - 1).getJournalId());
-                            list.remove(i-1);
+                            list.remove(i - 1);
                             notifyItemRemoved(i);
+                            new CountDownTimer(1000, 500) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    notifyDataSetChanged();
+                                }
+                            }.start();
+                            Log.e("list", list.size() + "");
+                            onDeleteClick.onDeleteClick();
                         }
                     });
                 }
@@ -80,9 +98,9 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             journalViewHolder.txtJournal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(context,AddJournalActivity.class);
-                    intent.putExtra("journal",list.get(i-1));
-                    Functions.fireIntent((Activity)context,intent,true);
+                    Intent intent = new Intent(context, AddJournalActivity.class);
+                    intent.putExtra("journal", list.get(i - 1));
+                    Functions.fireIntent((Activity) context, intent, true);
                 }
             });
         }
@@ -120,5 +138,9 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             imgDelete = (ImageView) itemView.findViewById(R.id.imgDelete);
             imgShare = (ImageView) itemView.findViewById(R.id.imgShare);
         }
+    }
+
+    public interface OnDeleteClick {
+        void onDeleteClick();
     }
 }

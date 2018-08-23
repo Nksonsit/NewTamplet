@@ -1,6 +1,7 @@
 package com.drkeironbrown.lifecoach.adapter;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.PersonalInspiration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -104,6 +106,17 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
                                 DBOpenHelper.deletePInspirational(list.get(finalPosition).getPInspirationalId());
                                 list.remove(finalPosition);
                                 notifyItemRemoved(finalPosition);
+                                new CountDownTimer(1000, 500) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        notifyDataSetChanged();
+                                    }
+                                }.start();
                             }
                         }
                     });
@@ -120,6 +133,12 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
         } else {
             return list.size();
         }
+    }
+
+    public void setDataList(List<PersonalInspiration> mList) {
+        list = new ArrayList<>();
+        list = mList;
+        notifyDataSetChanged();
     }
 
     public class AddPersonalInspirationVH extends RecyclerView.ViewHolder {

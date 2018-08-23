@@ -124,7 +124,10 @@ public class SlideshowActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        mp.stop();
-        Functions.fireIntent(this, false);
+        if (slideShow.getAudioPath() != null && slideShow.getAudioPath().trim().length() > 0 && mp != null) {
+            mp.stop();
+        }
+        Functions.fireIntent(this, SlideshowListActivity.class, false);
+        finish();
     }
 }

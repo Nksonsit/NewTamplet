@@ -75,6 +75,8 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
                     llEmptyView.setVisibility(View.GONE);
                     rvPInspirational.setVisibility(View.VISIBLE);
                 }
+//                list = DBOpenHelper.getPersonalInspirational();
+//                adapter.setDataList(list);
             }
 
             @Override

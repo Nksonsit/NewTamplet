@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="No vision movie available"
+            android:text="No vision Videos available"
             android:textColor="@color/darkColor"
             android:textSize="22sp"
             android:textStyle="bold"

@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +73,17 @@ public class GalleryListActivity extends AppCompatActivity {
                             llEmptyView.setVisibility(View.GONE);
                             rvGallery.setVisibility(View.VISIBLE);
                         }
+                        new CountDownTimer(1000, 500) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                adapter.setDataList(list);
+                            }
+                        }.start();
                     }
                 });
 
@@ -121,6 +133,11 @@ public class GalleryListActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+updateData();
+
+    }
+
+    private void updateData() {
         list = DBOpenHelper.getGalleryList();
         adapter.setDataList(list);
         if (list.size() == 0) {
@@ -130,11 +147,11 @@ public class GalleryListActivity extends AppCompatActivity {
             llEmptyView.setVisibility(View.GONE);
             rvGallery.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
     public void onBackPressed() {
-        Functions.fireIntent(this, false);
+        Functions.fireIntent(this,Dashboard2Activity.class, false);
+        finish();
     }
 }
