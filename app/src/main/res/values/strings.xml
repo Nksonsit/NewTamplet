@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Life coach</string>
+    <string name="app_name">Active Life Coach</string>
     <string name="inspiration_personal_inspirational"><![CDATA[Inspiration & Personal Inspirational]]></string>
     <string name="enter_mind_movie_name">Enter vision video name</string>
     <string name="check_internet">PLease check your internet connection</string>

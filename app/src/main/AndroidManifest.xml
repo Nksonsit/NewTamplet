@@ -16,8 +16,8 @@
         android:label="Life coach"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:label"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".ui.SplashActivity"
             android:screenOrientation="portrait"
@@ -76,7 +76,9 @@
 
         <activity android:name=".ui.SettingsActivity" />
         <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.ShopActivity"></activity>
+        <activity android:name=".ui.ShopActivity" />
+        <activity android:name=".ui.CategoriesActivity" />
+        <activity android:name=".ui.CategoryDetailActivity"></activity>
     </application>
 
 </manifest>
