@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,154 +11,165 @@
     android:scrollbars="none"
     tools:context=".ui.RegisterActivity">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/imgLife"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/imgAlcText"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@+id/imgLogo"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/alc_text" />
+
+
+    <LinearLayout
+        android:id="@+id/loginView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/imgAlcText"
+        android:layout_centerInParent="true"
+        android:layout_margin="8dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgLife"
+        <com.drkeironbrown.lifecoach.custom.TfEditText
+            android:id="@+id/edtUserName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="42dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edt_bg"
+            android:hint="Username"
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:textSize="@dimen/text_size_14" />
+
+        <com.drkeironbrown.lifecoach.custom.TfEditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="42dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_bg"
+            android:hint="Email Id"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:textSize="@dimen/text_size_14" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#b0FD9E06" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="42dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="22dp"
-            android:src="@mipmap/ic_launcher_round"
-            app:civ_border_color="#ffffff"
-            app:civ_border_width="2dp"
-            app:civ_circle_background_color="@color/white" />
+            <CheckBox
+                android:id="@+id/cbTermCondition2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I accept"
+                android:textSize="12sp" />
 
-        <android.support.v7.widget.CardView
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtReadTC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:text="term and condition"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cbGetMail2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="#d0ffffff"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="8dp">
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="42dp"
+            android:layout_marginTop="8dp"
+            android:text="Get latest update and notification"
+            android:textSize="12sp" />
 
-            <LinearLayout
-                android:id="@+id/llRegisterView"
-                android:layout_width="match_parent"
+        <com.drkeironbrown.lifecoach.custom.TfButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/brown_btn_selector"
+            android:text="SIGN Up"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:orientation="vertical">
+                android:text="Already have an account ?"
+                android:textColor="@color/black" />
 
-                <com.drkeironbrown.lifecoach.custom.TfEditText
-                    android:id="@+id/edtUserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="42dp"
-                    android:layout_marginRight="42dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/black_box"
-                    android:hint="Username"
-                    android:inputType="textNoSuggestions"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:padding="12dp"
-                    android:textSize="@dimen/text_size_14" />
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_8"
+                android:text="Sign In"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <com.drkeironbrown.lifecoach.custom.TfEditText
-                    android:id="@+id/edtEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="42dp"
-                    android:layout_marginRight="42dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/black_box"
-                    android:hint="Email Id"
-                    android:inputType="textEmailAddress"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:padding="12dp"
-                    android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="42dp"
-                    android:layout_marginRight="42dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="© 2018"
+            android:textColor="@color/black" />
 
-                    <CheckBox
-                        android:id="@+id/cbTermCondition2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="I accept"
-                        android:textSize="12sp" />
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtDr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="Dr. Keiron Brown"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:id="@+id/txtReadTC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
-                        android:text="term and condition"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
+    </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/cbGetMail2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="42dp"
-                    android:layout_marginRight="42dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Get latest update and notification"
-                    android:textSize="12sp" />
-
-                <com.drkeironbrown.lifecoach.custom.TfButton
-                    android:id="@+id/btnSignUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/black_btn_selector"
-                    android:text="SIGN Up"
-                    android:textColor="@color/white" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Already have an account ?"
-                        android:textColor="@color/black" />
-
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:id="@+id/txtSignIn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_8"
-                        android:text="Sign In"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

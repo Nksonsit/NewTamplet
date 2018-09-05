@@ -29,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
     private android.widget.CheckBox cbGetMail2;
     private com.drkeironbrown.lifecoach.custom.TfButton btnSignUp;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignIn;
-    private android.widget.LinearLayout llRegisterView;
     private TfTextView txtReadTC;
 
     @Override
@@ -37,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
-        this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         this.txtSignIn = (TfTextView) findViewById(R.id.txtSignIn);
         this.btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
@@ -49,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        Glide.with(this).load(R.drawable.life).into(imgLife);
 
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,13 +25,10 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox cbGetMail2;
     private TfButton btnSignIn;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
-    private LinearLayout llRegisterView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.llRegisterView = (LinearLayout) findViewById(R.id.llRegisterView);
         this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
         this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
@@ -41,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        Glide.with(this).load(R.drawable.life).into(imgLife);
 
         txtSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
