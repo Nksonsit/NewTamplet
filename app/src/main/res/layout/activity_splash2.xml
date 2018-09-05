@@ -10,15 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/alc_splash_bg" />
+        android:src="@drawable/bg" />
 
     <ImageView
+        android:id="@+id/imgLogo"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_above="@+id/imgAlcText"
         android:src="@drawable/logo" />
 
+    <ImageView
+        android:layout_centerInParent="true"
+        android:id="@+id/imgAlcText"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/alc_text" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:text="Dr. Keiron Brown"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </RelativeLayout>
