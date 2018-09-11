@@ -7,4 +7,5 @@ public class AppConstant {
     public static final int P_INSPIRATIONAL_NOTI_ID = 2;
     public static int StartingHour = 12;
     public static int EndingHour = 13;
+    public static String BASE_URL = "http://drkeironbrown.com/alc/";
 }

@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach;
 
 import android.app.Application;
 
+import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.db.DatabaseManager;
 import com.facebook.stetho.Stetho;
@@ -10,6 +11,7 @@ public class LifeCoachApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RestClient.setupRestClient();
         initDataBase();
         initStetho();
     }
