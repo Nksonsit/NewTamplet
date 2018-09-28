@@ -15,6 +15,7 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.model.Shop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
@@ -36,13 +37,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
 
     @Override
     public void onBindViewHolder(@NonNull ShopVH holder, final int position) {
-        Glide.with(context).load(list.get(position).getBookImg()).into(holder.imgBook);
-        holder.txtBookName.setText(list.get(position).getBookName());
-        holder.txtBookPrice.setText(list.get(position).getBookPrice());
+        Glide.with(context).load("http://drkeironbrown.com/alc/admin/" + list.get(position).getShopImg()).into(holder.imgBook);
+        holder.txtBookName.setText(list.get(position).getShopName());
+        holder.txtBookPrice.setText("$" + list.get(position).getShopPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(position).getBookUrl()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(position).getShopUrl()));
                 context.startActivity(browserIntent);
             }
         });
@@ -51,6 +52,12 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void setDataList(List<Shop> list) {
+        this.list = new ArrayList<>();
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     public class ShopVH extends RecyclerView.ViewHolder {

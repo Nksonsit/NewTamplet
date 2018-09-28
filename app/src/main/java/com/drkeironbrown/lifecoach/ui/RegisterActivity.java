@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
@@ -19,6 +20,14 @@ import com.drkeironbrown.lifecoach.custom.WebViewDialog;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
+import com.drkeironbrown.lifecoach.model.BaseResponse;
+import com.drkeironbrown.lifecoach.model.LoginReq;
+import com.drkeironbrown.lifecoach.model.RegisterReq;
+import com.drkeironbrown.lifecoach.model.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -81,13 +90,38 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                PrefUtils.setIsLogin(RegisterActivity.this, true);
-                if (PrefUtils.isFirstTime(RegisterActivity.this)) {
-                    Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);
-                } else {
-                    Functions.fireIntent(RegisterActivity.this, DashboardActivity.class, true);
-                }
-                finish();
+                RegisterReq registerReq = new RegisterReq();
+                registerReq.setFCM("");
+                registerReq.setDeviceType("Android");
+                registerReq.setGetNotification(cbGetMail2.isChecked() ? 1 : 2);
+                registerReq.setUsername(edtUserName.getText().toString().trim());
+                registerReq.setEmailId(edtEmail.getText().toString().trim());
+                RestClient.get().getRegister(registerReq).enqueue(new Callback<BaseResponse<User>>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse<User>> call, Response<BaseResponse<User>> response) {
+                        if (response.body() != null) {
+                            if (response.body().getStatus() == 1 && response.body().getData() != null) {
+                                PrefUtils.setIsLogin(RegisterActivity.this, true);
+                                PrefUtils.setUserFullProfileDetails(RegisterActivity.this,response.body().getData());
+                                if (PrefUtils.isFirstTime(RegisterActivity.this)) {
+                                    Functions.fireIntent(RegisterActivity.this, FunctionSlideActivity.class, true);
+                                } else {
+                                    Functions.fireIntent(RegisterActivity.this, DashboardActivity.class, true);
+                                }
+                                finish();
+                            } else {
+                                Functions.showToast(RegisterActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
+                            }
+                        } else {
+                            Functions.showToast(RegisterActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse<User>> call, Throwable t) {
+                        Functions.showToast(RegisterActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+                    }
+                });
             }
         });
         AdvancedSpannableString spannableString = new AdvancedSpannableString("term and condition");

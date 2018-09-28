@@ -7,6 +7,15 @@ public class Category implements Serializable{
     private String CategoryName;
     private String CategoryDetail;
     private String CategoryAudioPath;
+    private String CategoryPrice;
+
+    public String getCategoryPrice() {
+        return CategoryPrice;
+    }
+
+    public void setCategoryPrice(String categoryPrice) {
+        CategoryPrice = categoryPrice;
+    }
 
     public long getCategoryId() {
         return CategoryId;

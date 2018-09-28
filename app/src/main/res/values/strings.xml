@@ -8,4 +8,5 @@
     <string name="enter_valid_email_id">Please enter valid email id</string>
     <string name="accept_tc">Please accept term and condition</string>
     <string name="lorun_ipsum">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</string>
+    <string name="try_again">Something went wrong please try again later</string>
 </resources>

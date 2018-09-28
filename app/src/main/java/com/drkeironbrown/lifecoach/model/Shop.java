@@ -1,47 +1,49 @@
 package com.drkeironbrown.lifecoach.model;
 
 public class Shop {
-    private String BookName;
-    private int BookImg;
-    private String BookPrice;
-    private String BookUrl;
+    private String ShopId;
+    private String ShopName;
+    private String ShopUrl;
+    private String ShopPrice;
+    private String ShopImg;
 
-    public Shop(String bookName, int bookImg, String bookPrice, String bookUrl) {
-        BookName = bookName;
-        BookImg = bookImg;
-        BookPrice = bookPrice;
-        BookUrl = bookUrl;
+    public String getShopId() {
+        return ShopId;
     }
 
-    public String getBookUrl() {
-        return BookUrl;
+    public void setShopId(String shopId) {
+        ShopId = shopId;
     }
 
-    public void setBookUrl(String bookUrl) {
-        BookUrl = bookUrl;
+    public String getShopName() {
+        return ShopName;
     }
 
-    public String getBookName() {
-        return BookName;
+    public void setShopName(String shopName) {
+        ShopName = shopName;
     }
 
-    public void setBookName(String bookName) {
-        BookName = bookName;
+    public String getShopUrl() {
+        return ShopUrl;
     }
 
-    public int getBookImg() {
-        return BookImg;
+    public void setShopUrl(String shopUrl) {
+        ShopUrl = shopUrl;
     }
 
-    public void setBookImg(int bookImg) {
-        BookImg = bookImg;
+    public String getShopPrice() {
+        return ShopPrice;
     }
 
-    public String getBookPrice() {
-        return BookPrice;
+    public void setShopPrice(String shopPrice) {
+        ShopPrice = shopPrice;
     }
 
-    public void setBookPrice(String bookPrice) {
-        BookPrice = bookPrice;
+    public String getShopImg() {
+        return ShopImg;
+    }
+
+    public void setShopImg(String shopImg) {
+        ShopImg = shopImg;
     }
 }

@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.model.Category;
 import com.drkeironbrown.lifecoach.ui.CategoryDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryVH> {
@@ -39,11 +41,32 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         categoryVH.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CategoryDetailActivity.class);
-                intent.putExtra("category", list.get(i));
-                Functions.fireIntent(context, intent, true);
+                if (!Functions.isConnected(context)) {
+                    Functions.showToast(context, context.getString(R.string.check_internet), MDToast.TYPE_ERROR);
+                    return;
+                }
+                if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0) {
+                    Functions.showAlertDialogWithTwoOption(context, "Pay", "Cancel", "You need to pay $" + list.get(i).getCategoryPrice() + " to continue.", new Functions.DialogOptionsSelectedListener() {
+                        @Override
+                        public void onSelect(boolean isYes) {
+                            if (isYes) {
+
+                            }
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(context, CategoryDetailActivity.class);
+                    intent.putExtra("category", list.get(i));
+                    Functions.fireIntent(context, intent, true);
+                }
             }
         });
+        if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0) {
+            categoryVH.txtNote.setText("$" + list.get(i).getCategoryPrice());
+            categoryVH.txtNote.setVisibility(View.VISIBLE);
+        } else {
+            categoryVH.txtNote.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -51,12 +74,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return list.size();
     }
 
+    public void setDataList(List<Category> data) {
+        list = new ArrayList<>();
+        list = data;
+        notifyDataSetChanged();
+    }
+
     public class CategoryVH extends RecyclerView.ViewHolder {
-        private TfTextView txtCategoy;
+        private TfTextView txtCategoy, txtNote;
 
         public CategoryVH(View itemView) {
             super(itemView);
             txtCategoy = (TfTextView) itemView.findViewById(R.id.txtCategory);
+            txtNote = (TfTextView) itemView.findViewById(R.id.txtNote);
         }
     }
 }

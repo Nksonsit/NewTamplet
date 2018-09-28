@@ -11,12 +11,19 @@ import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.CategoryAdapter;
+import com.drkeironbrown.lifecoach.api.RestClient;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -27,6 +34,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private android.widget.LinearLayout llEmptyView;
     private List<Category> list;
     private CategoryAdapter adapter;
+    private TfTextView txtEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +44,12 @@ public class CategoriesActivity extends AppCompatActivity {
         this.rvCategories = (RecyclerView) findViewById(R.id.rvCategories);
         this.toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         this.txtTitle = (TfTextView) findViewById(R.id.txtTitle);
+        this.txtEmpty = (TfTextView) findViewById(R.id.txtEmpty);
         this.imgBack = (ImageView) findViewById(R.id.imgBack);
 
         list = new ArrayList<>();
         rvCategories.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CategoryAdapter(this,list);
+        adapter = new CategoryAdapter(this, list);
         rvCategories.setAdapter(adapter);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -51,10 +60,46 @@ public class CategoriesActivity extends AppCompatActivity {
         });
 
         txtTitle.setText("Categories");
+
+        if (Functions.isConnected(this)) {
+            RestClient.get().getCategories().enqueue(new Callback<BaseResponse<List<Category>>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<List<Category>>> call, Response<BaseResponse<List<Category>>> response) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1 && response.body().getData() != null) {
+                            list = response.body().getData();
+                            adapter.setDataList(list);
+                            rvCategories.setVisibility(View.VISIBLE);
+                            llEmptyView.setVisibility(View.GONE);
+
+                        } else {
+                            rvCategories.setVisibility(View.GONE);
+                            txtEmpty.setVisibility(View.VISIBLE);
+
+                        }
+                    } else {
+                        rvCategories.setVisibility(View.GONE);
+                        txtEmpty.setVisibility(View.VISIBLE);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse<List<Category>>> call, Throwable t) {
+                    rvCategories.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            Functions.showToast(CategoriesActivity.this, getString(R.string.check_internet), MDToast.TYPE_ERROR);
+            rvCategories.setVisibility(View.GONE);
+            txtEmpty.setVisibility(View.VISIBLE);
+            txtEmpty.setText(R.string.check_internet);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        Functions.fireIntent(this,false);
+        Functions.fireIntent(this, false);
     }
 }

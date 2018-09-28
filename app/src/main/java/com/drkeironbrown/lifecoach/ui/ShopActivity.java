@@ -6,16 +6,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.ShopAdapter;
+import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShopActivity extends AppCompatActivity {
 
@@ -25,11 +32,15 @@ public class ShopActivity extends AppCompatActivity {
     private android.support.v7.widget.RecyclerView rvShop;
     private List<Shop> list;
     private ShopAdapter adapter;
+    private TfTextView txtEmpty;
+    private android.widget.LinearLayout llEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+        this.llEmptyView = (LinearLayout) findViewById(R.id.llEmptyView);
+        this.txtEmpty = (TfTextView) findViewById(R.id.txtEmpty);
         rvShop = (RecyclerView) findViewById(R.id.rvShop);
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
@@ -43,14 +54,39 @@ public class ShopActivity extends AppCompatActivity {
         });
         txtTitle.setText("Shop");
         list = new ArrayList<>();
-        list.add(new Shop("Don’t Date A Psycho Personality Tests to Discover the REAL You – eBook", R.drawable.img1, "$5.99","https://www.amazon.com/Dont-Date-Psycho-Personality-Discover-ebook/dp/B01M6ASMLJ/ref=sr_1_6?ie=UTF8&qid=1528933620&sr=8-6&keywords=keiron+brown"));
-        list.add(new Shop("Don’t Date A Psycho Personality Tests to Discover the REAL You – Paperback", R.drawable.img2, "$16.95","https://www.amazon.com/Dont-Date-Psycho-Personality-Discover/dp/1536986267/ref=sr_1_7?ie=UTF8&qid=1528933620&sr=8-7&keywords=keiron+brown"));
-        list.add(new Shop("Don’t Date A Psycho: Don’t Be One, Don’t Date One – eBook", R.drawable.img3, "$5.99","https://www.amazon.com/Dont-Date-Psycho-Be-One-ebook/dp/B00MA8TQ7S/ref=sr_1_2?ie=UTF8&qid=1528933620&sr=8-2&keywords=keiron+brown"));
-        list.add(new Shop("Don’t Date A Psycho: Don’t Be One, Don’t Date One – Paperback", R.drawable.img4, "$18.95","https://www.amazon.com/Dont-Date-Psycho-Be-One/dp/1500695130/ref=sr_1_2_twi_pap_2?ie=UTF8&qid=1528933620&sr=8-2&keywords=keiron+brown"));
-        list.add(new Shop("Don’t Date A Psycho: The Workbook for Changing Your Life!", R.drawable.img5, "$16.99","https://www.amazon.com/Dont-Date-Psycho-Workbook-Changing/dp/152390450X/ref=sr_1_1?ie=UTF8&qid=1528933620&sr=8-1&keywords=keiron+brown"));
         adapter = new ShopAdapter(this, list);
         rvShop.setLayoutManager(new LinearLayoutManager(this));
         rvShop.setAdapter(adapter);
+
+        if (Functions.isConnected(this)) {
+            RestClient.get().getShop().enqueue(new Callback<BaseResponse<List<Shop>>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<List<Shop>>> call, Response<BaseResponse<List<Shop>>> response) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
+                            list = response.body().getData();
+                            adapter.setDataList(list);
+                        } else {
+                            llEmptyView.setVisibility(View.VISIBLE);
+                            rvShop.setVisibility(View.GONE);
+                        }
+                    } else {
+                        llEmptyView.setVisibility(View.VISIBLE);
+                        rvShop.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse<List<Shop>>> call, Throwable t) {
+                    llEmptyView.setVisibility(View.VISIBLE);
+                    rvShop.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            llEmptyView.setVisibility(View.VISIBLE);
+            rvShop.setVisibility(View.GONE);
+            txtEmpty.setText(getString(R.string.check_internet));
+        }
     }
 
     @Override

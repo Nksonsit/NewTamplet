@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 
+import com.drkeironbrown.lifecoach.model.User;
+import com.google.gson.Gson;
+
 public class PrefUtils {
 
     public static String USER_ID = "UserId";
@@ -63,4 +66,25 @@ public class PrefUtils {
         return Prefs.with(context).getString(P_INSPIRATIONAL_NOTI_TIME,null);
     }
 
+    public static void setUserFullProfileDetails(Context context, User userProfile) {
+
+        String toJson = new Gson().toJson(userProfile);
+        Prefs.with(context).save(USER_PROFILE_KEY, toJson);
+    }
+
+    public static User getUserFullProfileDetails(Context context) {
+        Gson gson = new Gson();
+
+        User userProfileDetails = null;
+
+        String getCityString = Prefs.with(context).getString(USER_PROFILE_KEY, "");
+
+        try {
+            userProfileDetails = gson.fromJson(getCityString, User.class);
+
+        } catch (Exception e) {
+
+        }
+        return userProfileDetails;
+    }
 }

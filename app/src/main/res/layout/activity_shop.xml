@@ -36,4 +36,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/llEmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="102dp"
+            android:layout_height="102dp"
+            android:src="@drawable/no_data" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No shop item available"
+            android:textColor="@color/darkColor"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:isBold="true" />
+    </LinearLayout>
 </RelativeLayout>

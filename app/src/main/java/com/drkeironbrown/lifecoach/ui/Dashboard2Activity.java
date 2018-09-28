@@ -49,6 +49,13 @@ public class Dashboard2Activity extends AppCompatActivity {
         this.llSettings = (LinearLayout) findViewById(R.id.llSettings);
         this.llLogout = (LinearLayout) findViewById(R.id.llLogout);
         this.toolbar = (LinearLayout) findViewById(R.id.toolbar);
+        llCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(Dashboard2Activity.this, CategoriesActivity.class, true);
+            }
+        });
+
         llSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
