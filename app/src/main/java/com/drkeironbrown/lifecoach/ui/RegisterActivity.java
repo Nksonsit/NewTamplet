@@ -1,5 +1,7 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private com.drkeironbrown.lifecoach.custom.TfButton btnSignUp;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignIn;
     private TfTextView txtReadTC;
+    private TfTextView txtDr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         this.edtEmail = (TfEditText) findViewById(R.id.edtEmail);
         this.edtUserName = (TfEditText) findViewById(R.id.edtUserName);
         this.imgLife = (ImageView) findViewById(R.id.imgLife);
+        txtDr = (TfTextView) findViewById(R.id.txtDr);
 
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -131,6 +135,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new WebViewDialog(RegisterActivity.this);
+            }
+        });
+
+
+        AdvancedSpannableString advancedSpannableString = new AdvancedSpannableString(txtDr.getText().toString().trim());
+        advancedSpannableString.setUnderLine(txtDr.getText().toString().trim());
+        txtDr.setText(advancedSpannableString);
+        txtDr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://drkeironbrown.com"));
+                startActivity(browserIntent);
             }
         });
     }

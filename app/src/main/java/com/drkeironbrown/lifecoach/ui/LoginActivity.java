@@ -1,5 +1,7 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox cbGetMail2;
     private TfButton btnSignIn;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
+    private TfTextView txtDr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
         this.edtUserName = (TfEditText) findViewById(R.id.edtUserName);
         this.imgLife = (ImageView) findViewById(R.id.imgLife);
+        txtDr = (TfTextView) findViewById(R.id.txtDr);
 
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-
-        txtSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Functions.fireIntent(LoginActivity.this, RegisterActivity.class, true);
-            }
-        });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +106,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        AdvancedSpannableString advancedSpannableString = new AdvancedSpannableString(txtDr.getText().toString().trim());
+        advancedSpannableString.setUnderLine(txtDr.getText().toString().trim());
+        txtDr.setText(advancedSpannableString);
+        txtDr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://drkeironbrown.com"));
+                startActivity(browserIntent);
+            }
+        });
 
     }
 }

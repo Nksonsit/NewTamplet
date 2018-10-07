@@ -2,12 +2,39 @@ package com.drkeironbrown.lifecoach.model;
 
 import java.io.Serializable;
 
-public class Category implements Serializable{
+public class Category implements Serializable {
     private long CategoryId;
     private String CategoryName;
     private String CategoryDetail;
     private String CategoryAudioPath;
     private String CategoryPrice;
+    private String IsSubData;
+    private String SubLinks;
+    private String SubCategory;
+
+    public String getIsSubData() {
+        return IsSubData;
+    }
+
+    public void setIsSubData(String isSubData) {
+        IsSubData = isSubData;
+    }
+
+    public String getSubLinks() {
+        return SubLinks;
+    }
+
+    public void setSubLinks(String subLinks) {
+        SubLinks = subLinks;
+    }
+
+    public String getSubCategory() {
+        return SubCategory;
+    }
+
+    public void setSubCategory(String subCategory) {
+        SubCategory = subCategory;
+    }
 
     public String getCategoryPrice() {
         return CategoryPrice;

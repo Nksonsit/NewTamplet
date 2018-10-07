@@ -20,12 +20,14 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryVH> {
 
+    private OnBuyClick onBuyClick;
     private List<Category> list;
     private Context context;
 
-    public CategoryAdapter(Context context, List<Category> list) {
+    public CategoryAdapter(Context context, List<Category> list, OnBuyClick onBuyClick) {
         this.context = context;
         this.list = list;
+        this.onBuyClick = onBuyClick;
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                         @Override
                         public void onSelect(boolean isYes) {
                             if (isYes) {
-
+                                onBuyClick.onBuyClick(i);
                             }
                         }
                     });
@@ -88,5 +90,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             txtCategoy = (TfTextView) itemView.findViewById(R.id.txtCategory);
             txtNote = (TfTextView) itemView.findViewById(R.id.txtNote);
         }
+    }
+
+    public interface OnBuyClick {
+        void onBuyClick(int pos);
     }
 }

@@ -79,7 +79,10 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.ShopActivity" />
         <activity android:name=".ui.CategoriesActivity" />
-        <activity android:name=".ui.CategoryDetailActivity"></activity>
+        <activity android:name=".ui.CategoryDetailActivity" />
+        <activity android:name=".ui.SubCategoryActivity" />
+        <activity android:name=".ui.SubLinkDetailActivity" />
+        <activity android:name=".ui.SubCategoryDetailActivity"></activity>
     </application>
 
 </manifest>

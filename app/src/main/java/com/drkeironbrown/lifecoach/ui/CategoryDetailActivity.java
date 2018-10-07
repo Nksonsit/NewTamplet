@@ -1,9 +1,12 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,11 +16,22 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.adapter.SubLinksAdapter;
+import com.drkeironbrown.lifecoach.api.RestClient;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Category;
+import com.drkeironbrown.lifecoach.model.CategoryReq;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoryDetailActivity extends AppCompatActivity {
 
@@ -37,6 +51,10 @@ public class CategoryDetailActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private android.widget.LinearLayout llAudioView;
+    private RecyclerView rvSubLinks;
+    private List<String> subLinksList;
+    private SubLinksAdapter subLinksAdapter;
+    private TfTextView txtGetStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +71,9 @@ public class CategoryDetailActivity extends AppCompatActivity {
         this.play = (ImageView) findViewById(R.id.play);
         this.toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         this.txtTitle = (TfTextView) findViewById(R.id.txtTitle);
+        this.txtGetStart = (TfTextView) findViewById(R.id.txtGetStart);
         this.imgBack = (ImageView) findViewById(R.id.imgBack);
+        this.rvSubLinks = (RecyclerView) findViewById(R.id.rvSubLinks);
 
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +84,37 @@ public class CategoryDetailActivity extends AppCompatActivity {
         });
 
         category = (Category) getIntent().getSerializableExtra("category");
+
+
+        rvSubLinks.setLayoutManager(new LinearLayoutManager(this));
+        subLinksList = new ArrayList<>();
+        if (category.getIsSubData().equalsIgnoreCase("1")) {
+            if (category.getSubLinks().contains(",")) {
+                String[] temp = category.getSubLinks().split(",");
+                for (int i = 0; i < temp.length; i++) {
+                    subLinksList.add(temp[i]);
+                }
+            } else {
+                subLinksList.add(category.getSubLinks());
+            }
+            subLinksAdapter = new SubLinksAdapter(this, subLinksList, new SubLinksAdapter.OnSubLinksClick() {
+                @Override
+                public void onSubLinksClick(int i) {
+                    getSubLinkDetail(subLinksList.get(i));
+                }
+            });
+            rvSubLinks.setAdapter(subLinksAdapter);
+            rvSubLinks.setVisibility(View.VISIBLE);
+            txtGetStart.setVisibility(View.GONE);
+        } else if (category.getIsSubData().equalsIgnoreCase("2")) {
+
+            rvSubLinks.setVisibility(View.GONE);
+            txtGetStart.setVisibility(View.VISIBLE);
+        } else {
+            txtGetStart.setVisibility(View.GONE);
+            rvSubLinks.setVisibility(View.GONE);
+        }
+
 
         txtTitle.setText(category.getCategoryName());
 
@@ -114,6 +165,42 @@ public class CategoryDetailActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 1000);
+
+        txtGetStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CategoryDetailActivity.this, SubCategoryActivity.class);
+                intent.putExtra("category", category);
+                Functions.fireIntent(CategoryDetailActivity.this, intent, true);
+            }
+        });
+    }
+
+    private void getSubLinkDetail(String sublink) {
+        CategoryReq categoryReq = new CategoryReq();
+        categoryReq.setCategoryName(sublink);
+        RestClient.get().getCategoriesByName(categoryReq).enqueue(new Callback<BaseResponse<List<Category>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<List<Category>>> call, Response<BaseResponse<List<Category>>> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
+                        Category subLinkDetail = response.body().getData().get(0);
+                        Intent intent = new Intent(CategoryDetailActivity.this, SubLinkDetailActivity.class);
+                        intent.putExtra("sublinks", subLinkDetail);
+                        Functions.fireIntent(CategoryDetailActivity.this, intent, true);
+                    } else {
+                        Functions.showToast(CategoryDetailActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
+                    }
+                } else {
+                    Functions.showToast(CategoryDetailActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<List<Category>>> call, Throwable t) {
+                Functions.showToast(CategoryDetailActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+            }
+        });
     }
 
     @Override

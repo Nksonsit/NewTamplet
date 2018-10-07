@@ -153,6 +153,31 @@
                 android:textColor="@color/darkColor"
                 android:textSize="18sp" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvSubLinks"
+                android:visibility="gone"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtGetStart"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/sub_links_bg"
+                android:paddingBottom="@dimen/padding_8"
+                android:paddingLeft="@dimen/padding_16"
+                android:paddingRight="@dimen/padding_16"
+                android:paddingTop="@dimen/padding_8"
+                android:text="Get Start"
+                app:isBold="true"
+                android:textColor="@color/white"/>
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

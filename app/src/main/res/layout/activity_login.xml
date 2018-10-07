@@ -66,7 +66,7 @@
             android:layout_marginLeft="42dp"
             android:layout_marginRight="42dp"
             android:layout_marginTop="8dp"
-            android:text="Get latest update and notification"
+            android:text="Get the latest update and notification"
             android:textSize="12sp" />
 
         <com.drkeironbrown.lifecoach.custom.TfButton
