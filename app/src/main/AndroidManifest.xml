@@ -82,7 +82,19 @@
         <activity android:name=".ui.CategoryDetailActivity" />
         <activity android:name=".ui.SubCategoryActivity" />
         <activity android:name=".ui.SubLinkDetailActivity" />
-        <activity android:name=".ui.SubCategoryDetailActivity"></activity>
+        <activity android:name=".ui.SubCategoryDetailActivity"/>
+
+
+
+        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.drkeironbrown.lifecoach.braintree" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

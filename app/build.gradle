@@ -45,4 +45,7 @@ dependencies {
     implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
     implementation 'com.google.android.gms:play-services-wallet:8.4.0'
 
+    implementation 'com.braintreepayments.api:braintree:2.14.0'
+    implementation 'com.braintreepayments.api:drop-in:3.+'
+
 }
