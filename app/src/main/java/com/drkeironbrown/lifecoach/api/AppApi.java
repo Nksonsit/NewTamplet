@@ -30,11 +30,11 @@ public interface AppApi {
     Call<BaseResponse<List<Category>>> getCategories();
 
 
-    @POST("GetCategories.php")
+    @POST("GetCategoriesByName.php")
     Call<BaseResponse<List<Category>>> getCategoriesByName(@Body CategoryReq categoryReq);
 
 
-    @POST("GetCategories.php")
+    @POST("GetSubCategories.php")
     Call<BaseResponse<List<SubCategory>>> getSubCategories(@Body SubCategoryReq subCategoryReq);
 
     @GET("GetShop.php")

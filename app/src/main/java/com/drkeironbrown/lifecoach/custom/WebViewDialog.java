@@ -34,12 +34,12 @@ public class WebViewDialog {
     private Dialog mDialog;
     private ProgressBar progressbar;
 
-    public WebViewDialog(Context baseActivity) {
+    public WebViewDialog(Context baseActivity,String title,String file) {
         mActivity = baseActivity;
-        createDialog();
+        createDialog(title,file);
     }
 
-    private void createDialog() {
+    private void createDialog(String title, String file) {
         mDialog = new Dialog(mActivity);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -49,11 +49,11 @@ public class WebViewDialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mDialog.getWindow().setAttributes(lp);
-        ((TfTextView) mDialog.findViewById(R.id.dialog_tv_title)).setText("Term and condition");
+        ((TfTextView) mDialog.findViewById(R.id.dialog_tv_title)).setText(title);
         WebView webView = (WebView) mDialog.findViewById(R.id.fragment_setting_terms_and_conditions_wv);
         TfButton btnOpenSetting = (TfButton) mDialog.findViewById(R.id.btnOpenSetting);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_res/raw/tc.html");
+        webView.loadUrl(file);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {

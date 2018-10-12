@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -78,8 +79,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="42dp"
-            android:layout_marginRight="42dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
@@ -101,15 +102,34 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/cbGetMail2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="42dp"
-            android:layout_marginRight="42dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
-            android:text="Get the latest update and notification"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbGetMail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Get the latest update and notification"
+                android:textSize="12sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtReadMore"
+                android:layout_marginLeft="@dimen/margin_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Read more"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:isBold="true" />
+        </LinearLayout>
 
         <com.drkeironbrown.lifecoach.custom.TfButton
             android:id="@+id/btnSignUp"

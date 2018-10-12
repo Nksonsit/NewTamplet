@@ -18,6 +18,7 @@ import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.custom.WebViewDialog;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
@@ -37,11 +38,13 @@ public class LoginActivity extends AppCompatActivity {
     private TfButton btnSignIn;
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignUp;
     private TfTextView txtDr;
+    private TfTextView txtReadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.txtReadMore = (TfTextView) findViewById(R.id.txtReadMore);
         this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
         this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
         this.cbGetMail2 = (CheckBox) findViewById(R.id.cbGetMail2);
@@ -114,6 +117,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://drkeironbrown.com"));
                 startActivity(browserIntent);
+            }
+        });
+
+        AdvancedSpannableString readMore = new AdvancedSpannableString("Read more");
+        readMore.setUnderLine("Read more");
+        txtReadMore.setText(readMore);
+        txtReadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new WebViewDialog(LoginActivity.this,"Otp - In","file:///android_res/raw/optin.html");
             }
         });
 

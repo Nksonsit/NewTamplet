@@ -42,11 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
     private com.drkeironbrown.lifecoach.custom.TfTextView txtSignIn;
     private TfTextView txtReadTC;
     private TfTextView txtDr;
+    private TfTextView txtReadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        this.txtReadMore = (TfTextView) findViewById(R.id.txtReadMore);
         this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
         this.txtSignIn = (TfTextView) findViewById(R.id.txtSignIn);
         this.btnSignUp = (TfButton) findViewById(R.id.btnSignUp);
@@ -134,7 +136,18 @@ public class RegisterActivity extends AppCompatActivity {
         txtReadTC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new WebViewDialog(RegisterActivity.this);
+                new WebViewDialog(RegisterActivity.this,"Term and condition","file:///android_res/raw/tc.html");
+            }
+        });
+
+
+        AdvancedSpannableString readMore = new AdvancedSpannableString("Read more");
+        readMore.setUnderLine("Read more");
+        txtReadMore.setText(readMore);
+        txtReadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new WebViewDialog(RegisterActivity.this,"Otp - In","file:///android_res/raw/optin.html");
             }
         });
 

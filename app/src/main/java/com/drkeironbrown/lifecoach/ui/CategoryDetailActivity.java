@@ -185,8 +185,8 @@ public class CategoryDetailActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if (response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
                         Category subLinkDetail = response.body().getData().get(0);
-                        Intent intent = new Intent(CategoryDetailActivity.this, SubLinkDetailActivity.class);
-                        intent.putExtra("sublinks", subLinkDetail);
+                        Intent intent = new Intent(CategoryDetailActivity.this, CategoryDetailActivity.class);
+                        intent.putExtra("category", subLinkDetail);
                         Functions.fireIntent(CategoryDetailActivity.this, intent, true);
                     } else {
                         Functions.showToast(CategoryDetailActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
