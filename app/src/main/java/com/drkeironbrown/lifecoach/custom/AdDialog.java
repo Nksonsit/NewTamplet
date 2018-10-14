@@ -21,6 +21,7 @@ import android.widget.ImageView;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import java.util.Random;
 
 public class AdDialog extends Dialog {
 
+    private int index;
+    private OnDialogClose onDialogClose;
     private Context mContext;
     private ImageView imgClose;
     private ImageView imgAd;
@@ -35,8 +38,9 @@ public class AdDialog extends Dialog {
     private Animation scalOut;
     private View view;
 
-    public AdDialog(@NonNull Context context) {
+    public AdDialog(@NonNull Context context, final OnDialogClose onDialogClose) {
         super(context);
+        this.onDialogClose = onDialogClose;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         view = LayoutInflater.from(context).inflate(R.layout.dialog_ad, null);
         setContentView(view);
@@ -73,6 +77,7 @@ public class AdDialog extends Dialog {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                onDialogClose.dialogClose();
                 dismiss();
             }
 
@@ -95,8 +100,21 @@ public class AdDialog extends Dialog {
         imgAd = (ImageView) view.findViewById(R.id.imgAd);
         imgClose = (ImageView) view.findViewById(R.id.imgClose);
 
-        Random random = new Random();
-        final int index = random.nextInt(3);
+        index = PrefUtils.getCurrentIndex(context);
+
+        if (index == -1) {
+            PrefUtils.setCurrentIndex(context, 0);
+            index = 0;
+        } else if (index == 0) {
+            PrefUtils.setCurrentIndex(context, 1);
+            index = 1;
+        } else if (index == 1) {
+            PrefUtils.setCurrentIndex(context, 2);
+            index = 2;
+        } else if (index == 2) {
+            PrefUtils.setCurrentIndex(context, 0);
+            index = 0;
+        }
 
         imgAd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +125,7 @@ public class AdDialog extends Dialog {
             }
         });
 
-        Functions.loadImage(mContext,adUrl.get(index),imgAd,null);
+        Functions.loadImage(mContext, adImages.get(index), imgAd, null);
 
         imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,4 +151,7 @@ public class AdDialog extends Dialog {
         view.startAnimation(scalOut);
     }
 
+    public interface OnDialogClose {
+        void dialogClose();
+    }
 }

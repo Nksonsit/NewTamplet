@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.DataCollector;
+import com.braintreepayments.api.PayPal;
 import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.interfaces.BraintreeCancelListener;
 import com.braintreepayments.api.interfaces.BraintreeErrorListener;
@@ -21,11 +23,13 @@ import com.braintreepayments.api.interfaces.ConfigurationListener;
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PayPalAccountNonce;
+import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.braintreepayments.api.models.PostalAddress;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.CategoryAdapter;
 import com.drkeironbrown.lifecoach.api.RestClient;
+import com.drkeironbrown.lifecoach.custom.AdDialog;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
@@ -34,6 +38,7 @@ import com.drkeironbrown.lifecoach.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,6 +82,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
         this.txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         this.txtEmpty = (TfTextView) findViewById(R.id.txtEmpty);
         this.imgBack = (ImageView) findViewById(R.id.imgBack);
+        handler = new Handler();
 
         list = new ArrayList<>();
         rvCategories.setLayoutManager(new LinearLayoutManager(this));
@@ -84,6 +90,9 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
             @Override
             public void onBuyClick(int pos) {
                 selectedPos = pos;
+                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
+
+
             }
         });
         rvCategories.setAdapter(adapter);
@@ -143,6 +152,9 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
         }
 
 
+        handler.removeCallbacks(runnable);
+        int randomNumber = random.nextInt(max + 1 - min) + min;
+        handler.postDelayed(runnable, randomNumber);
     }
 
     @Override
@@ -251,5 +263,48 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                 address.getRegion() + " " +
                 address.getPostalCode() + " " +
                 address.getCountryCodeAlpha2();
+    }
+
+    private Random random = new Random();
+    private int max = 1000 * 60;
+    private int min = 1000 * 20;
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                new AdDialog(CategoriesActivity.this, new AdDialog.OnDialogClose() {
+                    @Override
+                    public void dialogClose() {
+                        isDialogOpen = false;
+                    }
+                });
+            }
+            int randomNumber = random.nextInt(max + 1 - min) + min;
+            handler.postDelayed(runnable, randomNumber);
+        }
+    };
+    private Handler handler;
+    private boolean isDialogOpen = false;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        handler.removeCallbacks(runnable);
+        int randomNumber = random.nextInt(max + 1 - min) + min;
+        handler.postDelayed(runnable, randomNumber);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(runnable);
     }
 }

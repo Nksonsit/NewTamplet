@@ -87,4 +87,12 @@ public class PrefUtils {
         }
         return userProfileDetails;
     }
+
+    public static void setCurrentIndex(Context context, int index) {
+        Prefs.with(context).save("cindex", index);
+    }
+
+    public static int getCurrentIndex(Context context) {
+        return Prefs.with(context).getInt("cindex",-1);
+    }
 }

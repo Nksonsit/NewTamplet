@@ -1,14 +1,17 @@
 package com.drkeironbrown.lifecoach.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.AdDialog;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.MessageDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.custom.WebViewDialog;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.AppConstant;
@@ -31,6 +34,29 @@ public class Dashboard2Activity extends AppCompatActivity {
     private TfTextView txtTitle;
     private LinearLayout llSettings;
     private LinearLayout llLogout;
+    private Random random = new Random();
+    private int max = 1000 * 60;
+    private int min = 1000 * 20;
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isDialogOpen) {
+                isDialogOpen = true;
+                new AdDialog(Dashboard2Activity.this, new AdDialog.OnDialogClose() {
+                    @Override
+                    public void dialogClose() {
+                        isDialogOpen = false;
+                    }
+                });
+            }
+            int randomNumber = random.nextInt(max + 1 - min) + min;
+            handler.postDelayed(runnable, randomNumber);
+        }
+    };
+    private Handler handler;
+    private boolean isDialogOpen = false;
+    private LinearLayout llRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +75,8 @@ public class Dashboard2Activity extends AppCompatActivity {
         this.llSettings = (LinearLayout) findViewById(R.id.llSettings);
         this.llLogout = (LinearLayout) findViewById(R.id.llLogout);
         this.toolbar = (LinearLayout) findViewById(R.id.toolbar);
+        this.llRef = (LinearLayout) findViewById(R.id.llRef);
+        handler = new Handler();
         llCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +144,7 @@ public class Dashboard2Activity extends AppCompatActivity {
                 Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "YES", "NO", "Are you sure want to logout ?", new Functions.DialogOptionsSelectedListener() {
                     @Override
                     public void onSelect(boolean isYes) {
-                        if(isYes){
+                        if (isYes) {
                             PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
                             PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
@@ -128,6 +156,13 @@ public class Dashboard2Activity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        llRef.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new WebViewDialog(Dashboard2Activity.this,"Bibliography","file:///android_res/raw/ref.html");
             }
         });
 
@@ -149,7 +184,32 @@ public class Dashboard2Activity extends AppCompatActivity {
         }
 
         if (getIntent().getStringExtra("msg") != null) {
-            new MessageDialog(this,getIntent().getStringExtra("msg"));
+            new MessageDialog(this, getIntent().getStringExtra("msg"));
         }
+
+
+        handler.removeCallbacks(runnable);
+        int randomNumber = random.nextInt(max + 1 - min) + min;
+        handler.postDelayed(runnable, randomNumber);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        handler.removeCallbacks(runnable);
+        int randomNumber = random.nextInt(max + 1 - min) + min;
+        handler.postDelayed(runnable, randomNumber);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(runnable);
     }
 }
