@@ -62,6 +62,16 @@ public class SlideshowAdapter extends RecyclerView.Adapter<SlideshowAdapter.Slid
                 onClickItem.onPlayClick(position);
             }
         });
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> imageList = new ArrayList<>();
+                for (int i = 0; i < list.get(position).getImages().size(); i++) {
+                    imageList.add(list.get(position).getImages().get(i).getImagePath());
+                }
+                Functions.shareImages(context, list.get(position).getSlideshowName(), imageList);
+            }
+        });
     }
 
     @Override
@@ -83,6 +93,7 @@ public class SlideshowAdapter extends RecyclerView.Adapter<SlideshowAdapter.Slid
         private ImageView imgEdit;
         private ImageView imgDelete;
         private ImageView imgPlay;
+        private ImageView imgShare;
 
         public SlideshowViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +103,7 @@ public class SlideshowAdapter extends RecyclerView.Adapter<SlideshowAdapter.Slid
             img1 = (ImageView) itemView.findViewById(R.id.img1);
             img2 = (ImageView) itemView.findViewById(R.id.img2);
             img3 = (ImageView) itemView.findViewById(R.id.img3);
+            imgShare = (ImageView) itemView.findViewById(R.id.imgShare);
             txtSlideshowName = (TfTextView) itemView.findViewById(R.id.txtSlideshowName);
         }
     }

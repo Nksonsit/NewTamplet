@@ -123,6 +123,13 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
 
                 }
             });
+            final int finalPosition1 = position;
+            personalInspirationVH.imgShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Functions.shareSimpleText(context,list.get(finalPosition1).getPInspirational());
+                }
+            });
         }
     }
 

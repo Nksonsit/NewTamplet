@@ -609,13 +609,13 @@ public class Functions {
     public static void executeLogcat(Context context) {
         Log.d("System out", "Create Log file..");
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-            cacheDir = new File(Environment.getExternalStorageDirectory(), "BadgerAppLog");
+            cacheDir = new File(Environment.getExternalStorageDirectory(), "ActiveLifeCoachLogs");
         else
             cacheDir = context.getCacheDir();
         if (!cacheDir.exists())
             cacheDir.mkdirs();
 
-        File logFile = new File(cacheDir, "logs badger app.log"); // log file name
+        File logFile = new File(cacheDir, "logs_alc.log"); // log file name
         int sizePerFile = 60; // size in kilobytes
         int rotationCount = 10; // file rotation count
         String filter = "D"; // Debug priority
@@ -665,4 +665,29 @@ public class Functions {
         }
     }
 
+    public static void shareSimpleText(Context context, String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
+    }
+
+    public static void shareImages(Context context,String subject, List<String> filesToSend) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.setType("image/jpeg"); /* This example is sharing jpeg images. */
+
+        ArrayList<Uri> files = new ArrayList<>();
+
+        for (String path : filesToSend) {
+            File file = new File(path);
+            Uri uri = Uri.fromFile(file);
+            files.add(uri);
+        }
+
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, files);
+        context.startActivity(intent);
+    }
 }

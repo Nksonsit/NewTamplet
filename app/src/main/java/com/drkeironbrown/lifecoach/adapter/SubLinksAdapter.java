@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 
 import java.util.List;
@@ -34,7 +35,9 @@ public class SubLinksAdapter extends RecyclerView.Adapter<SubLinksAdapter.SubLin
 
     @Override
     public void onBindViewHolder(@NonNull SubLinksVH subLinksVH, final int i) {
-        subLinksVH.txtSubLinks.setText(list.get(i));
+        AdvancedSpannableString spannableString = new AdvancedSpannableString(list.get(i));
+        spannableString.setUnderLine(list.get(i));
+        subLinksVH.txtSubLinks.setText(spannableString);
         subLinksVH.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,14 +1,30 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.braintreepayments.api.BraintreeFragment;
+import com.braintreepayments.api.DataCollector;
+import com.braintreepayments.api.PayPal;
+import com.braintreepayments.api.exceptions.InvalidArgumentException;
+import com.braintreepayments.api.interfaces.BraintreeCancelListener;
+import com.braintreepayments.api.interfaces.BraintreeErrorListener;
+import com.braintreepayments.api.interfaces.BraintreeResponseListener;
+import com.braintreepayments.api.interfaces.ConfigurationListener;
+import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
+import com.braintreepayments.api.models.Configuration;
+import com.braintreepayments.api.models.PayPalAccountNonce;
+import com.braintreepayments.api.models.PayPalRequest;
+import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.braintreepayments.api.models.PostalAddress;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.AdDialog;
-import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.MessageDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.custom.WebViewDialog;
@@ -20,7 +36,22 @@ import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 import java.util.Random;
 
-public class Dashboard2Activity extends AppCompatActivity {
+public class Dashboard2Activity extends AppCompatActivity implements ConfigurationListener,
+        PaymentMethodNonceCreatedListener, BraintreeErrorListener, BraintreeCancelListener {
+
+
+    static final String EXTRA_PAYMENT_RESULT = "payment_result";
+    static final String EXTRA_DEVICE_DATA = "device_data";
+    static final String EXTRA_COLLECT_DEVICE_DATA = "collect_device_data";
+    static final String EXTRA_ANDROID_PAY_CART = "android_pay_cart";
+
+    private static final String EXTRA_AUTHORIZATION = "com.braintreepayments.demo.EXTRA_AUTHORIZATION";
+    private static final String EXTRA_CUSTOMER_ID = "com.braintreepayments.demo.EXTRA_CUSTOMER_ID";
+
+    protected BraintreeFragment mBraintreeFragment;
+
+    private boolean mActionBarSetup;
+    private String mDeviceData;
 
     private android.widget.LinearLayout toolbar;
     private android.widget.LinearLayout llCategory;
@@ -57,13 +88,21 @@ public class Dashboard2Activity extends AppCompatActivity {
     private Handler handler;
     private boolean isDialogOpen = false;
     private LinearLayout llRef;
+    private ImageView imgPaidSlideshow;
+    private ImageView imgPaidGallery;
+    private boolean isGalleryPaid = true;
+    private boolean isSlideshowPaid = true;
+    private int PaymentClickType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
         PrefUtils.setIsFirstTime(this, false);
+        Functions.executeLogcat(this);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
+        this.imgPaidSlideshow = (ImageView) findViewById(R.id.imgPaidSlideshow);
+        this.imgPaidGallery = (ImageView) findViewById(R.id.imgPaidGallery);
         this.llSecondThought = (LinearLayout) findViewById(R.id.llSecondThought);
         this.llJournal = (LinearLayout) findViewById(R.id.llJournal);
         this.llPInspirational = (LinearLayout) findViewById(R.id.llPInspirational);
@@ -94,7 +133,19 @@ public class Dashboard2Activity extends AppCompatActivity {
         llGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                if (!isGalleryPaid) {
+                    Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                } else {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $10 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
+                        @Override
+                        public void onSelect(boolean isYes) {
+                            if (isYes) {
+                                PaymentClickType = 1;
+                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("10"));
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -162,7 +213,7 @@ public class Dashboard2Activity extends AppCompatActivity {
         llRef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new WebViewDialog(Dashboard2Activity.this,"Bibliography","file:///android_res/raw/ref.html");
+                new WebViewDialog(Dashboard2Activity.this, "Bibliography", "file:///android_res/raw/ref.html");
             }
         });
 
@@ -187,10 +238,83 @@ public class Dashboard2Activity extends AppCompatActivity {
             new MessageDialog(this, getIntent().getStringExtra("msg"));
         }
 
+        try {
+            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_bsz8s3fp_225qyv663y373339");
+//            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_kswjqspg_b5qng8tnvn3sc48k");
+//            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_wvmtjryp_csrx6bnvrd78hyw9");
+        } catch (InvalidArgumentException e) {
+            onError(e);
+        }
 
         handler.removeCallbacks(runnable);
         int randomNumber = random.nextInt(max + 1 - min) + min;
         handler.postDelayed(runnable, randomNumber);
+
+    }
+
+    @Override
+    public void onCancel(int requestCode) {
+
+        Log.e(getClass().getSimpleName(), "Cancel received: " + requestCode);
+    }
+
+    @Override
+    public void onError(Exception error) {
+        Log.e(getClass().getSimpleName(), "Error received (" + error.getClass() + "): " + error.getMessage());
+        Log.e(getClass().getSimpleName(), error.toString());
+    }
+
+    @Override
+    public void onConfigurationFetched(Configuration configuration) {
+        DataCollector.collectDeviceData(mBraintreeFragment, new BraintreeResponseListener<String>() {
+            @Override
+            public void onResponse(String deviceData) {
+                mDeviceData = deviceData;
+            }
+        });
+
+    }
+
+    @Override
+    public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
+
+        Log.e(getClass().getSimpleName(), "Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
+
+        Intent intent = new Intent()
+                .putExtra(CategoriesActivity.EXTRA_PAYMENT_RESULT, paymentMethodNonce)
+                .putExtra(CategoriesActivity.EXTRA_DEVICE_DATA, mDeviceData);
+//        setResult(RESULT_OK, intent);
+//        finish();
+
+        if (PaymentClickType == 1) {
+            isGalleryPaid = true;
+            imgPaidGallery.setVisibility(View.GONE);
+        } else if (PaymentClickType == 2) {
+            isSlideshowPaid = true;
+            imgPaidSlideshow.setVisibility(View.GONE);
+        }
+    }
+
+
+    public static String getDisplayString(PayPalAccountNonce nonce) {
+        return "First name: " + nonce.getFirstName() + "\n" +
+                "Last name: " + nonce.getLastName() + "\n" +
+                "Email: " + nonce.getEmail() + "\n" +
+                "Phone: " + nonce.getPhone() + "\n" +
+                "Payer id: " + nonce.getPayerId() + "\n" +
+                "Client metadata id: " + nonce.getClientMetadataId() + "\n" +
+                "Billing address: " + formatAddress(nonce.getBillingAddress()) + "\n" +
+                "Shipping address: " + formatAddress(nonce.getShippingAddress());
+    }
+
+    private static String formatAddress(PostalAddress address) {
+        return address.getRecipientName() + " " +
+                address.getStreetAddress() + " " +
+                address.getExtendedAddress() + " " +
+                address.getLocality() + " " +
+                address.getRegion() + " " +
+                address.getPostalCode() + " " +
+                address.getCountryCodeAlpha2();
     }
 
     @Override

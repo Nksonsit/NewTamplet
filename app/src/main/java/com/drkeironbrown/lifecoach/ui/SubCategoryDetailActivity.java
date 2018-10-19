@@ -44,7 +44,7 @@ public class SubCategoryDetailActivity extends AppCompatActivity {
 
         txtTitle.setText(category.getCategoryName());
 
-        txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail()));
+        txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail().replace("&#39;", "'")));
 
         txtDestroy.setOnClickListener(new View.OnClickListener() {
             @Override

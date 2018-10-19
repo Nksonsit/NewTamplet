@@ -1,5 +1,6 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +11,15 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -27,6 +33,22 @@ public class SplashActivity extends AppCompatActivity {
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        TedPermission.with(this).setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissionListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        init();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        Functions.showToast(SplashActivity.this, "You can not proceed further without allow.", MDToast.TYPE_INFO);
+                        onBackPressed();
+                    }
+                }).check();
+    }
+
+    private void init() {
         txtDr = (TfTextView) findViewById(R.id.txtDr);
         new CountDownTimer(2000, 1000) {
             @Override

@@ -86,7 +86,12 @@ public class CategoryDetailActivity extends AppCompatActivity {
         category = (Category) getIntent().getSerializableExtra("category");
 
 
-        rvSubLinks.setLayoutManager(new LinearLayoutManager(this));
+        rvSubLinks.setLayoutManager(new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         subLinksList = new ArrayList<>();
         if (category.getIsSubData().equalsIgnoreCase("1")) {
             if (category.getSubLinks().contains(",")) {
@@ -118,7 +123,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
         txtTitle.setText(category.getCategoryName());
 
-        txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail()));
+        txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail().replace("&#39;", "'")));
 
         mediaPlayer = new MediaPlayer();
 

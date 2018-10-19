@@ -63,6 +63,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
                 onClickItem.onSeeClick(position);
             }
         });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> imageList = new ArrayList<>();
+                for (int i = 0; i < list.get(position).getImages().size(); i++) {
+                    imageList.add(list.get(position).getImages().get(i).getImagePath());
+                }
+                Functions.shareImages(context, list.get(position).getGalleryName(), imageList);
+            }
+        });
     }
 
     public void setDataList(List<Gallery> list) {
@@ -85,6 +96,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         private ImageView imgEdit;
         private ImageView imgDelete;
         private ImageView imgSee;
+        private ImageView imgShare;
 
         public GalleryViewHolder(View itemView) {
             super(itemView);
@@ -94,6 +106,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
             img2 = (ImageView) itemView.findViewById(R.id.img2);
             img3 = (ImageView) itemView.findViewById(R.id.img3);
             imgSee = (ImageView) itemView.findViewById(R.id.imgSee);
+            imgShare = (ImageView) itemView.findViewById(R.id.imgShare);
             txtGalleryName = (TfTextView) itemView.findViewById(R.id.txtGalleryName);
         }
     }

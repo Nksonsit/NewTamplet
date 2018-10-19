@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.helper.Functions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Random;
 
 public class MessageDialog extends Dialog {
 
+    private ImageView imgShare;
     private CardView msgView;
     private TfButton btnOk;
     private TfTextView txtMsg;
@@ -32,7 +34,7 @@ public class MessageDialog extends Dialog {
     private Animation scalOut;
     private View view;
 
-    public MessageDialog(@NonNull Context context, String msg) {
+    public MessageDialog(@NonNull final Context context, final String msg) {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         view = LayoutInflater.from(context).inflate(R.layout.dialog_msg, null);
@@ -78,6 +80,7 @@ public class MessageDialog extends Dialog {
             }
         });
 
+        imgShare = (ImageView) view.findViewById(R.id.imgShare);
         msgView = (CardView) view.findViewById(R.id.msgView);
         List<Integer> colorList = new ArrayList<>();
         colorList.add(R.color.intro_blue);
@@ -104,6 +107,14 @@ public class MessageDialog extends Dialog {
         txtMsg.setText(msg);
 
         show();
+
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.shareSimpleText(context,msg);
+                onBackPressed();
+            }
+        });
     }
 
     @Override

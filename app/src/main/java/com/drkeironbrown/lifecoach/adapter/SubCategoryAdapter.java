@@ -45,6 +45,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                     Functions.showToast(context, context.getString(R.string.check_internet), MDToast.TYPE_ERROR);
                     return;
                 }
+                onSubLinksClick.onSubLinksClick(i);
             }
         });
         categoryVH.txtNote.setVisibility(View.GONE);

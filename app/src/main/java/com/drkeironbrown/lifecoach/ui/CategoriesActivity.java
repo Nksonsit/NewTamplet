@@ -91,8 +91,6 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
             public void onBuyClick(int pos) {
                 selectedPos = pos;
                 PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
-
-
             }
         });
         rvCategories.setAdapter(adapter);

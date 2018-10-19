@@ -58,7 +58,14 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_launcher" />
 
-
+                <ImageView
+                    android:id="@+id/imgShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/imgEdit"
+                    android:padding="@dimen/padding_8"
+                    android:src="@drawable/ic_share" />
                 <ImageView
                     android:id="@+id/imgEdit"
                     android:layout_width="wrap_content"
