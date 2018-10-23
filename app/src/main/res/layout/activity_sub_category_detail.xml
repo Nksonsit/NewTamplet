@@ -44,26 +44,25 @@
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtCategoryDetail"
                 android:layout_width="match_parent"
-                android:padding="16dp"
                 android:layout_height="wrap_content"
+                android:padding="16dp"
                 android:textColor="@color/darkColor"
                 android:textSize="18sp" />
 
 
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtDestroy"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/sub_links_bg"
-                android:paddingBottom="@dimen/padding_8"
                 android:paddingLeft="@dimen/padding_16"
-                android:paddingRight="@dimen/padding_16"
                 android:paddingTop="@dimen/padding_8"
-                android:text="Destroy Barrier"
-                app:isBold="true"
-                android:textColor="@color/white"/>
+                android:paddingRight="@dimen/padding_16"
+                android:paddingBottom="@dimen/padding_8"
+                android:text="Destroy the Barrier"
+                android:textColor="@color/white"
+                app:isBold="true" />
 
 
         </LinearLayout>

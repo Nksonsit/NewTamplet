@@ -119,14 +119,27 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, CategoriesActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Choose a category and change your life", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, CategoriesActivity.class, true);
+                    }
+                });
             }
         });
 
         llSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                    }
+                });
+
             }
         });
 
@@ -134,7 +147,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             @Override
             public void onClick(View v) {
                 if (!isGalleryPaid) {
-                    Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                        @Override
+                        public void onSelect(boolean isYes) {
+                            if (isYes)
+                                Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                        }
+                    });
+
                 } else {
                     Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $10 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
                         @Override
@@ -152,35 +172,70 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, ShopActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, ShopActivity.class, true);
+                    }
+                });
+
             }
         });
 
         llJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Record your thoughts, feelings and progress on your journey to success and happiness.", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
+                    }
+                });
+
             }
         });
 
         llPInspirational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, PersonalInspirationalActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes your own words are the most encouraging.  Write in your own quotes or messages and have them delivered to you at random times or on a scheduled basis to keep you motivated and on-track.", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, PersonalInspirationalActivity.class, true);
+                    }
+                });
+
             }
         });
 
         llInspirational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, InspirationalActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Have notable quotes sent to you at random times or on a scheduled basis to keep you inspired and motivated!", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, InspirationalActivity.class, true);
+                    }
+                });
+
             }
         });
 
         llSecondThought.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(Dashboard2Activity.this, SecondThoughtActivity.class, true);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes you just want to get things off your chest and just vent! Express your thoughts and feelings here and then securely and safely “Let it go.”", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, SecondThoughtActivity.class, true);
+                    }
+                });
+
             }
         });
         llSettings.setOnClickListener(new View.OnClickListener() {
@@ -192,21 +247,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "YES", "NO", "Are you sure want to logout ?", new Functions.DialogOptionsSelectedListener() {
-                    @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes) {
-                            PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
-                            PrefUtils.setIsLogin(Dashboard2Activity.this, false);
+                PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
+                PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
-                            PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
-                            PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
+                PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
+                PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
 
-                            Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
-                            finish();
-                        }
-                    }
-                });
+                Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
+                finish();
             }
         });
 
@@ -239,7 +287,8 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         }
 
         try {
-            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_bsz8s3fp_225qyv663y373339");
+            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_364x39y6_4js5793tp4yg6pz9");
+//            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_bsz8s3fp_225qyv663y373339");
 //            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_kswjqspg_b5qng8tnvn3sc48k");
 //            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_wvmtjryp_csrx6bnvrd78hyw9");
         } catch (InvalidArgumentException e) {

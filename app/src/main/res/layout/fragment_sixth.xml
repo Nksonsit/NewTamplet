@@ -32,7 +32,7 @@
         android:layout_below="@id/txtCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:padding="@dimen/padding_8"
         android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
         android:textColor="@color/off_white"
         android:textSize="16sp" />

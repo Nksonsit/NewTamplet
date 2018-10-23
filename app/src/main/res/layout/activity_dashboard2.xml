@@ -35,7 +35,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:gravity="center"
-            android:text="Very little is needed to make a happy life; it is all within yourself, in your way of thinking."
+            android:text="Your Path to Success and Happiness Starts Here"
             android:textColor="@color/white"
             android:textStyle="italic" />
     </LinearLayout>
@@ -169,7 +169,7 @@
                         <com.drkeironbrown.lifecoach.custom.TfTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Vision board"
+                            android:text="Vision Board"
                             android:textColor="@color/darkColor" />
 
                     </LinearLayout>
@@ -307,7 +307,7 @@
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Personal Inspirational"
+                        android:text="Personal Inspiration"
                         android:textColor="@color/darkColor" />
                 </LinearLayout>
 
@@ -393,7 +393,7 @@
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="On second thought"
+                        android:text="On Second Thought..."
                         android:textColor="@color/darkColor" />
                 </LinearLayout>
 

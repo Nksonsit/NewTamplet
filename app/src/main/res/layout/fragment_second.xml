@@ -20,7 +20,7 @@
         android:layout_below="@id/imgCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Vision board"
+        android:text="Vision Board"
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
         android:layout_below="@id/txtCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:padding="@dimen/padding_8"
         android:text="It’s often helpful to be able to visualize your goals.  Select and post photos to help you create your own Vision Board, your visual map to happiness, fulfillment and success."
         android:textColor="@color/off_white"
         android:textSize="16sp" />

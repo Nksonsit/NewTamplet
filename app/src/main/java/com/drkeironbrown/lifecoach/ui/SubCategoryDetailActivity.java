@@ -39,7 +39,6 @@ public class SubCategoryDetailActivity extends AppCompatActivity {
             }
         });
 
-
         category = (SubCategory) getIntent().getSerializableExtra("subcat");
 
         txtTitle.setText(category.getCategoryName());
@@ -51,6 +50,7 @@ public class SubCategoryDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 isSolDisplay = true;
                 txtCategoryDetail.setText(Html.fromHtml(category.getCategorySol()));
+                txtDestroy.setVisibility(View.GONE);
             }
         });
 

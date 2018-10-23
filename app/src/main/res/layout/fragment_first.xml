@@ -32,7 +32,7 @@
         android:layout_below="@id/txtCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:padding="@dimen/padding_8"
         android:text="Choose from an array of common issues and obstacles to progress and receive help and guidance to get you past them and put you on the road to your success!"
         android:textColor="@color/off_white"
         android:textSize="16sp" />

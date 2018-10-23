@@ -32,7 +32,7 @@
         android:layout_below="@id/txtCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:padding="@dimen/padding_8"
         android:text="Put your photos in motion!  Select and post photos of your goals, select some music to go along with them, and now you have a slideshow of your journey and your success, complete with a soundtrack!"
         android:textColor="@color/off_white"
         android:textSize="16sp" />

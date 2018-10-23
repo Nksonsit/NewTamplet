@@ -20,7 +20,7 @@
         android:layout_below="@id/imgCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="On second thought"
+        android:text="On Second Thought..."
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
         android:layout_below="@id/txtCategory"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:padding="@dimen/padding_8"
         android:text="How many times do we simply want to vent our strongest feelings, but we don’t want others to know about it?  Ever.  This feature allows you to type your message and after you’ve vented, click “Let It Go” and that message goes away.  Forever."
         android:textColor="@color/off_white"
         android:textSize="16sp" />

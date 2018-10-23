@@ -90,7 +90,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                         SubCategory subCategory = response.body().getData().get(0);
                         Intent intent = new Intent(SubCategoryActivity.this, SubCategoryDetailActivity.class);
                         intent.putExtra("subcat", subCategory);
-                        Functions.fireIntent(SubCategoryActivity.this, intent, false);
+                        Functions.fireIntent(SubCategoryActivity.this, intent, true);
                     } else {
                         Functions.showToast(SubCategoryActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
                     }
