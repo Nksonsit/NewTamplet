@@ -123,7 +123,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
         txtTitle.setText(category.getCategoryName());
 
-        txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail().replace("&#39;", "'")));
+        txtCategoryDetail.setText("<![CDATA["+Html.fromHtml(category.getCategoryDetail())+"?]]>");
 
         mediaPlayer = new MediaPlayer();
 
