@@ -1,6 +1,5 @@
 package com.drkeironbrown.lifecoach.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +23,9 @@ import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.braintreepayments.api.models.PostalAddress;
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.AdDialog;
+import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.MessageDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.custom.WebViewDialog;
@@ -33,8 +34,17 @@ import com.drkeironbrown.lifecoach.helper.AlarmHelper;
 import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
+import com.drkeironbrown.lifecoach.model.BaseResponse;
+import com.drkeironbrown.lifecoach.model.PaidProduct;
+import com.drkeironbrown.lifecoach.model.PaidProductReq;
+import com.drkeironbrown.lifecoach.model.PayMoney;
 
+import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Dashboard2Activity extends AppCompatActivity implements ConfigurationListener,
         PaymentMethodNonceCreatedListener, BraintreeErrorListener, BraintreeCancelListener {
@@ -132,13 +142,26 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
-                    @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
-                    }
-                });
+                if (!isSlideshowPaid) {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                        @Override
+                        public void onSelect(boolean isYes) {
+                            if (isYes)
+                                Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                        }
+                    });
+
+                } else {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
+                        @Override
+                        public void onSelect(boolean isYes) {
+                            if (isYes) {
+                                PaymentClickType = 2;
+                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                            }
+                        }
+                    });
+                }
 
             }
         });
@@ -156,12 +179,12 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $10 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
                         @Override
                         public void onSelect(boolean isYes) {
                             if (isYes) {
                                 PaymentClickType = 1;
-                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("10"));
+                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
                             }
                         }
                     });
@@ -172,14 +195,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "", new Functions.DialogOptionsSelectedListener() {
-                    @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, ShopActivity.class, true);
-                    }
-                });
-
+                Functions.fireIntent(Dashboard2Activity.this, ShopActivity.class, true);
             }
         });
 
@@ -329,19 +345,56 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
         Log.e(getClass().getSimpleName(), "Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
 
-        Intent intent = new Intent()
-                .putExtra(CategoriesActivity.EXTRA_PAYMENT_RESULT, paymentMethodNonce)
-                .putExtra(CategoriesActivity.EXTRA_DEVICE_DATA, mDeviceData);
-//        setResult(RESULT_OK, intent);
-//        finish();
+        PayMoney payMoney = new PayMoney();
+        payMoney.setCatId(0);
+        payMoney.setAmount("1.0");
+        payMoney.setDeviceData(mDeviceData);
+        payMoney.setNonce(paymentMethodNonce.getNonce());
+        payMoney.setType(PaymentClickType);
+        payMoney.setUserId(PrefUtils.getUserFullProfileDetails(Dashboard2Activity.this).getUserId());
 
-        if (PaymentClickType == 1) {
-            isGalleryPaid = true;
-            imgPaidGallery.setVisibility(View.GONE);
-        } else if (PaymentClickType == 2) {
-            isSlideshowPaid = true;
-            imgPaidSlideshow.setVisibility(View.GONE);
-        }
+        RestClient.get().payMoney(payMoney).enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus() == 1) {
+                        Functions.showToast(Dashboard2Activity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
+                        if (PaymentClickType == 1) {
+                            isGalleryPaid = true;
+                            imgPaidGallery.setVisibility(View.GONE);
+                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                                @Override
+                                public void onSelect(boolean isYes) {
+                                    if (isYes)
+                                        Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                                }
+                            });
+                        } else if (PaymentClickType == 2) {
+                            isSlideshowPaid = true;
+                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                                @Override
+                                public void onSelect(boolean isYes) {
+                                    if (isYes)
+                                        Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                                }
+                            });
+                            imgPaidSlideshow.setVisibility(View.GONE);
+                        }
+                    } else {
+                        Functions.showToast(Dashboard2Activity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
+                    }
+                } else {
+                    Functions.showToast(Dashboard2Activity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Functions.showToast(Dashboard2Activity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+            }
+        });
+
+
     }
 
 
@@ -384,5 +437,34 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PaidProductReq paidProductReq = new PaidProductReq();
+        paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
+        RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<List<PaidProduct>>> call, Response<BaseResponse<List<PaidProduct>>> response) {
+                if (response.body() != null && response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        if (response.body().getData().get(i).getType() == 1) {
+                            isGalleryPaid = false;
+                            imgPaidGallery.setVisibility(View.GONE);
+                        }
+                        if (response.body().getData().get(i).getType() == 2) {
+                            isSlideshowPaid = false;
+                            imgPaidSlideshow.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<List<PaidProduct>>> call, Throwable t) {
+
+            }
+        });
     }
 }

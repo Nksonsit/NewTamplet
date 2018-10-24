@@ -29,6 +29,7 @@ public class FunctionSlideActivity extends AppCompatActivity {
     private FragmentManager fm;
     private int count = 1;
     private View divider;
+    private View bottomSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,10 @@ public class FunctionSlideActivity extends AppCompatActivity {
         Window w = getWindow(); // in Activity's onCreate() for instance
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+
         txtSkip = (TfTextView) findViewById(R.id.txtSkip);
         txtNext = (TfTextView) findViewById(R.id.txtNext);
+        bottomSpace = findViewById(R.id.bottomSpace);
         divider = findViewById(R.id.divider);
         container = (LinearLayout) findViewById(R.id.container);
 
@@ -77,6 +80,11 @@ public class FunctionSlideActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (Functions.hasSoftKeys(this, getWindowManager())) {
+            bottomSpace.setMinimumHeight(102);
+        }
+
     }
 
     private void pushFragment(Fragment fragment) {

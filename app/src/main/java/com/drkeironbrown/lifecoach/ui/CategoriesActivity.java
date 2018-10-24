@@ -33,8 +33,12 @@ import com.drkeironbrown.lifecoach.custom.AdDialog;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Category;
+import com.drkeironbrown.lifecoach.model.PaidProduct;
+import com.drkeironbrown.lifecoach.model.PaidProductReq;
+import com.drkeironbrown.lifecoach.model.PayMoney;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +118,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                             adapter.setDataList(list);
                             rvCategories.setVisibility(View.VISIBLE);
                             llEmptyView.setVisibility(View.GONE);
-
+                            getPaidProduct();
                         } else {
                             rvCategories.setVisibility(View.GONE);
                             txtEmpty.setVisibility(View.VISIBLE);
@@ -142,7 +146,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
 
 
         try {
-            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_364x39y6_4js5793tp4yg6pz9s");
+            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_364x39y6_4js5793tp4yg6pz9");
 //            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_bsz8s3fp_225qyv663y373339");
 //            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_kswjqspg_b5qng8tnvn3sc48k");
 //            mBraintreeFragment = BraintreeFragment.newInstance(this, "sandbox_wvmtjryp_csrx6bnvrd78hyw9");
@@ -196,8 +200,35 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
 //        setResult(RESULT_OK, intent);
 //        finish();
 
-        list.get(selectedPos).setCategoryPrice("0");
-        adapter.setDataList(list);
+        PayMoney payMoney = new PayMoney();
+        payMoney.setCatId(list.get(selectedPos).getCategoryId());
+        payMoney.setAmount(list.get(selectedPos).getCategoryPrice());
+        payMoney.setDeviceData(mDeviceData);
+        payMoney.setNonce(paymentMethodNonce.getNonce());
+        payMoney.setType(3);
+        payMoney.setUserId(PrefUtils.getUserFullProfileDetails(CategoriesActivity.this).getUserId());
+
+        RestClient.get().payMoney(payMoney).enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus() == 1) {
+                        Functions.showToast(CategoriesActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
+                        list.get(selectedPos).setCategoryPrice("0");
+                        adapter.setDataList(list);
+                    } else {
+                        Functions.showToast(CategoriesActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
+                    }
+                } else {
+                    Functions.showToast(CategoriesActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Functions.showToast(CategoriesActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
+            }
+        });
     }
 
    /* private PayPalRequest getPayPalRequest(@Nullable String amount) {
@@ -305,5 +336,32 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+    }
+
+    public void getPaidProduct() {
+        PaidProductReq paidProductReq = new PaidProductReq();
+        paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
+        RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<List<PaidProduct>>> call, Response<BaseResponse<List<PaidProduct>>> response) {
+                if (response.body() != null && response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
+                    for (int k = 0; k < list.size(); k++) {
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            if (response.body().getData().get(i).getType() == 3) {
+                                if (list.get(k).getCategoryId() == response.body().getData().get(i).getCatId()) {
+                                    list.get(k).setCategoryPrice("0");
+                                }
+                            }
+                        }
+                    }
+                    adapter.setDataList(list);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<List<PaidProduct>>> call, Throwable t) {
+
+            }
+        });
     }
 }

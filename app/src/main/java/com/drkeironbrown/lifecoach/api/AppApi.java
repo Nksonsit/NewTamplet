@@ -5,6 +5,9 @@ import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Category;
 import com.drkeironbrown.lifecoach.model.CategoryReq;
 import com.drkeironbrown.lifecoach.model.LoginReq;
+import com.drkeironbrown.lifecoach.model.PaidProduct;
+import com.drkeironbrown.lifecoach.model.PaidProductReq;
+import com.drkeironbrown.lifecoach.model.PayMoney;
 import com.drkeironbrown.lifecoach.model.RegisterReq;
 import com.drkeironbrown.lifecoach.model.Shop;
 import com.drkeironbrown.lifecoach.model.SubCategory;
@@ -39,4 +42,11 @@ public interface AppApi {
 
     @GET("GetShop.php")
     Call<BaseResponse<List<Shop>>> getShop();
+
+
+    @POST("PayMoney.php")
+    Call<BaseResponse> payMoney(@Body PayMoney payMoney);
+
+    @POST("GetPayments.php")
+    Call<BaseResponse<List<PaidProduct>>> getPaidProducts(@Body PaidProductReq paidProductReq);
 }
