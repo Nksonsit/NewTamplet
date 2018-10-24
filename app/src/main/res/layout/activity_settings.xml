@@ -62,7 +62,7 @@
         <com.drkeironbrown.lifecoach.custom.TfTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inspirational message"
+            android:text="Inspiration message"
             android:textSize="18sp" />
 
         <Space
@@ -100,7 +100,7 @@
         <com.drkeironbrown.lifecoach.custom.TfTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Personal inspirational message"
+            android:text="Personal inspiration message"
             android:textSize="18sp" />
 
         <Space
@@ -130,5 +130,55 @@
                 android:hint="Select time"
                 android:padding="8dp" />
         </LinearLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="32dp" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Latest update and notification"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/darkColor" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbGetMail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Get the latest update and notification"
+                android:textSize="12sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_4"
+                android:gravity="center"
+                android:text="Read more"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:isBold="true" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

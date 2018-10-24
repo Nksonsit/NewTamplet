@@ -263,14 +263,22 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
-                PrefUtils.setIsLogin(Dashboard2Activity.this, false);
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "CANCEL", "Are you sure want to logout?", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes){
+                            PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
+                            PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
-                PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
-                PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
+                            PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
+                            PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
 
-                Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
-                finish();
+                            Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
+                            finish();
+                        }
+                    }
+                });
+
             }
         });
 

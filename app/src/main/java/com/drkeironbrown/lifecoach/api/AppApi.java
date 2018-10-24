@@ -12,6 +12,7 @@ import com.drkeironbrown.lifecoach.model.RegisterReq;
 import com.drkeironbrown.lifecoach.model.Shop;
 import com.drkeironbrown.lifecoach.model.SubCategory;
 import com.drkeironbrown.lifecoach.model.SubCategoryReq;
+import com.drkeironbrown.lifecoach.model.UpdateNotificationReq;
 import com.drkeironbrown.lifecoach.model.User;
 
 import java.util.List;
@@ -49,4 +50,7 @@ public interface AppApi {
 
     @POST("GetPayments.php")
     Call<BaseResponse<List<PaidProduct>>> getPaidProducts(@Body PaidProductReq paidProductReq);
+
+    @POST("UpdateNotification.php")
+    Call<BaseResponse> updateNotification(@Body UpdateNotificationReq updateNotificationReq);
 }

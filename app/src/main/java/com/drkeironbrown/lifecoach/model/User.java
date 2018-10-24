@@ -4,6 +4,15 @@ public class User {
     private int UserId;
     private String Username;
     private String EmailId;
+    private int Noti;
+
+    public int getNoti() {
+        return Noti;
+    }
+
+    public void setNoti(int noti) {
+        Noti = noti;
+    }
 
     public int getUserId() {
         return UserId;
