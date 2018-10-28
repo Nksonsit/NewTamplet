@@ -50,6 +50,7 @@
                 android:textSize="18sp" />
 
 
+
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtDestroy"
                 android:layout_width="wrap_content"

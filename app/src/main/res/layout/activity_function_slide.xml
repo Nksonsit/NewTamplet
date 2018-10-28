@@ -22,7 +22,7 @@
         android:id="@+id/txtNext"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/height_42"
-        android:layout_above="@+id/bottomSpace"
+        android:layout_above="@+id/rrBottom"
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:paddingRight="32dp"
@@ -30,11 +30,18 @@
         android:textColor="@color/off_white"
         android:textSize="@dimen/text_size_14" />
 
-    <View
-        android:id="@+id/bottomSpace"
+    <RelativeLayout
+        android:id="@+id/rrBottom"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/bottomSpace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
     <com.drkeironbrown.lifecoach.custom.TfTextView
         android:id="@+id/txtSkip"

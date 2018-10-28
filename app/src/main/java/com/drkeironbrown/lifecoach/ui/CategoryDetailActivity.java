@@ -2,6 +2,7 @@ package com.drkeironbrown.lifecoach.ui;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -123,7 +125,11 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
         txtTitle.setText(category.getCategoryName());
 
-        txtCategoryDetail.setText("<![CDATA["+Html.fromHtml(category.getCategoryDetail())+"?]]>");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail()));
+        }
 
         mediaPlayer = new MediaPlayer();
 

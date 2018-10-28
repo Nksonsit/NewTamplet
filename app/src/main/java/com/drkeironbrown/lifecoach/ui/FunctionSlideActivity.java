@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
@@ -82,7 +84,8 @@ public class FunctionSlideActivity extends AppCompatActivity {
         });
 
         if (Functions.hasSoftKeys(this, getWindowManager())) {
-            bottomSpace.setMinimumHeight(102);
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,102);
+            bottomSpace.setLayoutParams(param);
         }
 
     }
