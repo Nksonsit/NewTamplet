@@ -72,8 +72,8 @@ public class SettingsActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-                                txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", hourOfDay));
-                                PrefUtils.setInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", hourOfDay));
+                                txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                PrefUtils.setInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                             }
                         },
                         now.get(Calendar.HOUR_OF_DAY),
@@ -103,8 +103,8 @@ public class SettingsActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-                                txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", hourOfDay));
-                                PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", hourOfDay));
+                                txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                             }
                         },
                         now.get(Calendar.HOUR_OF_DAY),

@@ -292,12 +292,19 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
         AlarmHelper alarmHelper = new AlarmHelper();
         if (!PrefUtils.isInspirational(this)) {
-            final int min = AppConstant.StartingHour;
+/*            final int min = AppConstant.StartingHour;
             final int max = AppConstant.EndingHour;
             final int random = new Random().nextInt((max - min) + 1) + min;
             PrefUtils.setIsInspirationalSet(this, true);
-            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);
+            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);*/
+
+            String tempTime = PrefUtils.getInspirationalNotiTime(this);
+            String[] timeSplit = tempTime.split(":");
+            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, true);
         }
+
+
+
         if (!PrefUtils.isPInspirational(this) && DBOpenHelper.getPInspirationalCount() > 0) {
             final int min = AppConstant.StartingHour;
             final int max = AppConstant.EndingHour;
@@ -323,6 +330,9 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         int randomNumber = random.nextInt(max + 1 - min) + min;
         handler.postDelayed(runnable, randomNumber);
 
+
+//        imgPaidGallery.setVisibility(View.GONE);
+//        imgPaidSlideshow.setVisibility(View.GONE);
     }
 
     @Override

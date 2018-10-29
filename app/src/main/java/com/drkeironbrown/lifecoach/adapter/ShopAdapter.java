@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
     @Override
     public void onBindViewHolder(@NonNull ShopVH holder, final int position) {
         Glide.with(context).load("http://drkeironbrown.com/alc/admin/" + list.get(position).getShopImg()).into(holder.imgBook);
-        holder.txtBookName.setText(list.get(position).getShopName());
+        holder.txtBookName.setText(Html.fromHtml(list.get(position).getShopName()));
         holder.txtBookPrice.setText("$" + list.get(position).getShopPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

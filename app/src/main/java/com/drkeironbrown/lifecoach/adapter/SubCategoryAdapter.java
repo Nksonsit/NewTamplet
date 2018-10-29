@@ -1,8 +1,8 @@
 package com.drkeironbrown.lifecoach.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,8 @@ import android.view.ViewGroup;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
-import com.drkeironbrown.lifecoach.model.Category;
-import com.drkeironbrown.lifecoach.ui.CategoryDetailActivity;
 
 import java.util.List;
 
@@ -49,6 +48,11 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             }
         });
         categoryVH.txtNote.setVisibility(View.GONE);
+
+        AdvancedSpannableString spannableString = new AdvancedSpannableString("Click to read");
+//        spannableString.setColor(ContextCompat.getColor(context, R.color.green), "read");
+        spannableString.setUnderLine("Click to read");
+        categoryVH.txtReadMore.setText(spannableString);
     }
 
     @Override
@@ -57,12 +61,13 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     public class CategoryVH extends RecyclerView.ViewHolder {
-        private TfTextView txtCategoy, txtNote;
+        private TfTextView txtCategoy, txtNote, txtReadMore;
 
         public CategoryVH(View itemView) {
             super(itemView);
             txtCategoy = (TfTextView) itemView.findViewById(R.id.txtCategory);
             txtNote = (TfTextView) itemView.findViewById(R.id.txtNote);
+            txtReadMore = (TfTextView) itemView.findViewById(R.id.txtReadMore);
         }
     }
 
