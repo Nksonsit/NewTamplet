@@ -266,7 +266,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                 Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "CANCEL", "Are you sure want to logout?", new Functions.DialogOptionsSelectedListener() {
                     @Override
                     public void onSelect(boolean isYes) {
-                        if (isYes){
+                        if (isYes) {
                             PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
                             PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
@@ -292,17 +292,12 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
         AlarmHelper alarmHelper = new AlarmHelper();
         if (!PrefUtils.isInspirational(this)) {
-/*            final int min = AppConstant.StartingHour;
+            final int min = AppConstant.StartingHour;
             final int max = AppConstant.EndingHour;
             final int random = new Random().nextInt((max - min) + 1) + min;
             PrefUtils.setIsInspirationalSet(this, true);
-            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);*/
-
-            String tempTime = PrefUtils.getInspirationalNotiTime(this);
-            String[] timeSplit = tempTime.split(":");
-            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true, true);
+            alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);
         }
-
 
 
         if (!PrefUtils.isPInspirational(this) && DBOpenHelper.getPInspirationalCount() > 0) {

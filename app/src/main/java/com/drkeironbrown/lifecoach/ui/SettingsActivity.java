@@ -15,7 +15,10 @@ import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.custom.WebViewDialog;
+import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
+import com.drkeironbrown.lifecoach.helper.AlarmHelper;
+import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
@@ -40,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     private LinearLayout llPInspirationalTime;
     private android.widget.CheckBox cbGetMail2;
     private TfTextView txtReadMore;
+    private AlarmHelper alarmHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        alarmHelper = new AlarmHelper();
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +79,10 @@ public class SettingsActivity extends AppCompatActivity {
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
                                 txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                                 PrefUtils.setInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+
+                                String tempTime = PrefUtils.getInspirationalNotiTime(SettingsActivity.this);
+                                String[] timeSplit = tempTime.split(":");
+                                alarmHelper.setReminder(SettingsActivity.this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), false, true);
                             }
                         },
                         now.get(Calendar.HOUR_OF_DAY),
@@ -105,6 +114,12 @@ public class SettingsActivity extends AppCompatActivity {
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
                                 txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                                 PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+
+                                if (DBOpenHelper.getPInspirationalCount() > 0) {
+                                    String tempTime = PrefUtils.getPInspirationalNotiTime(SettingsActivity.this);
+                                    String[] timeSplit = tempTime.split(":");
+                                    alarmHelper.setReminder(SettingsActivity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), false, false);
+                                }
                             }
                         },
                         now.get(Calendar.HOUR_OF_DAY),
