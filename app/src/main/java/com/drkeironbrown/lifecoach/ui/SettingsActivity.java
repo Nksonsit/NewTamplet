@@ -68,6 +68,13 @@ public class SettingsActivity extends AppCompatActivity {
         });
         txtTitle.setText("Settings");
 
+        if (PrefUtils.getInspirationalNotiTime(SettingsActivity.this) != null)
+            txtInspirationalTime.setText(PrefUtils.getInspirationalNotiTime(SettingsActivity.this));
+
+
+        if (PrefUtils.getPInspirationalNotiTime(SettingsActivity.this) != null)
+            txtPInspirationalTime.setText(PrefUtils.getPInspirationalNotiTime(SettingsActivity.this));
+
         llInspirationalTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
