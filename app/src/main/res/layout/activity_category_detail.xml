@@ -42,6 +42,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/llAudioView"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -144,13 +145,18 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/depression"
+                android:scaleType="centerCrop"/>
 
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtCategoryDetail"
                 android:layout_width="match_parent"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingTop="16dp"
+                android:paddingTop="8dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkColor"
                 android:textSize="12sp" />
