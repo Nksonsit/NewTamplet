@@ -50,7 +50,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -64,8 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
+                    android:background="@color/colorPrimary1"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_8">
@@ -75,28 +74,22 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/category"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Category"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
 
                 <LinearLayout
                     android:id="@+id/llShop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
+                    android:background="@color/colorPrimary2"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_8">
@@ -106,37 +99,15 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/shop"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Shop"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,9 +116,9 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:background="@color/colorPrimary3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1">
 
                     <LinearLayout
@@ -164,13 +135,13 @@
                             android:layout_height="52dp"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:src="@drawable/gallery"
-                            android:tint="@color/colorPrimary" />
+                            android:tint="@color/white" />
 
                         <com.drkeironbrown.lifecoach.custom.TfTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Vision Board"
-                            android:textColor="@color/darkColor" />
+                            android:textColor="@color/white" />
 
                     </LinearLayout>
 
@@ -182,19 +153,13 @@
                         android:src="@drawable/ic_paid" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:background="@color/colorPrimary4"
                         android:id="@+id/llSlideshow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -208,13 +173,13 @@
                             android:layout_height="52dp"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:src="@drawable/slideshow"
-                            android:tint="@color/colorPrimary" />
+                            android:tint="@color/white" />
 
                         <com.drkeironbrown.lifecoach.custom.TfTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Vision Videos"
-                            android:textColor="@color/darkColor" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <ImageView
@@ -229,38 +194,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar"
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:background="@color/colorPrimary5"
                     android:id="@+id/llInspirational"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -271,28 +214,22 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/inspirational"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Inspirational"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
 
                 <LinearLayout
                     android:id="@+id/llPInspirational"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
+                    android:background="@color/colorPrimary6"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_8">
@@ -302,37 +239,15 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/personal_inspirational"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Personal Inspiration"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
             </LinearLayout>
 
             <LinearLayout
@@ -342,11 +257,11 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:background="@color/colorPrimary7"
                     android:id="@+id/llJournal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -357,27 +272,21 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/notepad"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Journal"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
-
                 <LinearLayout
+                    android:background="@color/colorPrimary8"
                     android:id="@+id/llSecondThought"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -388,37 +297,15 @@
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:src="@drawable/second_thought"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="On Second Thought..."
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
             </LinearLayout>
 
             <LinearLayout
@@ -428,11 +315,11 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:background="@color/colorPrimary9"
                     android:id="@+id/llSettings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -444,29 +331,23 @@
                         android:layout_marginBottom="@dimen/margin_8"
                         android:padding="4dp"
                         android:src="@drawable/ic_settings"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Settings"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
 
                 <LinearLayout
                     android:id="@+id/llLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:background="@color/colorPrimary10"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_8">
 
@@ -475,38 +356,16 @@
                         android:layout_height="52dp"
                         android:padding="4dp"
                         android:src="@drawable/ic_logout"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/white" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Logout"
-                        android:textColor="@color/darkColor" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@color/off_white2" />
             </LinearLayout>
 
             <LinearLayout
@@ -539,14 +398,7 @@
                         android:textColor="@color/darkColor" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:background="@color/off_white2" />
-
                 <LinearLayout
-                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -554,7 +406,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/padding_8">
+                    android:padding="@dimen/padding_8"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="52dp"
@@ -571,9 +424,10 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_16"/>
+                android:layout_height="@dimen/margin_16" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
