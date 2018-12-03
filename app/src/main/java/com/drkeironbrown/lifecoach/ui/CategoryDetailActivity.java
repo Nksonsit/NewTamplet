@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -182,7 +181,12 @@ public class CategoryDetailActivity extends AppCompatActivity {
         };
         handler.postDelayed(runnable, 1000);
 
-        Functions.loadImage(this,category.getCategoryImagePath(),imgCategory,progressBar);
+        if (category.getCategoryImagePath() != null && category.getCategoryImagePath().trim().length() > 0) {
+            Functions.loadImage(this, category.getCategoryImagePath(), imgCategory, progressBar);
+            imgCategory.setVisibility(View.VISIBLE);
+        } else {
+            imgCategory.setVisibility(View.GONE);
+        }
 
         txtGetStart.setOnClickListener(new View.OnClickListener() {
             @Override
