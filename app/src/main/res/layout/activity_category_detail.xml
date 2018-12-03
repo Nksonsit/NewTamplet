@@ -42,16 +42,16 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/llAudioView"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:paddingLeft="4dp">
+                android:paddingLeft="4dp"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -63,9 +63,9 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="5dp"
-                        android:paddingTop="5dp">
+                        android:paddingBottom="5dp">
 
                         <ImageView
                             android:id="@+id/play"
@@ -90,9 +90,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@id/play_pause_layout"
-                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="5dp"
-                        android:paddingTop="5dp">
+                        android:paddingBottom="5dp">
 
                         <SeekBar
                             android:id="@+id/media_seekbar"
@@ -105,9 +105,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right|top"
                             android:orientation="horizontal"
-                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="10dp"
-                            android:paddingTop="5dp">
+                            android:paddingBottom="5dp">
 
                             <com.drkeironbrown.lifecoach.custom.TfTextView
                                 android:id="@+id/run_time"
@@ -145,45 +145,56 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:src="@drawable/depression"
-                android:scaleType="centerCrop"/>
+                android:layout_height="@dimen/height_180">
+
+                <ImageView
+                    android:id="@+id/imgCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
 
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtCategoryDetail"
                 android:layout_width="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
                 android:textColor="@color/darkColor"
                 android:textSize="12sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvSubLinks"
-                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:visibility="gone" />
 
 
             <com.drkeironbrown.lifecoach.custom.TfTextView
                 android:id="@+id/txtGetStart"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/sub_links_bg"
-                android:paddingBottom="@dimen/padding_8"
                 android:paddingLeft="@dimen/padding_16"
-                android:paddingRight="@dimen/padding_16"
                 android:paddingTop="@dimen/padding_8"
+                android:paddingRight="@dimen/padding_16"
+                android:paddingBottom="@dimen/padding_8"
                 android:text="Get Start"
-                app:isBold="true"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:isBold="true" />
 
 
         </LinearLayout>

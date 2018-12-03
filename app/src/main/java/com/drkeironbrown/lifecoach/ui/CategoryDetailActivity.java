@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
@@ -57,11 +58,14 @@ public class CategoryDetailActivity extends AppCompatActivity {
     private List<String> subLinksList;
     private SubLinksAdapter subLinksAdapter;
     private TfTextView txtGetStart;
+    private ImageView imgCategory;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_detail);
+        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
         this.llAudioView = (LinearLayout) findViewById(R.id.llAudioView);
         this.txtCategoryDetail = (TfTextView) findViewById(R.id.txtCategoryDetail);
         this.seekbarlayout = (FrameLayout) findViewById(R.id.seekbar_layout);
@@ -70,6 +74,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
         this.mediaseekbar = (SeekBar) findViewById(R.id.media_seekbar);
         this.playpauselayout = (FrameLayout) findViewById(R.id.play_pause_layout);
         this.pause = (ImageView) findViewById(R.id.pause);
+        this.imgCategory = (ImageView) findViewById(R.id.imgCategory);
         this.play = (ImageView) findViewById(R.id.play);
         this.toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         this.txtTitle = (TfTextView) findViewById(R.id.txtTitle);
@@ -176,6 +181,8 @@ public class CategoryDetailActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 1000);
+
+        Functions.loadImage(this,category.getCategoryImagePath(),imgCategory,progressBar);
 
         txtGetStart.setOnClickListener(new View.OnClickListener() {
             @Override
