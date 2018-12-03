@@ -181,11 +181,12 @@ public class CategoryDetailActivity extends AppCompatActivity {
         };
         handler.postDelayed(runnable, 1000);
 
-        if (category.getCategoryImagePath() != null && category.getCategoryImagePath().trim().length() > 0) {
+        if (category.getCategoryImagePath() != null && category.getCategoryImagePath().trim().length() > 0 && !category.getCategoryImagePath().trim().equalsIgnoreCase("http://drkeironbrown.com/alc/admin/banner")) {
             Functions.loadImage(this, category.getCategoryImagePath(), imgCategory, progressBar);
             imgCategory.setVisibility(View.VISIBLE);
         } else {
             imgCategory.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
 
         txtGetStart.setOnClickListener(new View.OnClickListener() {

@@ -7,18 +7,18 @@ public class Category implements Serializable {
     private String CategoryName;
     private String CategoryDetail;
     private String CategoryAudioPath;
-    private String CategoryImagePath;
+    private String CategoryBannerPath;
     private String CategoryPrice;
     private String IsSubData;
     private String SubLinks;
     private String SubCategory;
 
     public String getCategoryImagePath() {
-        return CategoryImagePath;
+        return CategoryBannerPath;
     }
 
     public void setCategoryImagePath(String categoryImagePath) {
-        CategoryImagePath = categoryImagePath;
+        CategoryBannerPath = categoryImagePath;
     }
 
     public String getIsSubData() {
