@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.drkeironbrown.lifecoach.helper.Functions;
@@ -29,8 +30,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "LifeCoach.db";
     public static final int DB_VERSION = 1;
     private static DBOpenHelper instance;
-    private static final String DATABASE_PATH = "/data/data/com.drkeironbrown.lifecoach/databases/";
-    public static final String DB_FULLPATH = DATABASE_PATH + DB_NAME;
+    public static final String DATABASE_PATH = Environment.getDataDirectory() + "/data/com.drkeironbrown.lifecoach/databases/";
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public static DBOpenHelper getInstance(Context context) {
@@ -48,12 +48,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL("CREATE TABLE Demo(id,name)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.disableWriteAheadLogging();
     }
 
     public void createDataBase(Context context) {

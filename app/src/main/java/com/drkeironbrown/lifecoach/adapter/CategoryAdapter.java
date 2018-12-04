@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
@@ -72,10 +74,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             categoryVH.txtNote.setVisibility(View.GONE);
         }
 
-        AdvancedSpannableString spannableString = new AdvancedSpannableString("Click to read");
-//        spannableString.setColor(ContextCompat.getColor(context, R.color.green), "read");
+/*        AdvancedSpannableString spannableString = new AdvancedSpannableString("Click to read");
         spannableString.setUnderLine("Click to read");
-        categoryVH.txtReadMore.setText(spannableString);
+        categoryVH.txtReadMore.setText(spannableString);*/
+        Functions.loadImage(context,list.get(i).getCategoryImagePath(),categoryVH.imgCategory,categoryVH.progressBar);
     }
 
     @Override
@@ -91,9 +93,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public class CategoryVH extends RecyclerView.ViewHolder {
         private TfTextView txtCategoy, txtNote, txtReadMore;
+        private ImageView imgCategory;
+        private ProgressBar progressBar;
 
         public CategoryVH(View itemView) {
             super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+            imgCategory = (ImageView) itemView.findViewById(R.id.imgCategory);
             txtCategoy = (TfTextView) itemView.findViewById(R.id.txtCategory);
             txtNote = (TfTextView) itemView.findViewById(R.id.txtNote);
             txtReadMore = (TfTextView) itemView.findViewById(R.id.txtReadMore);

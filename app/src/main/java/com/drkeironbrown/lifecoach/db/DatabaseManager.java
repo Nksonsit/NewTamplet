@@ -1,6 +1,8 @@
 package com.drkeironbrown.lifecoach.db;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Environment;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,7 +30,16 @@ public class DatabaseManager {
 
     public synchronized SQLiteDatabase openDatabase() {
         if (openCount.incrementAndGet() == 1) {
-            database = openHelper.getWritableDatabase();
+            String myPath = "";
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                myPath = openHelper.getWritableDatabase().getPath();
+
+            } else {
+                myPath = DBOpenHelper.DATABASE_PATH + DBOpenHelper.DB_NAME;
+            }
+
+            database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+//            database = openHelper.getWritableDatabase();
         }
         return database;
     }

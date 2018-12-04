@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class SplashActivity extends AppCompatActivity {
 
     private com.drkeironbrown.lifecoach.custom.TfTextView txtDr;
+    private View bottomSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
+        bottomSpace = findViewById(R.id.bottomSpace);
         txtDr = (TfTextView) findViewById(R.id.txtDr);
         new CountDownTimer(2000, 1000) {
             @Override
@@ -70,6 +74,11 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }.start();
+
+        if (Functions.hasSoftKeys(this, getWindowManager())) {
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,102);
+            bottomSpace.setLayoutParams(param);
+        }
 
         AdvancedSpannableString advancedSpannableString = new AdvancedSpannableString(txtDr.getText().toString().trim());
         advancedSpannableString.setUnderLine(txtDr.getText().toString().trim());

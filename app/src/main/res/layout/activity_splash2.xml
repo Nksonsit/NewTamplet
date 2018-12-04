@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/rrBottom"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">
@@ -51,4 +51,15 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rrBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/bottomSpace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -5,11 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.drkeironbrown.lifecoach.R;
@@ -43,11 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
     private TfTextView txtReadTC;
     private TfTextView txtDr;
     private TfTextView txtReadMore;
+    private View bottomSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        bottomSpace = findViewById(R.id.bottomSpace);
         this.txtReadMore = (TfTextView) findViewById(R.id.txtReadMore);
         this.txtReadTC = (TfTextView) findViewById(R.id.txtReadTC);
         this.txtSignIn = (TfTextView) findViewById(R.id.txtSignIn);
@@ -162,6 +167,11 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+
+        if (Functions.hasSoftKeys(this, getWindowManager())) {
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,102);
+            bottomSpace.setLayoutParams(param);
+        }
     }
 
     @Override
