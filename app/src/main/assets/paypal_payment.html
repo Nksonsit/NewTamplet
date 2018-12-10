@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
+<style>
+	
+	.card{    
+		margin: 35px 0px 15px 0px;
+		max-width: 200px;
+		}
+		.round{
+		     border-radius: 50%;
+			background: blue;
+			/* padding-top: 3px; */
+			text-align: center;
+			width: 50px;
+            height: 50px;
+			padding: 18px;
+			font-weight: bold;
+			color: #fff;
+            line-height: 50px;
+            font-size: 20px;
+		}
+		.paypal-button{padding-top: 10px;}
+
+</style>
+<body>
+<center>
+    <div style="width:300px">
+        <p>Click On The
+            "Checkout"
+            button below
+            to pay and send
+            your greetings.</p>
+
+        <br><br><br>
+
+        <div id="amount" class="round" style=" border-radius: 50%;background:#3e40aa"></div>
+
+        <br><br><br>
+
+        <div id="paypal-button-container"></div>
+
+        <img class="card"
+             src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png"
+             alt="Credit Card Badges">
+    </div>
+</center>
+
+
+<script>
+
+    document.getElementById("amount").innerHTML = Android.getAmount()
+    paypal.Button.render({
+
+                         env: 'production', // sandbox | production
+                         
+                         // PayPal Client IDs - replace with your own
+                         // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+                         client: {
+                         sandbox:    'Afym-3D7ZdANi71cnIJEV6xhOV9Jg6sivvabyv9FEk3UvCxov3tDWvoEUVOGL7cbYzw01FNB6UDvtSVC',
+                         production: 'AcKRUfbVMpHS5fEYVsAFfvP3EKtch1xLu_DHqInOnQVjaQpas4DitZ1By9_yUYTDAcCSCrdc4cvwkZzX'
+                         },
+                         
+                         // Show the buyer a 'Pay Now' button in the checkout flow
+                         commit: true,
+                         
+                         // payment() is called when the button is clicked
+                         payment: function(data, actions) {
+
+                         // Make a call to the REST api to create the payment
+                         return actions.payment.create({
+                                                       payment: {
+                                                       transactions: [
+                                                                      {
+                                                                      // amount: { total: '0.01', currency: 'USD' }
+                                                                      amount: { total: Android.getAmount(), currency: Android.getCurrency() }
+                                                                      }
+                                                                      ]
+                                                       }
+                                                       });
+                         },
+                         
+                         // onAuthorize() is called when the buyer approves the payment
+                         onAuthorize: function(data, actions) {
+                         
+                         // Make a call to the REST api to execute the payment
+                         return actions.payment.execute().then(function() {
+
+                                                               Android.setResponse(JSON.stringify(data))
+
+                                                               });
+                                                               }
+                         
+                         }, '#paypal-button-container');
+                         
+
+</script>
+
+</body>

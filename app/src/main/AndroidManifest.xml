@@ -21,8 +21,19 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label"
         tools:targetApi="n">
-        <activity
+        <!--<activity
             android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>-->
+
+        <activity
+            android:name=".ui.WebActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
             <intent-filter>

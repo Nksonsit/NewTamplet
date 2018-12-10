@@ -266,7 +266,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                 Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "CANCEL", "Are you sure want to logout?", new Functions.DialogOptionsSelectedListener() {
                     @Override
                     public void onSelect(boolean isYes) {
-                        if (isYes){
+                        if (isYes) {
                             PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
                             PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
@@ -298,8 +298,6 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             PrefUtils.setIsInspirationalSet(this, true);
             alarmHelper.setReminder(this, AppConstant.INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, true);
         }
-
-
 
 
         if (!PrefUtils.isPInspirational(this) && DBOpenHelper.getPInspirationalCount() > 0) {
@@ -359,7 +357,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
 
         Log.e(getClass().getSimpleName(), "Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
-
+        Functions.showToast(Dashboard2Activity.this, paymentMethodNonce.getNonce(), MDToast.TYPE_SUCCESS);
         PayMoney payMoney = new PayMoney();
         payMoney.setCatId(0);
         payMoney.setAmount("1.0");
