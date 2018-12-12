@@ -9,9 +9,19 @@ public class Category implements Serializable {
     private String CategoryAudioPath;
     private String CategoryBannerPath;
     private String CategoryPrice;
+    private String CategoryPayLink;
     private String IsSubData;
     private String SubLinks;
     private String SubCategory;
+
+    public String getCategoryPayLink() {
+        return CategoryPayLink;
+    }
+
+    public void setCategoryPayLink(String categoryPayLink) {
+        CategoryPayLink = categoryPayLink;
+    }
+
 
     public String getCategoryImagePath() {
         return CategoryBannerPath;

@@ -98,6 +98,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                 selectedPos = pos;
                 //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
                 Intent intent = new Intent(CategoriesActivity.this, WebActivity.class);
+                intent.putExtra("url", list.get(selectedPos).getCategoryPayLink());
                 intent.putExtra("type", 3);
                 intent.putExtra("catId", list.get(selectedPos).getCategoryId());
                 startActivityForResult(intent, 1011);

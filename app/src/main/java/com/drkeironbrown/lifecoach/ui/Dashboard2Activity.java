@@ -161,6 +161,9 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                                 //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
                                 Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
                                 intent.putExtra("type", PaymentClickType);
+                                intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
+                                intent.putExtra("catId", 0);
+
                                 startActivityForResult(intent, 1011);
                             }
                         }
@@ -191,6 +194,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                                 //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
                                 Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
                                 intent.putExtra("type", PaymentClickType);
+                                intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
                                 intent.putExtra("catId", 0);
                                 startActivityForResult(intent, 1011);
                             }
