@@ -27,6 +27,7 @@ import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.AdDialog;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.MessageDialog;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.custom.WebViewDialog;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
@@ -130,11 +131,15 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Choose a category and change your life", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Choose a category and change your life", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, CategoriesActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, CategoriesActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
             }
@@ -144,28 +149,35 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             @Override
             public void onClick(View v) {
                 if (!isSlideshowPaid) {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes)
-                                Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                        public void onOkClick() {
+                            Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes) {
-                                PaymentClickType = 2;
-                                //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
-                                Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
-                                intent.putExtra("type", PaymentClickType);
-                                intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
-                                intent.putExtra("catId", 0);
+                        public void onOkClick() {
+                            PaymentClickType = 2;
+                            //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                            Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
+                            intent.putExtra("type", PaymentClickType);
+                            intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
+                            intent.putExtra("catId", 0);
 
-                                startActivityForResult(intent, 1011);
-                            }
+                            startActivityForResult(intent, 1011);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
                 }
@@ -177,27 +189,34 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             @Override
             public void onClick(View v) {
                 if (!isGalleryPaid) {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes)
-                                Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                        public void onOkClick() {
+                            Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes) {
-                                PaymentClickType = 1;
-                                //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
-                                Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
-                                intent.putExtra("type", PaymentClickType);
-                                intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
-                                intent.putExtra("catId", 0);
-                                startActivityForResult(intent, 1011);
-                            }
+                        public void onOkClick() {
+                            PaymentClickType = 1;
+                            //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                            Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
+                            intent.putExtra("type", PaymentClickType);
+                            intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
+                            intent.putExtra("catId", 0);
+                            startActivityForResult(intent, 1011);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
                 }
@@ -214,11 +233,15 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Record your thoughts, feelings and progress on your journey to success and happiness.", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Record your thoughts, feelings and progress on your journey to success and happiness.", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 
@@ -228,11 +251,15 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llPInspirational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes your own words are the most encouraging.  Write in your own quotes or messages and have them delivered to you at random times or on a scheduled basis to keep you motivated and on-track.", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes your own words are the most encouraging.  Write in your own quotes or messages and have them delivered to you at random times or on a scheduled basis to keep you motivated and on-track.", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, PersonalInspirationalActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, PersonalInspirationalActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 
@@ -242,11 +269,15 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llInspirational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Have notable quotes sent to you at random times or on a scheduled basis to keep you inspired and motivated!", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Have notable quotes sent to you at random times or on a scheduled basis to keep you inspired and motivated!", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, InspirationalActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, InspirationalActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 
@@ -256,11 +287,15 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llSecondThought.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes you just want to get things off your chest and just vent! Express your thoughts and feelings here and then securely and safely “Let it go.”", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Sometimes you just want to get things off your chest and just vent! Express your thoughts and feelings here and then securely and safely “Let it go.”", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, SecondThoughtActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, SecondThoughtActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 
@@ -275,19 +310,22 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "CANCEL", "Are you sure want to logout?", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "CANCEL", "Are you sure want to logout?", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes) {
-                            PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
-                            PrefUtils.setIsLogin(Dashboard2Activity.this, false);
+                    public void onOkClick() {
+                        PrefUtils.setIsFirstTime(Dashboard2Activity.this, true);
+                        PrefUtils.setIsLogin(Dashboard2Activity.this, false);
 
-                            PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
-                            PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
+                        PrefUtils.setIsInspirationalSet(Dashboard2Activity.this, false);
+                        PrefUtils.setIsPInspirationalSet(Dashboard2Activity.this, false);
 
-                            Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
-                            finish();
-                        }
+                        Functions.fireIntentWithClearFlag(Dashboard2Activity.this, LoginActivity.class, false);
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 
@@ -387,20 +425,28 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                         if (PaymentClickType == 1) {
                             isGalleryPaid = true;
                             imgPaidGallery.setVisibility(View.GONE);
-                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new PopupDialog.OnPopupClick() {
                                 @Override
-                                public void onSelect(boolean isYes) {
-                                    if (isYes)
-                                        Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                                public void onOkClick() {
+                                    Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                                }
+
+                                @Override
+                                public void onCancelClick() {
+
                                 }
                             });
                         } else if (PaymentClickType == 2) {
                             isSlideshowPaid = true;
-                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                            Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new PopupDialog.OnPopupClick() {
                                 @Override
-                                public void onSelect(boolean isYes) {
-                                    if (isYes)
-                                        Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                                public void onOkClick() {
+                                    Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                                }
+
+                                @Override
+                                public void onCancelClick() {
+
                                 }
                             });
                             imgPaidSlideshow.setVisibility(View.GONE);
@@ -498,19 +544,27 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1011 && resultCode == 1012) {
             if (data != null && data.getIntExtra("pType", 1) == 1) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
             } else if (data != null && data.getIntExtra("pType", 1) == 2) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes)
-                            Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                    public void onOkClick() {
+                        Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
             }

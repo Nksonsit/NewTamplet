@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.Functions;
@@ -71,9 +72,9 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Functions.hideKeyPad(context, v);
-                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
+                        public void onOkClick() {
                             Log.e("list", list.size() + "    " + i);
                             DBOpenHelper.deleteJournal(list.get(i - 1).getJournalId());
                             list.remove(i - 1);
@@ -91,6 +92,11 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             }.start();
                             Log.e("list", list.size() + "");
                             onDeleteClick.onDeleteClick();
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
                 }

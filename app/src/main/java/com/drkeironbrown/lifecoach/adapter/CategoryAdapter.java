@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
@@ -52,12 +53,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     return;
                 }
                 if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0) {
-                    Functions.showAlertDialogWithTwoOption(context, "Pay", "Cancel", "You need to pay $" + list.get(i).getCategoryPrice() + " to continue.", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(context, "Pay", "Cancel", "You need to pay $" + list.get(i).getCategoryPrice() + " to continue.", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes) {
-                                onBuyClick.onBuyClick(i);
-                            }
+                        public void onOkClick() {
+                            onBuyClick.onBuyClick(i);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
                 } else {

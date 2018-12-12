@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfEditText;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
@@ -99,25 +100,28 @@ public class PersonalInspirationalAdapter extends RecyclerView.Adapter<RecyclerV
                 @Override
                 public void onClick(View v) {
                     Functions.hideKeyPad(context, v);
-                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                    Functions.showAlertDialogWithTwoOption(context, "YES", "NO", "Are you sure want to delete ?", new PopupDialog.OnPopupClick() {
                         @Override
-                        public void onSelect(boolean isYes) {
-                            if (isYes) {
-                                DBOpenHelper.deletePInspirational(list.get(finalPosition).getPInspirationalId());
-                                list.remove(finalPosition);
-                                notifyItemRemoved(finalPosition);
-                                new CountDownTimer(1000, 500) {
-                                    @Override
-                                    public void onTick(long millisUntilFinished) {
+                        public void onOkClick() {
+                            DBOpenHelper.deletePInspirational(list.get(finalPosition).getPInspirationalId());
+                            list.remove(finalPosition);
+                            notifyItemRemoved(finalPosition);
+                            new CountDownTimer(1000, 500) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
 
-                                    }
+                                }
 
-                                    @Override
-                                    public void onFinish() {
-                                        notifyDataSetChanged();
-                                    }
-                                }.start();
-                            }
+                                @Override
+                                public void onFinish() {
+                                    notifyDataSetChanged();
+                                }
+                            }.start();
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
                         }
                     });
 

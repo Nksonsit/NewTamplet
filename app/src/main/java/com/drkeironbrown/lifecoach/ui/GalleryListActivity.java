@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.GalleryAdapter;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
@@ -60,9 +61,9 @@ public class GalleryListActivity extends AppCompatActivity {
         adapter = new GalleryAdapter(this, list, new GalleryAdapter.OnClickItem() {
             @Override
             public void onDeleteClick(final int position) {
-                Functions.showAlertDialogWithTwoOption(GalleryListActivity.this, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(GalleryListActivity.this, "YES", "NO", "Are you sure want to delete ?", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
+                    public void onOkClick() {
                         DBOpenHelper.deleteGallery(list.get(position).getGalleryId());
                         list.remove(position);
                         adapter.notifyItemRemoved(position);
@@ -84,6 +85,11 @@ public class GalleryListActivity extends AppCompatActivity {
                                 adapter.setDataList(list);
                             }
                         }.start();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
 

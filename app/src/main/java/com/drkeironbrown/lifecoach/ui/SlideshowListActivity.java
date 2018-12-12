@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.SlideshowAdapter;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
@@ -60,32 +61,35 @@ public class SlideshowListActivity extends AppCompatActivity {
         adapter = new SlideshowAdapter(this, list, new SlideshowAdapter.OnClickItem() {
             @Override
             public void onDeleteClick(final int position) {
-                Functions.showAlertDialogWithTwoOption(SlideshowListActivity.this, "YES", "NO", "Are you sure want to delete ?", new Functions.DialogOptionsSelectedListener() {
+                Functions.showAlertDialogWithTwoOption(SlideshowListActivity.this, "YES", "NO", "Are you sure want to delete ?", new PopupDialog.OnPopupClick() {
                     @Override
-                    public void onSelect(boolean isYes) {
-                        if (isYes) {
-                            DBOpenHelper.deleteSlideshow(list.get(position).getSlideshowId());
-                            list.remove(position);
-                            adapter.notifyItemRemoved(position);
-                            if (list.size() == 0) {
-                                llEmptyView.setVisibility(View.VISIBLE);
-                                rvSlideshow.setVisibility(View.GONE);
-                            } else {
-                                llEmptyView.setVisibility(View.GONE);
-                                rvSlideshow.setVisibility(View.VISIBLE);
-                            }
-                            new CountDownTimer(1000, 500) {
-                                @Override
-                                public void onTick(long millisUntilFinished) {
-
-                                }
-
-                                @Override
-                                public void onFinish() {
-                                    adapter.setDataList(list);
-                                }
-                            }.start();
+                    public void onOkClick() {
+                        DBOpenHelper.deleteSlideshow(list.get(position).getSlideshowId());
+                        list.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        if (list.size() == 0) {
+                            llEmptyView.setVisibility(View.VISIBLE);
+                            rvSlideshow.setVisibility(View.GONE);
+                        } else {
+                            llEmptyView.setVisibility(View.GONE);
+                            rvSlideshow.setVisibility(View.VISIBLE);
                         }
+                        new CountDownTimer(1000, 500) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                adapter.setDataList(list);
+                            }
+                        }.start();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
                     }
                 });
             }

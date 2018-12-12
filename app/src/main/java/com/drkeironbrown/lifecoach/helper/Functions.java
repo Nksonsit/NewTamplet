@@ -43,6 +43,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
+import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.model.Image;
 
 import java.io.File;
@@ -450,8 +451,8 @@ public class Functions {
         }
     }
 
-    public static void showAlertDialogWithTwoOption(Context mContext, String positiveText, String negativeText, String message, final DialogOptionsSelectedListener dialogOptionsSelectedListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+    public static void showAlertDialogWithTwoOption(Context mContext, String positiveText, String negativeText, String message, PopupDialog.OnPopupClick onPopupClick) {
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage(message)
                 .setCancelable(true);
 
@@ -478,7 +479,9 @@ public class Functions {
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(false);
         alert.setCancelable(false);
-        alert.show();
+        alert.show();*/
+
+        new PopupDialog(mContext, message, positiveText, negativeText, onPopupClick);
     }
 
     public static void hideStatusBar(Activity activity) {
@@ -677,7 +680,7 @@ public class Functions {
         context.startActivity(sendIntent);
     }
 
-    public static void shareImages(Context context,String subject, List<String> filesToSend) {
+    public static void shareImages(Context context, String subject, List<String> filesToSend) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND_MULTIPLE);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
@@ -695,12 +698,12 @@ public class Functions {
         context.startActivity(intent);
     }
 
-    public static boolean hasSoftKeys(Activity c,WindowManager windowManager){
+    public static boolean hasSoftKeys(Activity c, WindowManager windowManager) {
         boolean hasSoftwareKeys = true;
         //c = context; use getContext(); in fragments, and in activities you can
         //directly access the windowManager();
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             Display d = c.getWindowManager().getDefaultDisplay();
 
             DisplayMetrics realDisplayMetrics = new DisplayMetrics();
@@ -715,7 +718,7 @@ public class Functions {
             int displayHeight = displayMetrics.heightPixels;
             int displayWidth = displayMetrics.widthPixels;
 
-            hasSoftwareKeys =  (realWidth - displayWidth) > 0 ||
+            hasSoftwareKeys = (realWidth - displayWidth) > 0 ||
                     (realHeight - displayHeight) > 0;
         } else {
             boolean hasMenuKey = ViewConfiguration.get(c).hasPermanentMenuKey();
