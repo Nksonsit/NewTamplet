@@ -1,7 +1,9 @@
 package com.drkeironbrown.lifecoach.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.DataCollector;
-import com.braintreepayments.api.PayPal;
 import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.interfaces.BraintreeCancelListener;
 import com.braintreepayments.api.interfaces.BraintreeErrorListener;
@@ -19,7 +20,6 @@ import com.braintreepayments.api.interfaces.ConfigurationListener;
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PayPalAccountNonce;
-import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.braintreepayments.api.models.PostalAddress;
 import com.drkeironbrown.lifecoach.R;
@@ -38,6 +38,7 @@ import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.PaidProduct;
 import com.drkeironbrown.lifecoach.model.PaidProductReq;
 import com.drkeironbrown.lifecoach.model.PayMoney;
+import com.drkeironbrown.lifecoach.payment.WebActivity;
 
 import java.util.List;
 import java.util.Random;
@@ -157,7 +158,10 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                         public void onSelect(boolean isYes) {
                             if (isYes) {
                                 PaymentClickType = 2;
-                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                                //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                                Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
+                                intent.putExtra("type", PaymentClickType);
+                                startActivityForResult(intent, 1011);
                             }
                         }
                     });
@@ -184,7 +188,11 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                         public void onSelect(boolean isYes) {
                             if (isYes) {
                                 PaymentClickType = 1;
-                                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                                //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                                Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
+                                intent.putExtra("type", PaymentClickType);
+                                intent.putExtra("catId", 0);
+                                startActivityForResult(intent, 1011);
                             }
                         }
                     });
@@ -479,5 +487,34 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1011 && resultCode == 1012) {
+            if (data != null && data.getIntExtra("pType", 1) == 1) {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, GalleryListActivity.class, true);
+                    }
+                });
+            } else if (data != null && data.getIntExtra("pType", 1) == 2) {
+                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new Functions.DialogOptionsSelectedListener() {
+                    @Override
+                    public void onSelect(boolean isYes) {
+                        if (isYes)
+                            Functions.fireIntent(Dashboard2Activity.this, SlideshowListActivity.class, true);
+                    }
+                });
+            }
+        } else if (requestCode == 1011 && resultCode == 1010) {
+            if (data != null) {
+                Functions.showToast(Dashboard2Activity.this, data.getStringExtra("msg"), MDToast.TYPE_ERROR);
+            }
+        }
+
     }
 }

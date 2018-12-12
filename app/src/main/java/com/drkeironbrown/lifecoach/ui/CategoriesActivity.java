@@ -3,6 +3,7 @@ package com.drkeironbrown.lifecoach.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,7 @@ import com.drkeironbrown.lifecoach.model.Category;
 import com.drkeironbrown.lifecoach.model.PaidProduct;
 import com.drkeironbrown.lifecoach.model.PaidProductReq;
 import com.drkeironbrown.lifecoach.model.PayMoney;
+import com.drkeironbrown.lifecoach.payment.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +96,11 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
             @Override
             public void onBuyClick(int pos) {
                 selectedPos = pos;
-                PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
+                //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
+                Intent intent = new Intent(CategoriesActivity.this, WebActivity.class);
+                intent.putExtra("type", 3);
+                intent.putExtra("catId", list.get(selectedPos).getCategoryId());
+                startActivityForResult(intent, 1011);
             }
         });
         rvCategories.setAdapter(adapter);
@@ -363,5 +369,25 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
 
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1011 && resultCode == 1012) {
+            if (data != null && data.getIntExtra("pType", 1) == 3) {
+                list.get(selectedPos).setCategoryPrice("0");
+                adapter.setDataList(list);
+                Intent intent = new Intent(CategoriesActivity.this, CategoryDetailActivity.class);
+                intent.putExtra("category", list.get(selectedPos));
+                Functions.fireIntent(CategoriesActivity.this, intent, true);
+            }
+        } else if (requestCode == 1011 && resultCode == 1010) {
+            if (data != null) {
+                Functions.showToast(CategoriesActivity.this, data.getStringExtra("msg"), MDToast.TYPE_ERROR);
+            }
+        }
+
     }
 }
