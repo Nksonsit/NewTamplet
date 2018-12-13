@@ -5,6 +5,15 @@ public class User {
     private String Username;
     private String EmailId;
     private int Noti;
+    private int IsFullPay;
+
+    public int getIsFullPay() {
+        return IsFullPay;
+    }
+
+    public void setIsFullPay(int isFullPay) {
+        IsFullPay = isFullPay;
+    }
 
     public int getNoti() {
         return Noti;

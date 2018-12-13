@@ -9,7 +9,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.api.RestClient;
@@ -18,6 +17,8 @@ import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.PayMoney;
+import com.drkeironbrown.lifecoach.model.UpdateNotificationReq;
+import com.drkeironbrown.lifecoach.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,8 +58,12 @@ public class WebActivity extends AppCompatActivity {
                     setResult(1010, intent);
                     finish();
                 } else if (url.contains("success")) {
-                    Toast.makeText(WebActivity.this, "Payment Success", Toast.LENGTH_LONG).show();
-                    setPaymentDone();
+                    Functions.showToast(WebActivity.this, "Payment Success", MDToast.TYPE_SUCCESS);
+                    if (PaymentClickType == 4) {
+                        updateFullPayApi();
+                    } else {
+                        setPaymentDone();
+                    }
                 }
 
             }
@@ -88,7 +93,7 @@ public class WebActivity extends AppCompatActivity {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body() != null) {
                     if (response.body().getStatus() == 1) {
-                        Functions.showToast(WebActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
+                        //Functions.showToast(WebActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
                         Intent intent = new Intent();
                         intent.putExtra("isSuccess", true);
                         intent.putExtra("pType", PaymentClickType);
@@ -115,5 +120,42 @@ public class WebActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void updateFullPayApi() {
+        if (Functions.isConnected(WebActivity.this)) {
+            final UpdateNotificationReq updateNotificationReq = new UpdateNotificationReq();
+            updateNotificationReq.setUserId(PrefUtils.getUserFullProfileDetails(WebActivity.this).getUserId());
+            RestClient.get().updateNotification(updateNotificationReq).enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                    if (response.body() != null && response.body().getStatus() == 1) {
+                        User user = PrefUtils.getUserFullProfileDetails(WebActivity.this);
+                        user.setIsFullPay(1);
+                        PrefUtils.setUserFullProfileDetails(WebActivity.this, user);
+
+                        Functions.showToast(WebActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
+                        Intent intent = new Intent();
+                        intent.putExtra("isSuccess", true);
+                        intent.putExtra("pType", PaymentClickType);
+                        setResult(1013, intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("msg", getString(R.string.try_again));
+                        setResult(1010, intent);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                    Intent intent = new Intent();
+                    intent.putExtra("msg", getString(R.string.try_again));
+                    setResult(1010, intent);
+                    finish();
+                }
+            });
+        }
     }
 }
