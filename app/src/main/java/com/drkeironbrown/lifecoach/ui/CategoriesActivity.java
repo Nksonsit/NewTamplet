@@ -303,8 +303,8 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
     }
 
     private Random random = new Random();
-    private int max = 1000 * 60;
-    private int min = 1000 * 20;
+    private int max = 1000 * 120;
+    private int min = 1000 * 40;
 
     Runnable runnable = new Runnable() {
         @Override

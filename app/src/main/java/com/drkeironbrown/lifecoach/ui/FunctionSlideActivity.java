@@ -22,6 +22,7 @@ import com.drkeironbrown.lifecoach.fragment.SevenFragment;
 import com.drkeironbrown.lifecoach.fragment.SixthFragment;
 import com.drkeironbrown.lifecoach.fragment.ThirdFragment;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 
 public class FunctionSlideActivity extends AppCompatActivity {
 
@@ -70,7 +71,11 @@ public class FunctionSlideActivity extends AppCompatActivity {
                     txtNext.setText("Done");
                     pushFragment(new SevenFragment());
                 } else {
-                    Functions.fireIntent(FunctionSlideActivity.this, PayActivity.class, true);
+                    if (PrefUtils.getUserFullProfileDetails(FunctionSlideActivity.this).getIsFullPay() == 1) {
+                        Functions.fireIntent(FunctionSlideActivity.this, Dashboard2Activity.class, true);
+                    } else {
+                        Functions.fireIntent(FunctionSlideActivity.this, PayActivity.class, true);
+                    }
                     finish();
                 }
             }
@@ -78,13 +83,17 @@ public class FunctionSlideActivity extends AppCompatActivity {
         txtSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.fireIntent(FunctionSlideActivity.this, PayActivity.class, true);
+                if (PrefUtils.getUserFullProfileDetails(FunctionSlideActivity.this).getIsFullPay() == 1) {
+                    Functions.fireIntent(FunctionSlideActivity.this, Dashboard2Activity.class, true);
+                } else {
+                    Functions.fireIntent(FunctionSlideActivity.this, PayActivity.class, true);
+                }
                 finish();
             }
         });
 
         if (Functions.hasSoftKeys(this, getWindowManager())) {
-            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,102);
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 102);
             bottomSpace.setLayoutParams(param);
         }
 

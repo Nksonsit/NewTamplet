@@ -78,8 +78,8 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     private LinearLayout llSettings;
     private LinearLayout llLogout;
     private Random random = new Random();
-    private int max = 1000 * 60;
-    private int min = 1000 * 20;
+    private int max = 1000 * 120;
+    private int min = 1000 * 40;
 
     Runnable runnable = new Runnable() {
         @Override
@@ -162,7 +162,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new PopupDialog.OnPopupClick() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium $1", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             PaymentClickType = 2;
@@ -202,7 +202,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Pay", "Cancel", "You need to pay $1 to unlock this functionality.", new PopupDialog.OnPopupClick() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium $1", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             PaymentClickType = 1;
@@ -378,6 +378,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
 //        imgPaidGallery.setVisibility(View.GONE);
 //        imgPaidSlideshow.setVisibility(View.GONE);
+
+
+        if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 1) {
+            imgPaidGallery.setVisibility(View.GONE);
+            imgPaidSlideshow.setVisibility(View.GONE);
+            isGalleryPaid = false;
+            isSlideshowPaid = false;
+        }
     }
 
     @Override
@@ -513,30 +521,32 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     @Override
     protected void onResume() {
         super.onResume();
-        PaidProductReq paidProductReq = new PaidProductReq();
-        paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
-        RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<List<PaidProduct>>> call, Response<BaseResponse<List<PaidProduct>>> response) {
-                if (response.body() != null && response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
-                    for (int i = 0; i < response.body().getData().size(); i++) {
-                        if (response.body().getData().get(i).getType() == 1) {
-                            isGalleryPaid = false;
-                            imgPaidGallery.setVisibility(View.GONE);
-                        }
-                        if (response.body().getData().get(i).getType() == 2) {
-                            isSlideshowPaid = false;
-                            imgPaidSlideshow.setVisibility(View.GONE);
+        if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 0) {
+            PaidProductReq paidProductReq = new PaidProductReq();
+            paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
+            RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<List<PaidProduct>>> call, Response<BaseResponse<List<PaidProduct>>> response) {
+                    if (response.body() != null && response.body().getStatus() == 1 && response.body().getData() != null && response.body().getData().size() > 0) {
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            if (response.body().getData().get(i).getType() == 1) {
+                                isGalleryPaid = false;
+                                imgPaidGallery.setVisibility(View.GONE);
+                            }
+                            if (response.body().getData().get(i).getType() == 2) {
+                                isSlideshowPaid = false;
+                                imgPaidSlideshow.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<BaseResponse<List<PaidProduct>>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<BaseResponse<List<PaidProduct>>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

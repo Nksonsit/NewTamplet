@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 
@@ -24,6 +25,7 @@ import java.util.Random;
 
 public class PopupDialog extends Dialog {
 
+    private RelativeLayout rlOut;
     private OnPopupClick onPopupClick;
     private CardView msgView;
     private TfButton btnOk;
@@ -42,7 +44,7 @@ public class PopupDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         lp.copyFrom(getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         getWindow().setAttributes(lp);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
@@ -78,6 +80,16 @@ public class PopupDialog extends Dialog {
             @Override
             public void onAnimationRepeat(Animation animation) {
 
+            }
+        });
+
+        rlOut = (RelativeLayout) view.findViewById(R.id.rlOut);
+
+        rlOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPopupClick.onCancelClick();
+                onBackPressed();
             }
         });
 

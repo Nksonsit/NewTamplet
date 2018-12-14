@@ -17,6 +17,7 @@ import com.drkeironbrown.lifecoach.custom.PopupDialog;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.helper.AdvancedSpannableString;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.Category;
 import com.drkeironbrown.lifecoach.ui.CategoryDetailActivity;
 
@@ -52,8 +53,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     Functions.showToast(context, context.getString(R.string.check_internet), MDToast.TYPE_ERROR);
                     return;
                 }
-                if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0) {
-                    Functions.showAlertDialogWithTwoOption(context, "Pay", "Cancel", "You need to pay $" + list.get(i).getCategoryPrice() + " to continue.", new PopupDialog.OnPopupClick() {
+                if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0 && PrefUtils.getUserFullProfileDetails(context).getIsFullPay() == 0) {
+                    Functions.showAlertDialogWithTwoOption(context, "Premium $"+list.get(i).getCategoryPrice(), "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             onBuyClick.onBuyClick(i);
@@ -71,7 +72,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 }
             }
         });
-        if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0) {
+        if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0 && PrefUtils.getUserFullProfileDetails(context).getIsFullPay() == 0) {
             categoryVH.txtNote.setText("$" + list.get(i).getCategoryPrice());
             categoryVH.txtNote.setVisibility(View.VISIBLE);
         } else {
