@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary12"
     tools:context=".ui.Dashboard2Activity">
 
     <LinearLayout
@@ -55,13 +56,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/llCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/colorPrimary1"
@@ -86,7 +86,7 @@
                 <LinearLayout
                     android:id="@+id/llShop"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/colorPrimary2"
@@ -124,7 +124,7 @@
                     <LinearLayout
                         android:id="@+id/llGallery"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="130dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -162,7 +162,7 @@
                         android:background="@color/colorPrimary4"
                         android:id="@+id/llSlideshow"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="130dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -202,7 +202,7 @@
                     android:background="@color/colorPrimary5"
                     android:id="@+id/llInspirational"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -226,7 +226,7 @@
                 <LinearLayout
                     android:id="@+id/llPInspirational"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/colorPrimary6"
@@ -260,7 +260,7 @@
                     android:background="@color/colorPrimary7"
                     android:id="@+id/llJournal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -285,7 +285,7 @@
                     android:background="@color/colorPrimary8"
                     android:id="@+id/llSecondThought"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -318,7 +318,7 @@
                     android:background="@color/colorPrimary9"
                     android:id="@+id/llSettings"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -343,7 +343,7 @@
                 <LinearLayout
                     android:id="@+id/llLogout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -378,7 +378,7 @@
                     android:id="@+id/llRef"
                     android:background="@color/colorPrimary11"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="1dp"
                     android:layout_weight="1"
@@ -402,7 +402,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="1dp"
                     android:layout_weight="1"
