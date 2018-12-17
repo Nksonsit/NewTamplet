@@ -61,6 +61,7 @@ public class SubCategoryDetailActivity extends AppCompatActivity {
         if (isSolDisplay) {
             isSolDisplay = false;
             txtCategoryDetail.setText(Html.fromHtml(category.getCategoryDetail()));
+            txtDestroy.setVisibility(View.VISIBLE);
         } else {
             Functions.fireIntent(this, false);
         }

@@ -191,7 +191,7 @@
                 android:paddingTop="@dimen/padding_8"
                 android:paddingRight="@dimen/padding_16"
                 android:paddingBottom="@dimen/padding_8"
-                android:text="Get Start"
+                android:text="Get Started!"
                 android:textColor="@color/white"
                 android:visibility="gone"
                 app:isBold="true" />

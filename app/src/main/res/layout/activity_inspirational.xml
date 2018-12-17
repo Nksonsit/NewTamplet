@@ -32,11 +32,20 @@
     </RelativeLayout>
 
     <com.drkeironbrown.lifecoach.custom.TfTextView
+        android:id="@+id/txtText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_height="wrap_content"
         android:layout_margin="32dp"
-        android:gravity="center"
-        android:text="You can not see the inspirational message list but you will get message on random or specific time by notification \nYou can change time for notification from setting."
+        android:layout_centerInParent="true"
+        android:text="Inspirational Messages help to keep you motivated and on track to your success. Now click on setting button so you will be redirected to the “Settings” menu so that you can set the time when you want Inspirational Messages sent to you."
         android:textColor="@color/darkColor" />
+
+    <ImageView
+        android:id="@+id/imgSetting"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_below="@+id/txtText"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

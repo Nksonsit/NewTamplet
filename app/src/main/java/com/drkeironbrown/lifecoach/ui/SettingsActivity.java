@@ -168,7 +168,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (Functions.isConnected(SettingsActivity.this)) {
                     final UpdateNotificationReq updateNotificationReq = new UpdateNotificationReq();
-                    updateNotificationReq.setGetNotification(isChecked ? 1 : 2);
+                    updateNotificationReq.setGetNotification(isChecked ? 1 : 0);
                     updateNotificationReq.setUserId(PrefUtils.getUserFullProfileDetails(SettingsActivity.this).getUserId());
                     RestClient.get().updateNotification(updateNotificationReq).enqueue(new Callback<BaseResponse>() {
                         @Override

@@ -53,4 +53,7 @@ public interface AppApi {
 
     @POST("UpdateNotification.php")
     Call<BaseResponse> updateNotification(@Body UpdateNotificationReq updateNotificationReq);
+
+    @POST("UpdateFullPay.php")
+    Call<BaseResponse> updatePayment(@Body UpdateNotificationReq updateNotificationReq);
 }

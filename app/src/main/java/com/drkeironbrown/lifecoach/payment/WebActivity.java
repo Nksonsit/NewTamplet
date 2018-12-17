@@ -120,7 +120,7 @@ public class WebActivity extends AppCompatActivity {
         if (Functions.isConnected(WebActivity.this)) {
             final UpdateNotificationReq updateNotificationReq = new UpdateNotificationReq();
             updateNotificationReq.setUserId(PrefUtils.getUserFullProfileDetails(WebActivity.this).getUserId());
-            RestClient.get().updateNotification(updateNotificationReq).enqueue(new Callback<BaseResponse>() {
+            RestClient.get().updatePayment(updateNotificationReq).enqueue(new Callback<BaseResponse>() {
                 @Override
                 public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                     if (response.body() != null && response.body().getStatus() == 1) {
