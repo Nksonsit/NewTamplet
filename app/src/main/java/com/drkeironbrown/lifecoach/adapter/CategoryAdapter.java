@@ -54,7 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     return;
                 }
                 if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0 && PrefUtils.getUserFullProfileDetails(context).getIsFullPay() == 0) {
-                    Functions.showAlertDialogWithTwoOption(context, "Premium $"+list.get(i).getCategoryPrice(), "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
+                    Functions.showAlertDialogWithTwoOption(context, "Premium", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             onBuyClick.onBuyClick(i);
@@ -72,12 +72,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 }
             }
         });
-        if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0 && PrefUtils.getUserFullProfileDetails(context).getIsFullPay() == 0) {
+        /*if (list.get(i).getCategoryPrice() != null && list.get(i).getCategoryPrice().trim().length() > 0 && Integer.parseInt(list.get(i).getCategoryPrice()) > 0 && PrefUtils.getUserFullProfileDetails(context).getIsFullPay() == 0) {
             categoryVH.txtNote.setText("$" + list.get(i).getCategoryPrice());
             categoryVH.txtNote.setVisibility(View.VISIBLE);
         } else {
-            categoryVH.txtNote.setVisibility(View.GONE);
-        }
+        }*/
+        categoryVH.txtNote.setVisibility(View.GONE);
 
 /*        AdvancedSpannableString spannableString = new AdvancedSpannableString("Click to read");
         spannableString.setUnderLine("Click to read");

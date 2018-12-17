@@ -33,6 +33,7 @@ import com.drkeironbrown.lifecoach.api.RestClient;
 import com.drkeironbrown.lifecoach.custom.AdDialog;
 import com.drkeironbrown.lifecoach.custom.MDToast;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
@@ -98,9 +99,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                 selectedPos = pos;
                 //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest(list.get(pos).getCategoryPrice()));
                 Intent intent = new Intent(CategoriesActivity.this, WebActivity.class);
-                intent.putExtra("url", list.get(selectedPos).getCategoryPayLink());
-                intent.putExtra("type", 3);
-                intent.putExtra("catId", list.get(selectedPos).getCategoryId());
+                intent.putExtra("url", AppConstant.PAYMENT_LINK);
                 startActivityForResult(intent, 1011);
             }
         });
@@ -125,7 +124,6 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                             adapter.setDataList(list);
                             rvCategories.setVisibility(View.VISIBLE);
                             llEmptyView.setVisibility(View.GONE);
-                            getPaidProduct();
                         } else {
                             rvCategories.setVisibility(View.GONE);
                             txtEmpty.setVisibility(View.VISIBLE);
@@ -207,7 +205,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
 //        setResult(RESULT_OK, intent);
 //        finish();
 
-        PayMoney payMoney = new PayMoney();
+        /*PayMoney payMoney = new PayMoney();
         payMoney.setCatId(list.get(selectedPos).getCategoryId());
         payMoney.setAmount(list.get(selectedPos).getCategoryPrice());
         payMoney.setDeviceData(mDeviceData);
@@ -221,7 +219,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
                 if (response.body() != null) {
                     if (response.body().getStatus() == 1) {
                         Functions.showToast(CategoriesActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
-                        list.get(selectedPos).setCategoryPrice("0");
+//                        list.get(selectedPos).setCategoryPrice("0");
                         adapter.setDataList(list);
                     } else {
                         Functions.showToast(CategoriesActivity.this, response.body().getMessage(), MDToast.TYPE_ERROR);
@@ -235,7 +233,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
             public void onFailure(Call<BaseResponse> call, Throwable t) {
                 Functions.showToast(CategoriesActivity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
             }
-        });
+        });*/
     }
 
    /* private PayPalRequest getPayPalRequest(@Nullable String amount) {
@@ -345,7 +343,7 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
         handler.removeCallbacks(runnable);
     }
 
-    public void getPaidProduct() {
+    /*public void getPaidProduct() {
         PaidProductReq paidProductReq = new PaidProductReq();
         paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
         RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
@@ -370,15 +368,14 @@ public class CategoriesActivity extends AppCompatActivity implements Configurati
 
             }
         });
-    }
+    }*/
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1011 && resultCode == 1012) {
-            if (data != null && data.getIntExtra("pType", 1) == 3) {
-                list.get(selectedPos).setCategoryPrice("0");
+            if (data != null) {
                 adapter.setDataList(list);
                 Intent intent = new Intent(CategoriesActivity.this, CategoryDetailActivity.class);
                 intent.putExtra("category", list.get(selectedPos));

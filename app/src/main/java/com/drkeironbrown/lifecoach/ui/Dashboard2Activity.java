@@ -162,15 +162,13 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium $1", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             PaymentClickType = 2;
                             //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
                             Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
-                            intent.putExtra("type", PaymentClickType);
-                            intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
-                            intent.putExtra("catId", 0);
+                            intent.putExtra("url", AppConstant.PAYMENT_LINK);
 
                             startActivityForResult(intent, 1011);
                         }
@@ -202,15 +200,13 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                     });
 
                 } else {
-                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium $1", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
                         @Override
                         public void onOkClick() {
                             PaymentClickType = 1;
                             //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
                             Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
-                            intent.putExtra("type", PaymentClickType);
-                            intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
-                            intent.putExtra("catId", 0);
+                            intent.putExtra("url", AppConstant.PAYMENT_LINK);
                             startActivityForResult(intent, 1011);
                         }
 
@@ -414,7 +410,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     @Override
     public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
 
-        Log.e(getClass().getSimpleName(), "Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
+        /*Log.e(getClass().getSimpleName(), "Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
         Functions.showToast(Dashboard2Activity.this, paymentMethodNonce.getNonce(), MDToast.TYPE_SUCCESS);
         PayMoney payMoney = new PayMoney();
         payMoney.setCatId(0);
@@ -471,7 +467,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             public void onFailure(Call<BaseResponse> call, Throwable t) {
                 Functions.showToast(Dashboard2Activity.this, getString(R.string.try_again), MDToast.TYPE_ERROR);
             }
-        });
+        });*/
 
 
     }
@@ -521,8 +517,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     @Override
     protected void onResume() {
         super.onResume();
+        if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 1) {
+            imgPaidGallery.setVisibility(View.GONE);
+            imgPaidSlideshow.setVisibility(View.GONE);
+            isGalleryPaid = false;
+            isSlideshowPaid = false;
+        }
         if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 0) {
-            PaidProductReq paidProductReq = new PaidProductReq();
+            /*PaidProductReq paidProductReq = new PaidProductReq();
             paidProductReq.setUserId(PrefUtils.getUserFullProfileDetails(this).getUserId());
             RestClient.get().getPaidProducts(paidProductReq).enqueue(new Callback<BaseResponse<List<PaidProduct>>>() {
                 @Override
@@ -545,7 +547,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                 public void onFailure(Call<BaseResponse<List<PaidProduct>>> call, Throwable t) {
 
                 }
-            });
+            });*/
         }
     }
 
@@ -553,7 +555,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1011 && resultCode == 1012) {
-            if (data != null && data.getIntExtra("pType", 1) == 1) {
+            if (data != null && PaymentClickType == 1) {
                 Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Construct your Vision Board with images of your future success and happiness", new PopupDialog.OnPopupClick() {
                     @Override
                     public void onOkClick() {
@@ -565,7 +567,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
 
                     }
                 });
-            } else if (data != null && data.getIntExtra("pType", 1) == 2) {
+            } else if (data != null && PaymentClickType == 2) {
                 Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Create a slideshow with images of what you will have as you pursue your goals.", new PopupDialog.OnPopupClick() {
                     @Override
                     public void onOkClick() {

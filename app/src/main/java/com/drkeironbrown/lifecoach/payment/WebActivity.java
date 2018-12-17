@@ -28,7 +28,6 @@ public class WebActivity extends AppCompatActivity {
 
     private WebView webView;
     private ProgressBar progressBar;
-    private int PaymentClickType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class WebActivity extends AppCompatActivity {
             finish();
         }
 
-        PaymentClickType = getIntent().getIntExtra("type", 1);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
         this.webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -59,11 +57,7 @@ public class WebActivity extends AppCompatActivity {
                     finish();
                 } else if (url.contains("success")) {
                     Functions.showToast(WebActivity.this, "Payment Success", MDToast.TYPE_SUCCESS);
-                    if (PaymentClickType == 4) {
-                        updateFullPayApi();
-                    } else {
-                        setPaymentDone();
-                    }
+                    updateFullPayApi();
                 }
 
             }
@@ -79,7 +73,7 @@ public class WebActivity extends AppCompatActivity {
         webView.loadUrl(getIntent().getStringExtra("url"));
     }
 
-    private void setPaymentDone() {
+/*    private void setPaymentDone() {
         PayMoney payMoney = new PayMoney();
         payMoney.setCatId(getIntent().getIntExtra("catId", 0));
         payMoney.setAmount("1.0");
@@ -120,7 +114,7 @@ public class WebActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
+    }*/
 
     private void updateFullPayApi() {
         if (Functions.isConnected(WebActivity.this)) {
@@ -137,8 +131,7 @@ public class WebActivity extends AppCompatActivity {
                         Functions.showToast(WebActivity.this, response.body().getMessage(), MDToast.TYPE_SUCCESS);
                         Intent intent = new Intent();
                         intent.putExtra("isSuccess", true);
-                        intent.putExtra("pType", PaymentClickType);
-                        setResult(1013, intent);
+                        setResult(1012, intent);
                         finish();
                     } else {
                         Intent intent = new Intent();

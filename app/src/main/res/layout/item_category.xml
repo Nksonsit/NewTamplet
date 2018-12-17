@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rlImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -39,7 +40,7 @@
                 android:id="@+id/txtCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@+id/rlImage"
                 android:text="Category name"
                 android:textColor="@color/darkColor"
                 android:textSize="16sp" />
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtCategory"
-                android:layout_marginLeft="50dp">
+                android:layout_toRightOf="@+id/rlImage">
 
                 <com.drkeironbrown.lifecoach.custom.TfTextView
                     android:id="@+id/txtNote"
@@ -59,19 +60,19 @@
                     android:text="$10"
                     android:textColor="@color/green"
                     android:textSize="12sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <com.drkeironbrown.lifecoach.custom.TfTextView
                     android:id="@+id/txtReadMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/margin_8"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/blue_btn"
                     android:paddingLeft="@dimen/margin_8"
                     android:paddingTop="@dimen/margin_4"
+                    android:paddingRight="@dimen/margin_8"
                     android:paddingBottom="@dimen/margin_4"
-                    android:layout_alignParentRight="true"
                     android:text="Click to view"
-                    android:background="@drawable/blue_btn"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:visibility="visible" />

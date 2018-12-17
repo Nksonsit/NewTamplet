@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
+import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
 import com.drkeironbrown.lifecoach.payment.WebActivity;
 
@@ -40,7 +41,7 @@ public class PayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PayActivity.this, WebActivity.class);
                 intent.putExtra("type", 4);
-                intent.putExtra("url", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7WJJC9659CTC6");
+                intent.putExtra("url", AppConstant.PAYMENT_LINK);
                 intent.putExtra("catId", 0);
 
                 startActivityForResult(intent, 1011);
@@ -59,7 +60,7 @@ public class PayActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1011 && resultCode == 1013) {
+        if (requestCode == 1011 && resultCode == 1012) {
             Functions.fireIntent(PayActivity.this, Dashboard2Activity.class, true);
             finish();
         }

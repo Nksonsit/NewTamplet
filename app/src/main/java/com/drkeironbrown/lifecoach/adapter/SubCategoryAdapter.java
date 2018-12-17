@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.custom.MDToast;
@@ -37,7 +38,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull CategoryVH categoryVH, final int i) {
         categoryVH.txtCategoy.setText(list.get(i));
-        categoryVH.itemView.setOnClickListener(new View.OnClickListener() {
+        categoryVH.txtReadMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!Functions.isConnected(context)) {
@@ -47,13 +48,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                 onSubLinksClick.onSubLinksClick(i);
             }
         });
+        categoryVH.rlImage.setVisibility(View.GONE);
         categoryVH.txtNote.setVisibility(View.GONE);
-
-        AdvancedSpannableString spannableString = new AdvancedSpannableString("Click to read");
-//        spannableString.setColor(ContextCompat.getColor(context, R.color.green), "read");
-        spannableString.setUnderLine("Click to read");
-        categoryVH.txtReadMore.setText(spannableString);
-    }
+        }
 
     @Override
     public int getItemCount() {
@@ -62,9 +59,11 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     public class CategoryVH extends RecyclerView.ViewHolder {
         private TfTextView txtCategoy, txtNote, txtReadMore;
+        private RelativeLayout rlImage;
 
         public CategoryVH(View itemView) {
             super(itemView);
+            rlImage = (RelativeLayout) itemView.findViewById(R.id.rlImage);
             txtCategoy = (TfTextView) itemView.findViewById(R.id.txtCategory);
             txtNote = (TfTextView) itemView.findViewById(R.id.txtNote);
             txtReadMore = (TfTextView) itemView.findViewById(R.id.txtReadMore);
