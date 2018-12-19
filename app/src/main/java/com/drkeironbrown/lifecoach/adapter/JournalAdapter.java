@@ -101,6 +101,14 @@ public class JournalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     });
                 }
             });
+
+            journalViewHolder.imgShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Functions.shareSimpleText(context,list.get(i-1).getJournal());
+                }
+            });
+
             journalViewHolder.txtJournal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
