@@ -26,7 +26,10 @@ import com.drkeironbrown.lifecoach.model.UpdateNotificationReq;
 import com.drkeironbrown.lifecoach.model.User;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,12 +71,26 @@ public class SettingsActivity extends AppCompatActivity {
         });
         txtTitle.setText("Settings");
 
-        if (PrefUtils.getInspirationalNotiTime(SettingsActivity.this) != null)
-            txtInspirationalTime.setText(PrefUtils.getInspirationalNotiTime(SettingsActivity.this));
+        if (PrefUtils.getInspirationalNotiTime(SettingsActivity.this) != null) {
+            try {
+                final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                final Date dateObj = sdf.parse(PrefUtils.getInspirationalNotiTime(SettingsActivity.this));
+                txtInspirationalTime.setText(new SimpleDateFormat("K:mm").format(dateObj));
+            } catch (final ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
+        if (PrefUtils.getPInspirationalNotiTime(SettingsActivity.this) != null) {
+            try {
+                final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                final Date dateObj = sdf.parse(PrefUtils.getPInspirationalNotiTime(SettingsActivity.this));
+                txtPInspirationalTime.setText(new SimpleDateFormat("K:mm").format(dateObj));
+            } catch (final ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
-        if (PrefUtils.getPInspirationalNotiTime(SettingsActivity.this) != null)
-            txtPInspirationalTime.setText(PrefUtils.getPInspirationalNotiTime(SettingsActivity.this));
 
         llInspirationalTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +101,15 @@ public class SettingsActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-                                txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                PrefUtils.setInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                try {
+                                    final SimpleDateFormat sdf = new SimpleDateFormat("K:mm");
+                                    final Date dateObj = sdf.parse(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                    txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                    Log.e("time2",new SimpleDateFormat("H:mm").format(dateObj));
+                                    PrefUtils.setInspirationalNotiTime(SettingsActivity.this, new SimpleDateFormat("H:mm").format(dateObj));
+                                } catch (final ParseException e) {
+                                    e.printStackTrace();
+                                }
 
                                 String tempTime = PrefUtils.getInspirationalNotiTime(SettingsActivity.this);
                                 String[] timeSplit = tempTime.split(":");
@@ -94,8 +118,9 @@ public class SettingsActivity extends AppCompatActivity {
                         },
                         now.get(Calendar.HOUR_OF_DAY),
                         now.get(Calendar.MINUTE),
-                        true
+                        false
                 );
+
 
                 tpd.setThemeDark(false);
                 tpd.setTitle("TimePicker Title");
@@ -119,8 +144,16 @@ public class SettingsActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-                                txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+
+                                try {
+                                    final SimpleDateFormat sdf = new SimpleDateFormat("K:mm");
+                                    final Date dateObj = sdf.parse(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                    txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                                    Log.e("time",new SimpleDateFormat("H:mm").format(dateObj));
+                                    PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, new SimpleDateFormat("H:mm").format(dateObj));
+                                } catch (final ParseException e) {
+                                    e.printStackTrace();
+                                }
 
                                 if (DBOpenHelper.getPInspirationalCount() > 0) {
                                     String tempTime = PrefUtils.getPInspirationalNotiTime(SettingsActivity.this);
@@ -131,7 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
                         },
                         now.get(Calendar.HOUR_OF_DAY),
                         now.get(Calendar.MINUTE),
-                        true
+                        false
                 );
 
                 tpd.setThemeDark(false);
