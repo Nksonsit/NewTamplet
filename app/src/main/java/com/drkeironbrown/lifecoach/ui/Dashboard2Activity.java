@@ -40,6 +40,7 @@ import com.drkeironbrown.lifecoach.model.PaidProduct;
 import com.drkeironbrown.lifecoach.model.PaidProductReq;
 import com.drkeironbrown.lifecoach.model.PayMoney;
 import com.drkeironbrown.lifecoach.payment.WebActivity;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Random;
@@ -144,6 +145,9 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
                 });
             }
         });
+
+
+        //Functions.generateNoteOnSD(this,"jsonfile",new Gson().toJson(DBOpenHelper.getInspirational()));
 
         llSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.drkeironbrown.lifecoach.R;
+import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.model.Shop;
 
@@ -41,7 +42,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
         Glide.with(context).load("http://drkeironbrown.com/alc/admin/" + list.get(position).getShopImg()).into(holder.imgBook);
         holder.txtBookName.setText(Html.fromHtml(list.get(position).getShopName()));
         holder.txtBookPrice.setText("$" + list.get(position).getShopPrice());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(position).getShopUrl()));
@@ -63,11 +64,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopVH> {
 
     public class ShopVH extends RecyclerView.ViewHolder {
         private ImageView imgBook;
+        private TfButton btnBuy;
         private TfTextView txtBookName;
         private TfTextView txtBookPrice;
 
         public ShopVH(View itemView) {
             super(itemView);
+            btnBuy = (TfButton) itemView.findViewById(R.id.btnBuy);
             imgBook = (ImageView) itemView.findViewById(R.id.imgBook);
             txtBookName = (TfTextView) itemView.findViewById(R.id.txtBookName);
             txtBookPrice = (TfTextView) itemView.findViewById(R.id.txtBookPrice);

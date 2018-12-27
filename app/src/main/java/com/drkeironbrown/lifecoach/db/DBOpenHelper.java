@@ -374,6 +374,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         DatabaseManager.getInstance().closeDatabase();
+
         return list;
     }
 
