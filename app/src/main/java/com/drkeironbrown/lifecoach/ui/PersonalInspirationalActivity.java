@@ -32,6 +32,7 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
     private boolean isAddingMode = false;
     private LinearLayout llEmptyView;
     private ImageView imgAdd;
+    private ImageView imgSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
         txtTitle.setText("Personal inspirational");
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgAdd = (ImageView) findViewById(R.id.imgAdd);
+        imgSetting = (ImageView) findViewById(R.id.imgSetting);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +114,14 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
                     adapter.setAddInMode(true);
                     isAddingMode = false;
                 }
+            }
+        });
+
+        imgSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.fireIntent(PersonalInspirationalActivity.this, SettingsActivity.class, true);
+                finish();
             }
         });
     }

@@ -33,14 +33,39 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/btnAdd"
+        android:paddingBottom="8dp"
+        android:id="@+id/llNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click on setting button so you will be redirected to the “Settings” menu so that you can set the time when you want Personal Inspirational Messages sent to you."
+            android:textSize="@dimen/text_size_12" />
+
+        <ImageView
+            android:id="@+id/imgSetting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_settings"
+            android:tint="@color/colorPrimaryDark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llNote"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -62,6 +87,7 @@
         android:layout_below="@+id/btnAdd"
         android:overScrollMode="never"
         android:scrollbars="none" />
+
     <LinearLayout
         android:id="@+id/llEmptyView"
         android:layout_width="match_parent"
@@ -84,6 +110,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             app:isBold="true" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
