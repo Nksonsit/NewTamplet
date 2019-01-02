@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.model.Gallery;
+import com.drkeironbrown.lifecoach.model.Inspiration;
+import com.drkeironbrown.lifecoach.model.PersonalInspiration;
 import com.drkeironbrown.lifecoach.model.Slideshow;
 import com.drkeironbrown.lifecoach.ui.Dashboard2Activity;
 import com.drkeironbrown.lifecoach.ui.GalleryActivity;
@@ -142,6 +144,26 @@ public class AlarmHelper extends BroadcastReceiver {
 
     }
 
+    public Inspiration getLatestInspiration(Context context) {
+        Inspiration inspiration = DBOpenHelper.getRandomInspirational();
+        if (PrefUtils.getLastInspiId(context) == inspiration.getInspirationalId()) {
+            return getLatestInspiration(context);
+        } else {
+            PrefUtils.setLastInspiId(context, inspiration.getInspirationalId());
+            return inspiration;
+        }
+    }
+
+    public PersonalInspiration getLatestPInspiration(Context context) {
+        PersonalInspiration pInspiration = DBOpenHelper.getRandomPInspirational();
+        if (PrefUtils.getLastPInspiId(context) == pInspiration.getPInspirationalId() && DBOpenHelper.getPInspirationalCount() > 1) {
+            return getLatestPInspiration(context);
+        } else {
+            PrefUtils.setLastPInspiId(context, pInspiration.getPInspirationalId());
+            return pInspiration;
+        }
+    }
+
     public void setReminder(Context context, int calId, Class<?> cls, int hour, int min, boolean isNext, boolean isInspirational) {
         cancelAlarm(context, calId);
 
@@ -166,12 +188,14 @@ public class AlarmHelper extends BroadcastReceiver {
 
         if (isInspirational) {
             Intent intent = new Intent(context, AlarmHelper.class);
-            intent.putExtra("msg", DBOpenHelper.getRandomInspirational().getInspirational());
+            Inspiration inspiration = getLatestInspiration(context);
+            intent.putExtra("msg", inspiration.getInspirational());
             intent.putExtra("IsInspirational", true);
             pendingIntent = PendingIntent.getBroadcast(context, calId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         } else {
             Intent intent = new Intent(context, AlarmHelper.class);
-            intent.putExtra("msg", DBOpenHelper.getRandomPInspirational().getPInspirational());
+            PersonalInspiration pInspiration = getLatestPInspiration(context);
+            intent.putExtra("msg", pInspiration.getPInspirational());
             intent.putExtra("IsPInspirational", true);
             pendingIntent = PendingIntent.getBroadcast(context, calId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }

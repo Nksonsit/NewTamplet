@@ -487,6 +487,19 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+
+    public static int getInspirationalCount() {
+        SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sb.rawQuery("SELECT * FROM Inspirational", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            DatabaseManager.getInstance().closeDatabase();
+            return cursor.getCount();
+        } else {
+            DatabaseManager.getInstance().closeDatabase();
+            return 0;
+        }
+    }
+
     public static Slideshow getSlideshow(int id) {
         Slideshow slideshow = new Slideshow();
         SQLiteDatabase sb = DatabaseManager.getInstance().openDatabase();

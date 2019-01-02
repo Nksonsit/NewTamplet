@@ -1,8 +1,6 @@
 package com.drkeironbrown.lifecoach.helper;
 
-import android.app.Activity;
 import android.content.Context;
-import android.location.Location;
 
 import com.drkeironbrown.lifecoach.model.User;
 import com.google.gson.Gson;
@@ -55,7 +53,7 @@ public class PrefUtils {
     }
 
     public static String getInspirationalNotiTime(Context context) {
-        return Prefs.with(context).getString(INSPIRATIONAL_NOTI_TIME,null);
+        return Prefs.with(context).getString(INSPIRATIONAL_NOTI_TIME, null);
     }
 
     public static void setPInspirationalNotiTime(Context context, String time) {
@@ -63,7 +61,7 @@ public class PrefUtils {
     }
 
     public static String getPInspirationalNotiTime(Context context) {
-        return Prefs.with(context).getString(P_INSPIRATIONAL_NOTI_TIME,null);
+        return Prefs.with(context).getString(P_INSPIRATIONAL_NOTI_TIME, null);
     }
 
     public static void setUserFullProfileDetails(Context context, User userProfile) {
@@ -93,6 +91,22 @@ public class PrefUtils {
     }
 
     public static int getCurrentIndex(Context context) {
-        return Prefs.with(context).getInt("cindex",-1);
+        return Prefs.with(context).getInt("cindex", -1);
+    }
+
+    public static int getLastInspiId(Context context) {
+        return Prefs.with(context).getInt("LastInspiId", 0);
+    }
+
+    public static void setLastInspiId(Context context, int id) {
+        Prefs.with(context).save("LastInspiId", id);
+    }
+
+    public static int getLastPInspiId(Context context) {
+        return Prefs.with(context).getInt("LastPInspiId", 0);
+    }
+
+    public static void setLastPInspiId(Context context, int id) {
+        Prefs.with(context).save("LastPInspiId", id);
     }
 }
