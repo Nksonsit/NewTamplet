@@ -14,11 +14,15 @@ import com.drkeironbrown.lifecoach.adapter.PersonalInspirationalAdapter;
 import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
+import com.drkeironbrown.lifecoach.helper.AlarmHelper;
+import com.drkeironbrown.lifecoach.helper.AppConstant;
 import com.drkeironbrown.lifecoach.helper.Functions;
+import com.drkeironbrown.lifecoach.helper.PrefUtils;
 import com.drkeironbrown.lifecoach.model.PersonalInspiration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PersonalInspirationalActivity extends AppCompatActivity {
 
@@ -91,6 +95,14 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
                 adapter.notifyItemMoved(0, 1);
                 adapter.setAddInMode(false);
                 isAddingMode = false;
+                AlarmHelper alarmHelper = new AlarmHelper();
+                if (!PrefUtils.isPInspirational(PersonalInspirationalActivity.this) && DBOpenHelper.getPInspirationalCount() > 0) {
+                    final int min = AppConstant.StartingHour;
+                    final int max = AppConstant.EndingHour;
+                    final int random = new Random().nextInt((max - min) + 1) + min;
+                    PrefUtils.setIsPInspirationalSet(PersonalInspirationalActivity.this, true);
+                    alarmHelper.setReminder(PersonalInspirationalActivity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+                }
             }
         });
         rvPInspirational.setAdapter(adapter);

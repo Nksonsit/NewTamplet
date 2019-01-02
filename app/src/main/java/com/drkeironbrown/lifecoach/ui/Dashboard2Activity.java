@@ -106,6 +106,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     private boolean isGalleryPaid = true;
     private boolean isSlideshowPaid = true;
     private int PaymentClickType = 0;
+    private AlarmHelper alarmHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -340,7 +341,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         });
 
 
-        AlarmHelper alarmHelper = new AlarmHelper();
+        alarmHelper = new AlarmHelper();
         if (!PrefUtils.isInspirational(this)) {
             final int min = AppConstant.StartingHour;
             final int max = AppConstant.EndingHour;
