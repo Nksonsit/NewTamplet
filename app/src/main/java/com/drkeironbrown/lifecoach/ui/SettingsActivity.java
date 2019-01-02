@@ -104,8 +104,8 @@ public class SettingsActivity extends AppCompatActivity {
                                 try {
                                     final SimpleDateFormat sdf = new SimpleDateFormat("K:mm");
                                     final Date dateObj = sdf.parse(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                    txtInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                    Log.e("time2",new SimpleDateFormat("H:mm").format(dateObj));
+                                    txtInspirationalTime.setText(sdf.format(dateObj));
+//                                    Log.e("time2",new SimpleDateFormat("H:mm").format(dateObj));
                                     PrefUtils.setInspirationalNotiTime(SettingsActivity.this, new SimpleDateFormat("H:mm").format(dateObj));
                                 } catch (final ParseException e) {
                                     e.printStackTrace();
@@ -148,8 +148,8 @@ public class SettingsActivity extends AppCompatActivity {
                                 try {
                                     final SimpleDateFormat sdf = new SimpleDateFormat("K:mm");
                                     final Date dateObj = sdf.parse(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                    txtPInspirationalTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                                    Log.e("time",new SimpleDateFormat("H:mm").format(dateObj));
+                                    txtPInspirationalTime.setText(sdf.format(dateObj));
+//                                    Log.e("time",new SimpleDateFormat("H:mm").format(dateObj)+"  " + sdf.format(dateObj));
                                     PrefUtils.setPInspirationalNotiTime(SettingsActivity.this, new SimpleDateFormat("H:mm").format(dateObj));
                                 } catch (final ParseException e) {
                                     e.printStackTrace();
