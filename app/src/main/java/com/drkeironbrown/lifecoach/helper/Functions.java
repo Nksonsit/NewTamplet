@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -675,6 +676,7 @@ public class Functions {
     }
 
     public static void shareSimpleText(Context context, String text) {
+        text = "Active Life Coach \n\n" + text;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
@@ -683,6 +685,7 @@ public class Functions {
     }
 
     public static void shareImages(Context context, String subject, List<String> filesToSend) {
+        subject = "Active Life Coach \n\n" + subject;
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND_MULTIPLE);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
@@ -692,7 +695,7 @@ public class Functions {
 
         for (String path : filesToSend) {
             File file = new File(path);
-            Uri uri = Uri.fromFile(file);
+            Uri uri = FileProvider.getUriForFile(context, "com.drkeironbrown.lifecoach.fileProvider", file);
             files.add(uri);
         }
 

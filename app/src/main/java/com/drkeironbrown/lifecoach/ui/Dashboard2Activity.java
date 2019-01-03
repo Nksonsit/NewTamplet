@@ -356,7 +356,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             final int max = AppConstant.EndingHour;
             final int random = new Random().nextInt((max - min) + 1) + min;
             PrefUtils.setIsPInspirationalSet(this, true);
-            alarmHelper.setReminder(this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+//            alarmHelper.setReminder(this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+            if (PrefUtils.getPInspirationalNotiTime(Dashboard2Activity.this) != null) {
+                String tempTime = PrefUtils.getPInspirationalNotiTime(Dashboard2Activity.this);
+                String[] timeSplit = tempTime.split(":");
+                alarmHelper.setReminder(Dashboard2Activity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), false, false);
+            } else {
+                alarmHelper.setReminder(Dashboard2Activity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+            }
         }
 
         if (getIntent().getStringExtra("msg") != null) {

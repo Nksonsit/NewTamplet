@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 import com.drkeironbrown.lifecoach.R;
 import com.drkeironbrown.lifecoach.adapter.PersonalInspirationalAdapter;
-import com.drkeironbrown.lifecoach.custom.TfButton;
 import com.drkeironbrown.lifecoach.custom.TfTextView;
 import com.drkeironbrown.lifecoach.db.DBOpenHelper;
 import com.drkeironbrown.lifecoach.helper.AlarmHelper;
@@ -101,7 +100,13 @@ public class PersonalInspirationalActivity extends AppCompatActivity {
                     final int max = AppConstant.EndingHour;
                     final int random = new Random().nextInt((max - min) + 1) + min;
                     PrefUtils.setIsPInspirationalSet(PersonalInspirationalActivity.this, true);
-                    alarmHelper.setReminder(PersonalInspirationalActivity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+                    if (PrefUtils.getPInspirationalNotiTime(PersonalInspirationalActivity.this) != null) {
+                        String tempTime = PrefUtils.getPInspirationalNotiTime(PersonalInspirationalActivity.this);
+                        String[] timeSplit = tempTime.split(":");
+                        alarmHelper.setReminder(PersonalInspirationalActivity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), false, false);
+                    } else {
+                        alarmHelper.setReminder(PersonalInspirationalActivity.this, AppConstant.P_INSPIRATIONAL_NOTI_ID, Dashboard2Activity.class, random, 0, false, false);
+                    }
                 }
             }
         });
