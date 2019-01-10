@@ -113,7 +113,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
         PrefUtils.setIsFirstTime(this, false);
-        Functions.executeLogcat(this);
+        //Functions.executeLogcat(this);
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         this.imgPaidSlideshow = (ImageView) findViewById(R.id.imgPaidSlideshow);
         this.imgPaidGallery = (ImageView) findViewById(R.id.imgPaidGallery);

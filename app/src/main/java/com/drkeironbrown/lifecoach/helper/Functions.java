@@ -571,7 +571,6 @@ public class Functions {
         return imageList;
     }
 
-
     public static String copyAudioFile(File file) {
         File newfile = null;
         try {
@@ -614,7 +613,6 @@ public class Functions {
     public interface DialogOptionsSelectedListener {
         void onSelect(boolean isYes);
     }
-
 
     public static void executeLogcat(Context context) {
         Log.d("System out", "Create Log file..");
