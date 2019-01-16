@@ -33,6 +33,7 @@ public class FunctionSlideActivity extends AppCompatActivity {
     private int count = 1;
     private View divider;
     private View bottomSpace;
+    private TfTextView txtPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class FunctionSlideActivity extends AppCompatActivity {
 
         txtSkip = (TfTextView) findViewById(R.id.txtSkip);
         txtNext = (TfTextView) findViewById(R.id.txtNext);
+        txtPre = (TfTextView) findViewById(R.id.txtPre);
         bottomSpace = findViewById(R.id.bottomSpace);
         divider = findViewById(R.id.divider);
         container = (LinearLayout) findViewById(R.id.container);
@@ -57,17 +59,23 @@ public class FunctionSlideActivity extends AppCompatActivity {
             public void onClick(View v) {
                 count++;
                 if (count == 2) {
+                    txtPre.setVisibility(View.VISIBLE);
                     txtSkip.setVisibility(View.VISIBLE);
                     pushFragment(new SecondFragment());
                 } else if (count == 3) {
+                    txtPre.setVisibility(View.VISIBLE);
                     pushFragment(new ThirdFragment());
                 } else if (count == 4) {
+                    txtPre.setVisibility(View.VISIBLE);
                     pushFragment(new ForthFragment());
                 } else if (count == 5) {
+                    txtPre.setVisibility(View.VISIBLE);
                     pushFragment(new FifthFragment());
                 } else if (count == 6) {
+                    txtPre.setVisibility(View.VISIBLE);
                     pushFragment(new SixthFragment());
                 } else if (count == 7) {
+                    txtPre.setVisibility(View.VISIBLE);
                     txtNext.setText("Done");
                     pushFragment(new SevenFragment());
                 } else {
@@ -80,6 +88,52 @@ public class FunctionSlideActivity extends AppCompatActivity {
                 }
             }
         });
+
+        txtPre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count--;
+                if (count == 1) {
+                    txtPre.setVisibility(View.GONE);
+                    txtSkip.setVisibility(View.GONE);
+                    txtNext.setText("Next");
+                    pushFragment2(new FirstFragment());
+                }else if (count == 2) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtSkip.setVisibility(View.VISIBLE);
+                    txtNext.setText("Next");
+                    pushFragment2(new SecondFragment());
+                } else if (count == 3) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtNext.setText("Next");
+                    pushFragment2(new ThirdFragment());
+                } else if (count == 4) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtNext.setText("Next");
+                    pushFragment2(new ForthFragment());
+                } else if (count == 5) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtNext.setText("Next");
+                    pushFragment2(new FifthFragment());
+                } else if (count == 6) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtNext.setText("Next");
+                    pushFragment2(new SixthFragment());
+                } else if (count == 7) {
+                    txtPre.setVisibility(View.VISIBLE);
+                    txtNext.setText("Done");
+                    pushFragment2(new SevenFragment());
+                } else {
+                    if (PrefUtils.getUserFullProfileDetails(FunctionSlideActivity.this).getIsFullPay() == 1) {
+                        Functions.fireIntent(FunctionSlideActivity.this, Dashboard2Activity.class, true);
+                    } else {
+                        Functions.fireIntent(FunctionSlideActivity.this, PayActivity.class, true);
+                    }
+                    finish();
+                }
+            }
+        });
+
         txtSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +161,17 @@ public class FunctionSlideActivity extends AppCompatActivity {
         int leftOut = R.anim.slide_out_left;
 
         ft.setCustomAnimations(rightIn, leftOut);
+        ft.replace(R.id.container, fragment);
+        ft.commit();
+    }
+    private void pushFragment2(Fragment fragment) {
+        FragmentTransaction ft = fm.beginTransaction();
+        int rightIn = R.anim.slide_in_right;
+        int rightOut = R.anim.slide_out_right;
+        int leftIn = R.anim.slide_in_left;
+        int leftOut = R.anim.slide_out_left;
+
+        ft.setCustomAnimations(leftIn, rightOut);
         ft.replace(R.id.container, fragment);
         ft.commit();
     }

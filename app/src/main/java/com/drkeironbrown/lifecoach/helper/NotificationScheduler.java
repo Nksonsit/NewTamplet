@@ -115,7 +115,8 @@ public class NotificationScheduler {
                 .setAutoCancel(true).setContentIntent(pendingIntent)
                 .setNumber(1)
                 .setContentText(content + " ready to be viewed")
-                .setWhen(System.currentTimeMillis());
+                .setWhen(System.currentTimeMillis())
+                .setChannelId(idd);
         notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
 
     }
