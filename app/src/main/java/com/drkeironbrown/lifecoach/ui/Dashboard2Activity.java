@@ -107,6 +107,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     private boolean isSlideshowPaid = true;
     private int PaymentClickType = 0;
     private AlarmHelper alarmHelper;
+    private LinearLayout llAboutUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         this.llLogout = (LinearLayout) findViewById(R.id.llLogout);
         this.toolbar = (LinearLayout) findViewById(R.id.toolbar);
         this.llRef = (LinearLayout) findViewById(R.id.llRef);
+        this.llAboutUs = (LinearLayout) findViewById(R.id.llAboutUs);
         handler = new Handler();
         llCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,6 +339,14 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
             @Override
             public void onClick(View view) {
                 new WebViewDialog(Dashboard2Activity.this, "Bibliography", "file:///android_res/raw/ref.html");
+            }
+        });
+
+
+        llAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Functions.fireIntent(Dashboard2Activity.this, AboutUsActivity.class, true);
             }
         });
 

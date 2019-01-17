@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AboutUsActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_action_back" />
+
+        <com.drkeironbrown.lifecoach.custom.TfTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="About Us"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:isBold="true" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:text="About Us"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:isBold="true" />
+
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:text="Active Life Coach (ALC) was conceived and designed by Dr. Keiron Brown, a licensed Clinical Psychologist with more than 25 years of professional experience in helping people feel good about themselves, overcome challenges, achieve higher levels of success and lead better and more fulfilling lives.  Active Life Coach is an important part of an entire system of products and services developed by Dr. Brown that enable users to be better at and more fulfilled in whatever they do in life, especially in their relationships."
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:text="What is Active Life Coach?"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:isBold="true" />
+
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:text="Active Life Coach is like having Dr. Brown by your side, as close as your smart devices.  ALC covers an array of common, but limiting, mindsets, behaviors and habits, and provides strategies to break those old patterns and lays out more effective and productive ways to move beyond those previous limitations."
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:text="Who is Active Life Coach for?"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:isBold="true" />
+
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:text="Active Life Coach is for anyone faced with the common challenges of life that produce stress and anxiety and that interfere with their personal growth, their relationships and the happiness and prosperity in life that they want and deserve."
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:text="For more information on life-changing products and services, visit Dr. Brown at:"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.drkeironbrown.lifecoach.custom.TfTextView
+                android:id="@+id/txtLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:textColor="@color/darkBlue"
+                android:text="http://drkeironbrown.com"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

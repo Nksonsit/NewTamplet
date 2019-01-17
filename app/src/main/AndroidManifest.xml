@@ -21,10 +21,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label"
         tools:targetApi="n">
-
-
-
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.drkeironbrown.lifecoach.fileProvider"
@@ -179,7 +175,8 @@
                 <data android:scheme="com.drkeironbrown.lifecoach.braintree" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PayActivity"></activity>
+        <activity android:name=".ui.PayActivity" />
+        <activity android:name=".ui.AboutUsActivity"></activity>
     </application>
 
 </manifest>

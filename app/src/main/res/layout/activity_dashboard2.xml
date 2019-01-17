@@ -401,6 +401,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:background="@color/colorPrimary12"
+                    android:id="@+id/llAboutUs"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_gravity="center"
@@ -408,21 +410,19 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/padding_8"
-                    android:visibility="invisible">
+                    android:padding="@dimen/padding_8">
 
                     <ImageView
                         android:layout_width="52dp"
                         android:layout_height="52dp"
                         android:layout_marginBottom="@dimen/margin_8"
-                        android:src="@drawable/second_thought"
-                        android:tint="@color/colorPrimary" />
+                        android:src="@drawable/about_us" />
 
                     <com.drkeironbrown.lifecoach.custom.TfTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="On second thought"
-                        android:textColor="@color/darkColor" />
+                        android:text="About Us"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
             </LinearLayout>
