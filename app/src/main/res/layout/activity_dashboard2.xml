@@ -375,33 +375,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/llRef"
                     android:background="@color/colorPrimary11"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="1dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_8">
-
-                    <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:src="@drawable/b"
-                        android:tint="@color/white" />
-
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bibliography"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:background="@color/colorPrimary12"
                     android:id="@+id/llAboutUs"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
@@ -422,6 +396,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="About Us"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRef"
+                    android:background="@color/colorPrimary12"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_8">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:src="@drawable/b"
+                        android:tint="@color/white" />
+
+                    <com.drkeironbrown.lifecoach.custom.TfTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bibliography"
                         android:textColor="@color/white" />
                 </LinearLayout>
 
