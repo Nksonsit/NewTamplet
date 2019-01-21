@@ -256,30 +256,46 @@
                 android:layout_below="@+id/toolbar"
                 android:orientation="horizontal">
 
-                <LinearLayout
+
+                <RelativeLayout
                     android:background="@color/colorPrimary7"
-                    android:id="@+id/llJournal"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_8">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:id="@+id/llJournal"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_8">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:src="@drawable/notepad"
+                            android:tint="@color/white" />
+
+                        <com.drkeironbrown.lifecoach.custom.TfTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Journal"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
                     <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:src="@drawable/notepad"
-                        android:tint="@color/white" />
+                        android:id="@+id/imgPaidJournal"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_paid" />
+                </RelativeLayout>
 
-                    <com.drkeironbrown.lifecoach.custom.TfTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Journal"
-                        android:textColor="@color/white" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:background="@color/colorPrimary8"

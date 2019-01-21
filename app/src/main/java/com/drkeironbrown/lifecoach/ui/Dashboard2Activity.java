@@ -105,9 +105,11 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
     private ImageView imgPaidGallery;
     private boolean isGalleryPaid = true;
     private boolean isSlideshowPaid = true;
+    private boolean isJournalPaid = true;
     private int PaymentClickType = 0;
     private AlarmHelper alarmHelper;
     private LinearLayout llAboutUs;
+    private ImageView imgPaidJournal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +120,7 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         txtTitle = (TfTextView) findViewById(R.id.txtTitle);
         this.imgPaidSlideshow = (ImageView) findViewById(R.id.imgPaidSlideshow);
         this.imgPaidGallery = (ImageView) findViewById(R.id.imgPaidGallery);
+        this.imgPaidJournal = (ImageView) findViewById(R.id.imgPaidJournal);
         this.llSecondThought = (LinearLayout) findViewById(R.id.llSecondThought);
         this.llJournal = (LinearLayout) findViewById(R.id.llJournal);
         this.llPInspirational = (LinearLayout) findViewById(R.id.llPInspirational);
@@ -236,17 +239,36 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         llJournal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Record your thoughts, feelings and progress on your journey to success and happiness.", new PopupDialog.OnPopupClick() {
-                    @Override
-                    public void onOkClick() {
-                        Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
-                    }
+                if (!isJournalPaid) {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "OK", "", "Record your thoughts, feelings and progress on your journey to success and happiness.", new PopupDialog.OnPopupClick() {
+                        @Override
+                        public void onOkClick() {
+                            Functions.fireIntent(Dashboard2Activity.this, JournalListActivity.class, true);
+                        }
 
-                    @Override
-                    public void onCancelClick() {
+                        @Override
+                        public void onCancelClick() {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Functions.showAlertDialogWithTwoOption(Dashboard2Activity.this, "Premium", "Not now", "Upgrade to Premium to access this feature!", new PopupDialog.OnPopupClick() {
+                        @Override
+                        public void onOkClick() {
+                            PaymentClickType = 2;
+                            //PayPal.requestOneTimePayment(mBraintreeFragment, new PayPalRequest("1"));
+                            Intent intent = new Intent(Dashboard2Activity.this, WebActivity.class);
+                            intent.putExtra("url", AppConstant.PAYMENT_LINK);
+
+                            startActivityForResult(intent, 1011);
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
+                        }
+                    });
+                }
 
             }
         });
@@ -401,8 +423,10 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 1) {
             imgPaidGallery.setVisibility(View.GONE);
             imgPaidSlideshow.setVisibility(View.GONE);
+            imgPaidJournal.setVisibility(View.GONE);
             isGalleryPaid = false;
             isSlideshowPaid = false;
+            isJournalPaid = false;
         }
     }
 
@@ -542,8 +566,10 @@ public class Dashboard2Activity extends AppCompatActivity implements Configurati
         if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 1) {
             imgPaidGallery.setVisibility(View.GONE);
             imgPaidSlideshow.setVisibility(View.GONE);
+            imgPaidJournal.setVisibility(View.GONE);
             isGalleryPaid = false;
             isSlideshowPaid = false;
+            isJournalPaid = false;
         }
         if (PrefUtils.getUserFullProfileDetails(this).getIsFullPay() == 0) {
             /*PaidProductReq paidProductReq = new PaidProductReq();
