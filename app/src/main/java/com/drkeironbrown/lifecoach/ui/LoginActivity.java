@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private TfTextView txtDr;
     private TfTextView txtReadMore;
     private View bottomSpace;
+    private TfTextView txtForgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         bottomSpace = findViewById(R.id.bottomSpace);
+        this.txtForgotPass = (TfTextView) findViewById(R.id.txtForgotPass);
         this.txtReadMore = (TfTextView) findViewById(R.id.txtReadMore);
         this.txtSignUp = (TfTextView) findViewById(R.id.txtSignUp);
         this.btnSignIn = (TfButton) findViewById(R.id.btnSignIn);
@@ -140,5 +142,12 @@ public class LoginActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,102);
             bottomSpace.setLayoutParams(param);
         }
+        txtForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Functions.hideKeyPad(LoginActivity.this, v);
+                Functions.fireIntent(LoginActivity.this, ForgotPasswordActivity.class, true);
+            }
+        });
     }
 }
