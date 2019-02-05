@@ -4,6 +4,7 @@ package com.drkeironbrown.lifecoach.api;
 import com.drkeironbrown.lifecoach.model.BaseResponse;
 import com.drkeironbrown.lifecoach.model.Category;
 import com.drkeironbrown.lifecoach.model.CategoryReq;
+import com.drkeironbrown.lifecoach.model.ForgotPasswordReq;
 import com.drkeironbrown.lifecoach.model.LoginReq;
 import com.drkeironbrown.lifecoach.model.PaidProduct;
 import com.drkeironbrown.lifecoach.model.PaidProductReq;
@@ -56,4 +57,8 @@ public interface AppApi {
 
     @POST("UpdateFullPay.php")
     Call<BaseResponse> updatePayment(@Body UpdateNotificationReq updateNotificationReq);
+
+
+    @POST("GetForgotPassword.php")
+    Call<BaseResponse> getForgotPassword(@Body ForgotPasswordReq forgotPasswordReq);
 }

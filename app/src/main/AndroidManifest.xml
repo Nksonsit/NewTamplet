@@ -175,8 +175,17 @@
                 <data android:scheme="com.drkeironbrown.lifecoach.braintree" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PayActivity" />
-        <activity android:name=".ui.AboutUsActivity"></activity>
+        <activity
+            android:name=".ui.PayActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity
+            android:name=".ui.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+        <activity android:name=".ui.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
     </application>
 
 </manifest>
